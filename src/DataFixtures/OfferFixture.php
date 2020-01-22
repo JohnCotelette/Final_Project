@@ -62,7 +62,7 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
         "Curieux.",
         "Rigoureux et qui aime le travail en équipe.",
         "Maitrise de la suite Adobe.",
-        "Capacités en management et organisé"
+        "Capacités en management et organisé."
     ];
 
     const OFFERS_TYPE = [

@@ -19,6 +19,7 @@
         "symfony/profiler-pack": "^1.0",
         "symfony/security-bundle": "4.4.*",
         "symfony/security-csrf": "4.4.*",
+        "symfony/translation": "4.4.*",
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "4.4.*",
         "symfony/web-server-bundle": "^4.4",
