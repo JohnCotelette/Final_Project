@@ -5,17 +5,23 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\UuidInterface as UUID;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields={"email"}, message="Cet email est déjà utilisé.")
  */
 class User implements UserInterface
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var \Ramsey\Uuid\UuidInterface
+     *
+     * @ORM\Id
+     * @ORM\Column(type="uuid", unique=true)
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     private $id;
 
@@ -91,7 +97,7 @@ class User implements UserInterface
         $this->offers = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): UUID
     {
         return $this->id;
     }
@@ -193,12 +199,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getBirthday(): ?\DateTimeInterface
+    public function getBirthDay(): ?\DateTimeInterface
     {
         return $this->birthDay;
     }
 
-    public function setBirthday(\DateTimeInterface $birthDay): self
+    public function setBirthDay(\DateTimeInterface $birthDay): self
     {
         $this->birthDay = $birthDay;
 
