@@ -1,0 +1,45 @@
+@import './core.scss';
+
+
+body{
+    font-size: 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: $bodyBag;
+}
+.bgCol
+{
+    background-color: $bagPrimary !important;
+    color: $light;
+}
+
+.navbar-toggler-icon {
+    display: flex;
+    color: white
+}
+
+
+.navbar-brand, .nav-link{
+        font-size: 1.8rem;
+
+        color: $light !important;
+        &:hover{
+           color : $buttonColor !important;
+        }   
+ }
+
+
+nav
+{
+    color: $light !important;
+}
+
+
+
+footer{
+    background-color: $bagPrimary;
+    padding: 10px;
+    text-align: center;
+    color: $light;
+}
