@@ -9,6 +9,8 @@ Encore
     .setPublicPath('/build')
     .addEntry('app', './assets/js/app.js')
     .addEntry('app', './assets/js/componments/layout.js')
+    .addStyleEntry('forgotPassword', './assets/css/components/security/forgotPassword.scss')
+    .addStyleEntry('changePassword', './assets/css/components/security/changePassword.scss')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
