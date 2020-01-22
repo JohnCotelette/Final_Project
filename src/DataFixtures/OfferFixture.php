@@ -10,7 +10,7 @@ use App\Entity\Offer;
 use App\Entity\User;
 
 /**
- * Class UserFixture
+ * Class OfferFixture
  * @package App\DataFixtures
  */
 class OfferFixture extends BaseFixture implements DependentFixtureInterface
@@ -19,6 +19,11 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
      * @var OfferService;
      */
     private $offerService;
+
+    /**
+     * @var int
+     */
+    private $index = 0;
 
     const OFFERS_TITLES = [
         "Développeur Symfony",
@@ -57,7 +62,7 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
         "Curieux.",
         "Rigoureux et qui aime le travail en équipe.",
         "Maitrise de la suite Adobe.",
-        "Capacités en management et organisé."
+        "Capacités en management et organisé"
     ];
 
     const OFFERS_TYPE = [
@@ -65,8 +70,6 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
         "CDD",
         "Stage",
     ];
-
-    private $index = 0;
 
     public function __construct(OfferService $offerService)
     {
@@ -78,9 +81,9 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
      */
     protected function loadData(ObjectManager $manager)
     {
-        $randomRecruiter = $this->getRandomRecruiter();
+        $this->createMany(Offer::class, 5, function(Offer $offer) {
+            $randomRecruiter = $this->getRandomRecruiter();
 
-        $this->createMany(Offer::class, 5, function(Offer $offer) use ($randomRecruiter) {
             $offer
                 ->setTitle(self::OFFERS_TITLES[$this->index])
                 ->setDescription(self::OFFERS_DESCRIPTIONS[$this->index])
@@ -88,8 +91,8 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
                 ->setSalary(self::OFFERS_SALARY[$this->index])
                 ->setType(self::OFFERS_TYPE[rand(0, 2)])
                 ->setLocation($this->faker->city)
-                ->setProfilRequired(self::OFFERS_PROFIL_REQUIRED[$this->index])
                 ->setStartedAt($this->faker->dateTimeBetween($startDate = "now", $endDate = "+ 1 year", $timezone = "Europe/Paris"))
+                ->setProfilRequired(self::OFFERS_PROFIL_REQUIRED[$this->index])
             ;
 
             $this->offerService->generateReference($offer);
@@ -102,6 +105,9 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
         $manager->flush();
     }
 
+    /**
+     * @return mixed
+     */
     public function getRandomRecruiter()
     {
         $randomUser = $this->getRandomReference(User::class);
@@ -114,6 +120,9 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
         }
     }
 
+    /**
+     * @return array
+     */
     public function getDependencies()
     {
         return [
