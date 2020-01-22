@@ -12,12 +12,12 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index( )
+    public function index(OfferRepository $offerRepository )
     {
-         $offers =  new Offer;
-        // $offers = $offerRepository->findAll();
+       $offers = $offerRepository->findAll();
+       
         return $this->render('home/home.html.twig', [
-            //'offers' => $offers,
+           'offers' => $offers,
         ]);
     }
 
