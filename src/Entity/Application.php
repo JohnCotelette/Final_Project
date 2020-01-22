@@ -32,6 +32,20 @@ class Application
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Offer", inversedBy="applications")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $offer;
+
+    /**
+     * Application constructor.
+     */
+    public function __construct()
+    {
+        $this->created_at = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +83,18 @@ class Application
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getOffer(): ?Offer
+    {
+        return $this->offer;
+    }
+
+    public function setOffer(?Offer $offer): self
+    {
+        $this->offer = $offer;
 
         return $this;
     }
