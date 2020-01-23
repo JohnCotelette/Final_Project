@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OfferRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Offer
 {
@@ -82,6 +85,20 @@ class Offer
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Application", mappedBy="offer", orphanRemoval=true)
+     */
+    private $applications;
+
+    /**
+     * Offer constructor.
+     */
+    public function __construct()
+    {
+        $this->created_at = new \DateTime();
+        $this->applications = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -128,11 +145,15 @@ class Offer
         return $this->expired_at;
     }
 
-    public function setExpiredAt(\DateTimeInterface $expired_at): self
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setExpiredAt(): void
     {
-        $this->expired_at = $expired_at;
+        $now = new \DateTime();
 
-        return $this;
+        $this->expired_at = $now->add(new \DateInterval("P6M"));
     }
 
     public function getReference(): ?string
@@ -239,6 +260,37 @@ class Offer
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Application[]
+     */
+    public function getApplications(): Collection
+    {
+        return $this->applications;
+    }
+
+    public function addApplication(Application $application): self
+    {
+        if (!$this->applications->contains($application)) {
+            $this->applications[] = $application;
+            $application->setOffer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApplication(Application $application): self
+    {
+        if ($this->applications->contains($application)) {
+            $this->applications->removeElement($application);
+            // set the owning side to null (unless already changed)
+            if ($application->getOffer() === $this) {
+                $application->setOffer(null);
+            }
+        }
 
         return $this;
     }
