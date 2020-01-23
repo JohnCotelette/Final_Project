@@ -1,9 +1,130 @@
 easy_admin:
-    entities:
-        
-        - App\Entity\User
-        - App\Entity\Offer
-        - App\Entity\Application
-        - App\Entity\Cv
-        - App\Entity\Avatar
+  site_name:  '<em style="font-size:80%;">FindLAB</em>'
+  design:
+        brand_color: '#e67e22'
+        menu:
+            - { entity: 'User', icon: 'user-tie' }
+            - { entity: 'Offer', icon: 'scroll' }
+            - { entity: 'Application', icon: 'mail-bulk' }
+            - { entity: 'CV', icon: 'envelope-open-text' }
+            - { entity: 'Avatar', icon: 'user-circle' }
+  entities:
+  # Entity User
+  #---------------------------------------------------------------------------------------------------------------------------------------------
+    User:
+      class: App\Entity\User
+      avatar_property_path: 'avatar'  
+      label: Utilisateur
+      list:
+        fields:
+            - property: firstName
+              label: Prénom
+            - property: lastName
+              label: Nom
+            - property: roles
+              label: Roles
+            - property: email
+              label: Email
+            - property: password
+              label: Mot de passe
+            - property: isActive
+              label: compte(Activé)
+            - property: birthDay
+              label: Date de naissance
+            - property: business
+              label: Entreprise
+            - property: cv
+              label: CV
+      form:
+        fields:
+          - property: firstName
+            label: Prénom
+          - property: lastName
+            label: Nom
+          - property: email
+            label: Email
+          - property: birthDay
+            label: Date de naissance
+          - property: business
+            label: Entreprise
+          - property: cv
+            label: CV
+          - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_ADMIN': 'ROLE_ADMIN',  	'ROLE_CANDIDATE': 	'ROLE_CANDIDATE', 'ROLE_RECRUITER': 'ROLE_RECRUITERx' } } }
 
+  # Entity Offer
+  #---------------------------------------------------------------------------------------------------------------------------------------------
+
+    Offer:
+      class: App\Entity\Offer
+      label: Annonces
+      list:
+          fields:
+              - property: title
+                label: Titre
+              - property: description
+                label: Description
+              - property: profilRequired
+                label: Compétences
+              - property: experience
+                label: Experiences
+              - property: location
+                label: Adresse
+      form:
+          fields:
+            - property: title
+              label: Titre
+            - property: description
+              label: Description
+            - property: profilRequired
+              label: Compétences
+            - property: experience
+              label: Experiences
+            - property: location
+              label: Adresse
+  # Entity Apllication
+   #---------------------------------------------------------------------------------------------------------------------------------------------
+    Application:
+      class: App\Entity\Application
+      label: Condidatures
+      list:
+          fields:
+              - property: user
+                label:  Candidat
+              - property: offer
+                label:  L'annonce
+              - property: created_at
+                label:  Date de création
+              - property: motivation
+                label: Motivation
+
+   # Entity CV
+   #---------------------------------------------------------------------------------------------------------------------------------------------
+    CV:
+      class: App\Entity\Cv
+      label: CV
+      list:
+          fields:
+              - property: name
+                label:  Nom
+              - property: user
+                label: Candidat
+              - property: size
+                label:  Taille
+              - property: updated_at
+                label: Date de Mise à jour
+
+    # Entity Avatar
+   #---------------------------------------------------------------------------------------------------------------------------------------------              
+    Avatar:
+      class: App\Entity\Avatar
+      label: Avatars 
+      list:
+          fields:
+              - property: name
+                label:  Nom
+              - property: user
+                label: Candidat
+              - property: size
+                label:  Taille
+              - property: updated_at
+                label: Date de Mise à jour
