@@ -7,17 +7,17 @@
     <header class="bgCol">
         <div class="head p-3">
             <div class="text-center">
-                <h1 class="">Conect.Click.Find </h1>
+                <h1 class="">Connect.Click.Find </h1>
                 <p>Good job Well play, easy win, easy job</p>
             </div>
             <div class ="text-center">
                 <h2>We need you </h2>
                 <div class="row">
                      <div class="col-md-6 col-xs-12 mb-3">
-                        <a  href="" class="btn btn-primary">RECHERCHER</a>
+                        <a  href="" class="btn btn-primary">rechercher</a>
                     </div>
                     <div class="col-md-6 col-xs-12">
-                        <a href ="" class="btn btn-primary">SE CONNECTER</a>
+                        <a href ="" class="btn btn-primary">se connecter</a>
                     </div>
                 </div>
             </div>
@@ -28,12 +28,14 @@
         <h2 class="text-center">A la une </h2>
         <div class="row  mt-3 justify-content-center">
            {% for offer in offers %}
-                <div class="card mx-3 mb-4 align-items-center" style="width: 18rem;">
+                <div class="card mx-3 mb-4 align-items-center" style="width: 25rem;">
                     <img class="card-img-top" src="http://via.placeholder.com/640x360" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{ offer.title}}</h5>
                         <p class="card-text">{{ offer.description }}</p>
+                        {<strong class="card-text">{{ offer.createdAt | date("{m/d/Y}")}}</strong>
                         <a href="#" class="btn btn-primary ">plus de détails</a>
+                     
                     </div>
                 </div>
             {% endfor %}

@@ -1,0 +1,9 @@
+easy_admin:
+    entities:
+        
+        - App\Entity\User
+        - App\Entity\Offer
+        - App\Entity\Application
+        - App\Entity\Cv
+        - App\Entity\Avatar
+
