@@ -1,5 +1,16 @@
 @import './core.scss';
 
+/* -------------------------- MAIN -------------------------- */
+
+.btn-primary{
+  background-color: $buttonColor;
+  color: $dark;
+  border: none;
+
+  &:hover{
+    background-color: $buttonColor;
+  }
+}
 
 body{
     font-size: 16px;
@@ -29,13 +40,12 @@ body{
         }   
  }
 
-
 nav
 {
     color: $light !important;
 }
 
-
+/* -------------------------- FOOTER -------------------------- */
 
 footer{
     background-color: $bagPrimary;
