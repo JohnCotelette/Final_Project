@@ -41,7 +41,7 @@ class UserFixture extends BaseFixture
      */
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(User::class, 20, function(User $user) {
+        $this->createMany(User::class, 100, function(User $user) {
             if ($this->index % 2 === 0) {
                 $user
                     ->setEmail(self::DEFAULT_CANDIDATE . $this->index . self::DEFAULT_ENDMAIL)

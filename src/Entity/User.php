@@ -42,10 +42,12 @@ class User implements UserInterface
      * @Assert\Length(
      *     min=8,
      *     max=30,
-     *     minMessage="Your password must be at least {{ limit }} characters long.",
-     *     maxMessage="Your password cannot be longer than {{ limit }} characters."
+     *     minMessage="Votre mot de passe doit faire plus de {{ limit }} caractères",
+     *     maxMessage="Votre mot de passe ne peut dépasser {{ limit }} caractères"
      * )
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner ce champs"
+     * )
      */
     private $password;
 
@@ -54,10 +56,12 @@ class User implements UserInterface
      * @Assert\Length(
      *     min=3,
      *     max=80,
-     *     minMessage="Your firstname must be at least {{ limit }} characters long.",
-     *     maxMessage="Your firstname cannot be longer than {{ limit }} characters."
+     *     minMessage="Votre prénom doit faire plus de {{ limit }} caractères",
+     *     maxMessage="Votre prénom ne peut dépasser {{ limit }} caractères"
      * )
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner ce champs"
+     * )
      */
     private $firstName;
 
@@ -66,10 +70,12 @@ class User implements UserInterface
      * @Assert\Length(
      *     min=3,
      *     max=80,
-     *     minMessage="Your firstname must be at least {{ limit }} characters long.",
-     *     maxMessage="Your firstname cannot be longer than {{ limit }} characters."
+     *     minMessage="Votre nom doit faire plus de {{ limit }} caractères",
+     *     maxMessage="Votre nom ne peut dépasser {{ limit }} caractères"
      * )
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner ce champs"
+     * )
      */
     private $lastName;
 
@@ -93,8 +99,8 @@ class User implements UserInterface
      * @Assert\Length(
      *     min=3,
      *     max=80,
-     *     minMessage="Your firstname must be at least {{ limit }} characters long.",
-     *     maxMessage="Your firstname cannot be longer than {{ limit }} characters."
+     *     minMessage="Le nom de votre entreprise doit faire plus de {{ limit }} caractères.",
+     *     maxMessage="Le nom de votre entreprise ne peut dépasser {{ limit }} caractères."
      * )
      * @Assert\NotBlank()
      * 
@@ -160,8 +166,6 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
