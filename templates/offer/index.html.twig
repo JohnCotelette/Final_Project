@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ parent() }} Offre{% endblock %}
+
+{% block content %}
+
+    <div class="container my-5">
+        <h2 class="text-center">A la une </h2>
+        <div class="row">
+            <div class="col-md-4">
+                <aside>
+                    <h3>Experience</h3>
+                </aside>
+            </div>
+            <div class="col-md-8">
+                {% for offer in pagination %}
+                    <div class="mx-3 mb-4 d-flex">
+                        <div class="col-md-4">
+                            <img class="card-img-top mx-auto my-auto" src="http://via.placeholder.com/660x360" alt="Card image cap" style=" height: 100px;">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ offer.title}}</h4>
+                                <h5>Chez Societe {#{{user.business|upper}}#}</h5>
+                                <p class="card-text">{{ offer.description|truncate(50) }}</p>
+                                {# <a href="{{ path('') }}" class="btn btn-primary ">plus de détails</a> #}
+                            </div>
+                        </div>  
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {{ knp_pagination_render(pagination) }}
+
+{% endblock %}
