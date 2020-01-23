@@ -20,7 +20,7 @@ abstract class BaseFixture extends Fixture
     /**
      * @var ObjectManager
      */
-    private $manager;
+    protected $manager;
 
     /*
     * @var Faker/Factory
@@ -39,7 +39,7 @@ abstract class BaseFixture extends Fixture
     public function load(ObjectManager $manager)
     {
         $this->manager = $manager;
-        $this->faker = Factory::create();
+        $this->faker = Factory::create("fr_FR");
 
         $this->loadData($manager);
     }

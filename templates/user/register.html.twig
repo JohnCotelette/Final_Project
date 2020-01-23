@@ -10,54 +10,54 @@
 
      <div class="container">
         <div class="form">
-            {{ form_start( form ) }}
-
-            <div class="form-group">
-                {{ form_label(form.firstName) }}
-                {{ form_widget(form.firstName) }}
-                <div class="errors">
-                    {{ form_errors(form.firstName) }}
-                </div>
-            </div>
-
-            <div class="form-group">
-                {{ form_label(form.lastName) }}
-                {{ form_widget(form.lastName) }}
-                <div class="errors">
-                    {{ form_errors(form.lastName) }}
+                {{ form_start( form ) }}
+                <div class="form-group">
+                    {{ form_label(form.firstName) }}
+                    {{ form_widget(form.firstName) }}
+                    <div class="errors">
+                        {{ form_errors(form.firstName) }}
+                    </div>
                 </div>
 
-            </div>
+                <div class="form-group">
+                    {{ form_label(form.lastName) }}
+                    {{ form_widget(form.lastName) }}
+                    <div class="errors">
+                        {{ form_errors(form.lastName) }}
+                    </div>
 
-            <div class="form-group">
-                {{ form_label(form.birthDay) }}
-                <div class="row">
-                    <div class="col">{{ form_widget(form.birthDay.day) }}</div>
-                    <div class="col">{{ form_widget(form.birthDay.month) }}</div>
-                    <div class="col">{{ form_widget(form.birthDay.year) }}</div>
                 </div>
-                <div class="errors">
-                    {{ form_errors(form.birthDay) }}
-                </div>
-            </div>
 
-            <div class="form-group">
-                {{ form_label(form.email) }}
-                {{ form_widget(form.email) }}
-                <div class="errors">
-                    {{ form_errors(form.email) }}
-                
-                </div>  
-            </div>
-
-            <div class="form-group">
-                {{ form_widget(form.password) }}
-                <div class="errors">
-                    {{ form_errors(form.password) }}
+                <div class="form-group">
+                    {{ form_label(form.birthDay) }}
+                    <div class="row">
+                        <div class="col">{{ form_widget(form.birthDay.day) }}</div>
+                        <div class="col">{{ form_widget(form.birthDay.month) }}</div>
+                        <div class="col">{{ form_widget(form.birthDay.year) }}</div>
+                    </div>
+                    <div class="errors">
+                        {{ form_errors(form.birthDay) }}
+                    </div>
                 </div>
-            </div>
-            {{ form_end( form ) }} 
-            <button type="submit" id="submit" class="btn btn-primary">Inscription</button>
+
+                <div class="form-group">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                    <div class="errors">
+                        {{ form_errors(form.email) }}
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form_widget(form.password) }}
+                    <div class="errors">
+                        {{ form_errors(form.password) }}
+                    </div>
+                </div>
+
+                <button type="submit" id="submit" class="btn btn-primary">Inscription</button>
+            {{ form_end( form ) }}
         </div> 
     </div>
 {% endblock %}

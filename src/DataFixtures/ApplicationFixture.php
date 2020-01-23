@@ -20,7 +20,7 @@ class ApplicationFixture extends BaseFixture implements DependentFixtureInterfac
      */
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(Application::class, 5, function (Application $application) {
+        $this->createMany(Application::class, 70, function (Application $application) {
             $randomCandidate = $this->getRandomCandidate();
 
             $application
