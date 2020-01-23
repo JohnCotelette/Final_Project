@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface as UUID;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -38,16 +39,37 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(
+     *     min=8,
+     *     max=30,
+     *     minMessage="Your password must be at least {{ limit }} characters long.",
+     *     maxMessage="Your password cannot be longer than {{ limit }} characters."
+     * )
+     * @Assert\NotBlank()
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @Assert\Length(
+     *     min=3,
+     *     max=80,
+     *     minMessage="Your firstname must be at least {{ limit }} characters long.",
+     *     maxMessage="Your firstname cannot be longer than {{ limit }} characters."
+     * )
+     * @Assert\NotBlank()
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @Assert\Length(
+     *     min=3,
+     *     max=80,
+     *     minMessage="Your firstname must be at least {{ limit }} characters long.",
+     *     maxMessage="Your firstname cannot be longer than {{ limit }} characters."
+     * )
+     * @Assert\NotBlank()
      */
     private $lastName;
 
@@ -68,6 +90,14 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=70, nullable=true)
+     * @Assert\Length(
+     *     min=3,
+     *     max=80,
+     *     minMessage="Your firstname must be at least {{ limit }} characters long.",
+     *     maxMessage="Your firstname cannot be longer than {{ limit }} characters."
+     * )
+     * @Assert\NotBlank()
+     * 
      */
     private $business;
 
