@@ -13,40 +13,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/user")
+ * Class UserController
+ * @package App\Controller
  */
 class UserController extends AbstractController
 {
     /**
-     * @Route("/new", name="user_new", methods={"GET","POST"})
-     * @param Request $request
-     * @return Response
-     */
-    public function new(Request $request): Response
-    {
-        $user = new User();
-
-        $form = $this->createForm(UserType::class, $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this
-                ->getDoctrine()
-                ->getManager();
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-        }
-
-        return $this->render('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/registerCandidat", name="candidat_new", methods={"GET","POST"})
+     * @Route("/candidate/register", name="candidate_register", methods={"GET","POST"})
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @return Response
@@ -62,6 +35,8 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $encoder->encodePassword( $user, $user->getPassword());
 
+            dd($password);
+
             $user->setPassword($password);
             $user->setRoles(['ROLE_CANDIDAT']);
             
@@ -71,6 +46,8 @@ class UserController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $this->redirectToRoute("candidate_register");
         }
 
         return $this->render('user/register.html.twig', [
@@ -80,7 +57,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/registerRecruiter", name="recruiter_new", methods={"GET","POST"})
+     * @Route("/recruiter/register", name="recruiter_register", methods={"GET","POST"})
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @return Response
@@ -94,7 +71,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $this->encoder->encodePassword( $user, $user->getPassword());
+            $password = $encoder->encodePassword( $user, $user->getPassword());
 
             $user->setPassword( $password );
             $user->setRoles(['ROLE_RECRUITER']);
@@ -105,6 +82,8 @@ class UserController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $this->redirectToRoute("recruiter_register");
         }
 
         return $this->render('user/register.html.twig', array(
@@ -114,11 +93,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
+     * @Route("/account/{id}", name="account", methods={"GET"})
      * @param User $user
      * @return Response
      */
-    public function show(User $user): Response
+    public function account(User $user): Response
     {
         return $this->render('user/show.html.twig', [
             'user' => $user,
@@ -126,7 +105,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/account/{id}/edit", name="account_edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
      * @return Response
@@ -150,12 +129,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param User $user
-     * @return Response
-     */
+    /*
     public function delete(Request $request, User $user): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
@@ -169,4 +143,5 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+    */
 }
