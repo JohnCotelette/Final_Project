@@ -10,6 +10,7 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('register', './assets/js/components/user/register.js')
     .addEntry('home', './assets/js/components/home/home.js')
+    .addEntry('offers', './assets/js/components/offer/offers.js')
     .addStyleEntry('forgotPassword', './assets/css/components/security/forgotPassword.scss')
     .addStyleEntry('changePassword', './assets/css/components/security/changePassword.scss')
     .addStyleEntry('easyAdmin', './assets/css/easyAdmin/easyAdmin.scss')

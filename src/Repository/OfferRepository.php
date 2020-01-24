@@ -36,6 +36,16 @@ class OfferRepository extends ServiceEntityRepository
     }
     */
 
+    public function findByType($type)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.type = :type')
+            ->setParameter('type', $type)
+            ->orderBy('o.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ; 
+    }
     /*
     public function findOneBySomeField($value): ?Offer
     {
