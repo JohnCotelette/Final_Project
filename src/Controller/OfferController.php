@@ -33,7 +33,7 @@ class OfferController extends AbstractController
     /**
      * @Route("/offer/{id}", name="show_offer", methods={"GET", "POST"})
      */
-    public function show(Offer $offer)
+    public function showOffer(Offer $offer)
     {
         return $this->render('offer/show.html.twig', [
             'offer' => $offer,

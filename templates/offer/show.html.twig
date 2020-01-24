@@ -1,1 +1,17 @@
 {% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="card text-center container my-5">
+        <div class="card-header">
+            <h2> {{offer.user.business|upper}} </h2>
+        </div>
+        <div class="card-body">
+        <h5 class="card-title">{{offer.title}}</h5>
+        <p class="card-text">{{offer.description }}</p>
+        <a href="#" class="btn btn-primary">Postuler</a>
+        </div>
+        <div class="card-footer text-muted">
+            <p> Annonce publié le : {{ offer.createdAt|date("m/d/Y") }} </p>
+        </div>
+    </div> 
+{% endblock  %}
