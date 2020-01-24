@@ -81,6 +81,8 @@ easy_admin:
               label: Experiences
             - property: location
               label: Adresse
+
+              git ba
   # Entity Apllication
    #---------------------------------------------------------------------------------------------------------------------------------------------
     Application:
