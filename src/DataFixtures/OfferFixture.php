@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\DataFixtures\BaseFixture;
+use App\Entity\Category;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Service\OfferService;
@@ -25,44 +26,11 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
      */
     private $index = 0;
 
-    const OFFERS_TITLES = [
-        "Développeur Symfony",
-        "Développeur Javascript Node.js",
-        "Chef de projet",
-        "Directeur artistique",
-        "Lead Développeur",
-    ];
-
-    const OFFERS_DESCRIPTIONS = [
-        "Nous recherchons un développeur Symfony pour le développement de notre application interne de gestion des dossiers.",
-        "Si tu aimes le boulot en équipe et que tu aimes JS (back et front), ce boulot est pour toi !",
-        "Nous recherchons un chef de projet pour renforcer nos équipes.",
-        "Nous sommes à la recherche d'un as de Photoshop/Illustrator pour maqueter du Web.",
-        "Si la puissance du développement est en toi et que tu te sens l'âme d'un manager, nous serons heureux de t'accueilir parmi nous !"
-    ];
-
     const OFFERS_EXPERIENCES = [
-        "Débutants acceptés",
-        "1 an d'experience",
-        "6 mois d'experience",
-        "7 ans d'experience",
-        "5 ans d'experience",
-    ];
-
-    const OFFERS_SALARY = [
-        null,
-        null,
-        "35000",
-        "30000",
-        "40000",
-    ];
-
-    const OFFERS_PROFIL_REQUIRED = [
-        "Organisé et motivé.",
-        "Curieux.",
-        "Rigoureux et qui aime le travail en équipe.",
-        "Maitrise de la suite Adobe.",
-        "Capacités en management et organisé."
+        "Tous",
+        "Junior (0 à 2 ans)",
+        "Confirmé (3 à 6 ans)",
+        "Senior (7 ans et plus)",
     ];
 
     const OFFERS_TYPE = [
@@ -71,6 +39,10 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
         "Stage",
     ];
 
+    /**
+     * OfferFixture constructor.
+     * @param OfferService $offerService
+     */
     public function __construct(OfferService $offerService)
     {
         $this->offerService = $offerService;
@@ -81,19 +53,26 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
      */
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(Offer::class, 5, function(Offer $offer) {
+        $this->createMany(Offer::class, 80, function(Offer $offer) {
             $randomRecruiter = $this->getRandomRecruiter();
 
+            $randomNumberOfCategories = rand(1, 4);
+
             $offer
-                ->setTitle(self::OFFERS_TITLES[$this->index])
-                ->setDescription(self::OFFERS_DESCRIPTIONS[$this->index])
-                ->setExperience(self::OFFERS_EXPERIENCES[$this->index])
-                ->setSalary(self::OFFERS_SALARY[$this->index])
+                ->setTitle($this->faker->text($maxNbChars = 90))
+                ->setDescription($this->faker->text($maxNbChars = 300))
+                ->setExperience(self::OFFERS_EXPERIENCES[rand(0, 3)])
+                ->setSalary(rand(25000, 55000))
                 ->setType(self::OFFERS_TYPE[rand(0, 2)])
                 ->setLocation($this->faker->city)
                 ->setStartedAt($this->faker->dateTimeBetween($startDate = "now", $endDate = "+ 1 year", $timezone = "Europe/Paris"))
-                ->setProfilRequired(self::OFFERS_PROFIL_REQUIRED[$this->index])
-            ;
+                ->setProfilRequired($this->faker->text($maxNbChars = 250));
+
+            for ($i = 0; $i < $randomNumberOfCategories; $i++) {
+                $uniqueCategory = $this->getUniqueReferenceOfCategory($offer);
+
+                $offer->addCategory($uniqueCategory);
+            }
 
             $this->offerService->generateReference($offer);
 
@@ -120,6 +99,17 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
         }
     }
 
+    public function getUniqueReferenceOfCategory(Offer $offer)
+    {
+        $uniqueReference = $this->getRandomReference(Category::class);
+
+        if ($offer->getCategories()->contains($uniqueReference)) {
+            return $this->getUniqueReferenceOfCategory($offer);
+        }
+
+        return $uniqueReference;
+    }
+
     /**
      * @return array
      */
@@ -127,6 +117,7 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
     {
         return [
             UserFixture::class,
+            CategoryFixture::class,
         ];
     }
 }
