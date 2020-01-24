@@ -237,6 +237,10 @@ class Offer
 
     public function getSalary(): ?int
     {
+        if ($this->salary == null) {
+            return "A négocier";
+        }
+
         return $this->salary;
     }
 

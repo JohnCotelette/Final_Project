@@ -24,6 +24,10 @@ Encore
     })
     .enableSassLoader()
     .autoProvidejQuery()
+    .copyFiles({
+        from: './assets/img',
+        to: 'images/[path][name].[hash:8].[ext]',
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();
