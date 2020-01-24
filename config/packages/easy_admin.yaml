@@ -1,13 +1,17 @@
 easy_admin:
-  site_name:  '<em style="font-size:80%;">FindLAB</em>'
+  site_name:  '<em style="font-size:80%;">Find<i>LAB</i></em>'
+  formats:
+      datetime: 'd/m/Y'
   design:
-        brand_color: '#e67e22'
+        brand_color: '#4115cf'
         menu:
             - { entity: 'User', icon: 'user-tie' }
-            - { entity: 'Offer', icon: 'scroll' }
+            - { entity: 'Offer', icon: 'scroll'  }
             - { entity: 'Application', icon: 'mail-bulk' }
             - { entity: 'CV', icon: 'envelope-open-text' }
             - { entity: 'Avatar', icon: 'user-circle' }
+        assets:
+          css: ['/assets/css/easyAdmin/easyAdmin.scss']    
   entities:
   # Entity User
   #---------------------------------------------------------------------------------------------------------------------------------------------
@@ -17,6 +21,7 @@ easy_admin:
       label: Utilisateur
       list:
         fields:
+          
             - property: firstName
               label: Prénom
             - property: lastName
@@ -25,31 +30,44 @@ easy_admin:
               label: Roles
             - property: email
               label: Email
-            - property: password
-              label: Mot de passe
             - property: isActive
               label: compte(Activé)
             - property: birthDay
               label: Date de naissance
             - property: business
               label: Entreprise
+            - property: avatar
+              label: image
             - property: cv
               label: CV
+        max_results: 5  
+             
+           
       form:
         fields:
+          - { type: 'group', columns: 4, label: 'information de base ' }
           - property: firstName
             label: Prénom
           - property: lastName
             label: Nom
+          - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_ADMIN': 'ROLE_ADMIN',  	'ROLE_CANDIDATE': 	'ROLE_CANDIDATE', 'ROLE_RECRUITER': 'ROLE_RECRUITER' } } }  
+          - { type: 'group', label: ' informations de contact ', icon: 'phone', columns: 4 }
           - property: email
             label: Email
+          - property: business
+            label: Entreprise  
+          - { type: 'group', label: ' Autres informations ',  columns: 4 }
+        
           - property: birthDay
             label: Date de naissance
-          - property: business
-            label: Entreprise
-          - property: cv
-            label: CV
-          - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_ADMIN': 'ROLE_ADMIN',  	'ROLE_CANDIDATE': 	'ROLE_CANDIDATE', 'ROLE_RECRUITER': 'ROLE_RECRUITERx' } } }
+          - property: isActive
+            label: compte(Activé)
+
+          - { type: 'group', label: 'images', icon: 'portrait',  columns: 6}
+          - { property: 'avatar', label: 'Avatar' }
+          - { type: 'group', label: 'attachement', icon: 'paperclip',  columns: 6}
+          - { property: 'cv', label: 'CV'}
+          
 
   # Entity Offer
   #---------------------------------------------------------------------------------------------------------------------------------------------
@@ -69,20 +87,28 @@ easy_admin:
                 label: Experiences
               - property: location
                 label: Adresse
+              - property: 'created_at'
+                label: créer le 
       form:
+          edit:
+                title:  "changer l'annance"
           fields:
+            - { type: 'section', label: 'entéte-annonce'}
             - property: title
               label: Titre
-            - property: description
-              label: Description
             - property: profilRequired
               label: Compétences
             - property: experience
               label: Experiences
             - property: location
               label: Adresse
+            - { type: 'section', label: "Description de l'annonce"}  
+            - property: description
+              label: Description
+              type: text_editor
+
   # Entity Apllication
-   #---------------------------------------------------------------------------------------------------------------------------------------------
+  #---------------------------------------------------------------------------------------------------------------------------------------------
     Application:
       class: App\Entity\Application
       label: Condidatures
@@ -96,7 +122,20 @@ easy_admin:
                 label:  Date de création
               - property: motivation
                 label: Motivation
-
+      form:
+          fields:
+              - { type: 'group', columns: 6, label: 'Condidat' }
+              - property: user
+                label:  Candidat
+              - property: created_at
+                label:  Date de création
+              - { type: 'group', columns: 6, label: 'Annonce' }  
+              - property: offer
+                label:  L'annonce
+              - { type: 'group', columns: 8, label: 'les motivations ' }    
+              - property: motivation
+                label: Motivation
+                type: text_editor
    # Entity CV
    #---------------------------------------------------------------------------------------------------------------------------------------------
     CV:
