@@ -14,8 +14,9 @@ class HomeController extends AbstractController
      */
     public function index(OfferRepository $offerRepository )
     {
-       $offers = $offerRepository->findAll();
-       
+        //Display the  last five offers
+       $offers = $offerRepository->findBy([], ['created_at'=>'DESC'], 3 ,0);
+       $lastoffers = array_slice($offers, 0, 5);  
         return $this->render('home/home.html.twig', [
            'offers' => $offers,
         ]);
