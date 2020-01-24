@@ -65,6 +65,7 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
                 ->setSalary(rand(25000, 55000))
                 ->setType(self::OFFERS_TYPE[rand(0, 2)])
                 ->setLocation($this->faker->city)
+                ->setCreatedAt($this->faker->dateTimeBetween($startDate = "-1 month", $endDate = "now", $timezone = "Europe/Paris"))
                 ->setStartedAt($this->faker->dateTimeBetween($startDate = "now", $endDate = "+ 1 year", $timezone = "Europe/Paris"))
                 ->setProfilRequired($this->faker->text($maxNbChars = 250));
 

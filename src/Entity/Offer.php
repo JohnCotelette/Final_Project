@@ -158,7 +158,7 @@ class Offer
      */
     public function setExpiredAt(): void
     {
-        $now = new \DateTime();
+        $now = $this->created_at;
 
         $this->expired_at = $now->add(new \DateInterval("P6M"));
     }
