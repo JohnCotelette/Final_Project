@@ -2,6 +2,10 @@
 
 {% block title %}{{ parent() }} Offre{% endblock %}
 
+{% block stylesheets %}
+    {{ encore_entry_link_tags("offers") }}
+{% endblock %}
+
 {% block content %}
 
     <div class="container my-5">
@@ -14,24 +18,34 @@
             </div>
             <div class="col-md-8">
                 {% for offer in pagination %}
-                    <div class="mx-3 mb-4 d-flex">
-                        <div class="col-md-4">
-                            <img class="card-img-top mx-auto my-auto" src="http://via.placeholder.com/660x360" alt="Card image cap" style=" height: 100px;">
+                    <div class="mx-3 mb-4 container d-flex bg-white">
+                        <div class="col-md-4 d-flex">
+                            <img class="card-img-top align-self-center" src="http://via.placeholder.com/660x360" alt="Card image cap">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h4 class="card-title">{{ offer.title}}</h4>
-                                <h5>Chez Societe {#{{user.business|upper}}#}</h5>
-                                <p class="card-text">{{ offer.description|truncate(50) }}</p>
-                                {# <a href="{{ path('') }}" class="btn btn-primary ">plus de détails</a> #}
+                                <div class=" linkOffer">
+                                    <h4 class="card-title">{{ offer.title }}</h4>
+                                    <h5> Chez <a href="{{ path('show_offer', {'id':offer.id}) }}"> {{offer.user.business|upper}}</a> </h5>
+                                    <div class="container col-md-12 d-flex justify-content-around">
+                                        <p class="card-text"><i class="fas fa-id-badge"></i> : {{ offer.experience}}</p>
+                                        <p class="card-text"><i class="fas fa-money-check-alt"></i> : {{ offer.salary}}</p>
+                                        <p class="card-text"><i class="fas fa-file-contract"></i> : {{ offer.type}}</p>
+                                    </div>
+                                </div>
+                                <p class="card-text">{{ offer.description|truncate(50) }} <a href="{{ path('show_offer', {'id':offer.id}) }}">En savoir plus</a></p>
                             </div>
                         </div>  
                     </div>
                 {% endfor %}
+                <div class="container col-md-12 d-flex justify-content-center">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
 
-    {{ knp_pagination_render(pagination) }}
-
+{% block javascripts %}
+    {{ encore_entry_script_tags("offers") }}
 {% endblock %}
