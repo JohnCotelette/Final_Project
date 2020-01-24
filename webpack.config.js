@@ -13,6 +13,7 @@ Encore
     .addEntry('offers', './assets/js/components/offer/offers.js')
     .addStyleEntry('forgotPassword', './assets/css/components/security/forgotPassword.scss')
     .addStyleEntry('changePassword', './assets/css/components/security/changePassword.scss')
+    .addStyleEntry('easyAdmin', './assets/css/easyAdmin/easyAdmin.scss')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
