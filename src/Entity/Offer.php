@@ -158,7 +158,7 @@ class Offer
      */
     public function setExpiredAt(): void
     {
-        $now = new \DateTime();
+        $now = $this->created_at;
 
         $this->expired_at = $now->add(new \DateInterval("P6M"));
     }
@@ -235,9 +235,13 @@ class Offer
         return $this;
     }
 
-    public function getSalary(): ?int
+    public function getSalary(): ?string
     {
-        return $this->salary;
+        if ($this->salary == null) {
+            return "A négocier";
+        }
+
+        return $this->salary . "K annuel";
     }
 
     public function setSalary(?int $salary): self

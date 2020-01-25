@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Offer;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,17 +16,4 @@ class BusinessController extends AbstractController
             'controller_name' => 'BusinessController',
         ]);
     }
-
-    /**
-     * @Route("/business/{id}", name="show_business", methods={"GET", "POST"})
-     */
-    public function showBusiness(Offer $offer, UserRepository $userRepository)
-    {
-
-        
-        return $this->render('business/show.html.twig', [
-            'business' => $business,
-        ]);   
-    }
-
 }

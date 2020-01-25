@@ -39,6 +39,15 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
         "Stage",
     ];
 
+    const OFFERS_SALARY = [
+        25000,
+        28000,
+        32000,
+        40000,
+        58000,
+        53000,
+    ];
+
     /**
      * OfferFixture constructor.
      * @param OfferService $offerService
@@ -58,15 +67,21 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
 
             $randomNumberOfCategories = rand(1, 4);
 
+            $chanceToSetASalary = rand(0, 5);
+
             $offer
-                ->setTitle($this->faker->text($maxNbChars = 90))
+                ->setTitle($this->faker->text($maxNbChars = 40))
                 ->setDescription($this->faker->text($maxNbChars = 300))
                 ->setExperience(self::OFFERS_EXPERIENCES[rand(0, 3)])
-                ->setSalary(rand(25000, 55000))
                 ->setType(self::OFFERS_TYPE[rand(0, 2)])
                 ->setLocation($this->faker->city)
+                ->setCreatedAt($this->faker->dateTimeBetween($startDate = "-1 month", $endDate = "now", $timezone = "Europe/Paris"))
                 ->setStartedAt($this->faker->dateTimeBetween($startDate = "now", $endDate = "+ 1 year", $timezone = "Europe/Paris"))
                 ->setProfilRequired($this->faker->text($maxNbChars = 250));
+
+            if ($chanceToSetASalary > 0) {
+                $offer->setSalary(self::OFFERS_SALARY[rand(0, count(self::OFFERS_SALARY) - 1)]);
+            }
 
             for ($i = 0; $i < $randomNumberOfCategories; $i++) {
                 $uniqueCategory = $this->getUniqueReferenceOfCategory($offer);

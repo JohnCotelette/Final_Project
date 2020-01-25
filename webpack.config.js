@@ -13,7 +13,8 @@ Encore
     .addEntry('offers', './assets/js/components/offer/offers.js')
     .addStyleEntry('forgotPassword', './assets/css/components/security/forgotPassword.scss')
     .addStyleEntry('changePassword', './assets/css/components/security/changePassword.scss')
-    .addStyleEntry('easyAdmin', './assets/css/easyAdmin/easyAdmin.scss')
+    .addStyleEntry('easyAdmin', './assets/css/components/easyAdmin/easyAdmin.scss')
+    .addStyleEntry("404", './assets/css/components/error/404.scss')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
@@ -26,6 +27,10 @@ Encore
     })
     .enableSassLoader()
     .autoProvidejQuery()
+    .copyFiles({
+        from: './assets/img',
+        to: 'images/[path][name].[hash:8].[ext]',
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();

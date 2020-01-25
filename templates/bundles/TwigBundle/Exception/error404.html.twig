@@ -1,0 +1,23 @@
+{% extends "layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags("404") }}
+{% endblock %}
+
+{% block title %}{{ parent() }}Erreur, page non trouvée{% endblock %}
+
+{% block content %}
+    <div id="errorMessageContainer">
+        <figure>
+            <img src="{{ asset("build/images/error_smile.a794c828.png") }}" alt="Sad head" />
+        </figure>
+
+        <h1>Page non trouvée</h1>
+
+        <p>
+            La page que avez demandée n'existe pas.<br>
+            Peut être vous êtes vous trompé dans l'url ?<br>
+            Pour retourner simplement sur la page d'accueil, cliquez <a id="errorRedirectLink" href="{{ path('home') }}">ici</a>.
+        </p>
+    </div>
+{% endblock %}
