@@ -27,6 +27,7 @@
 body {
     font-family: aktivgrotesk-mediuploadedfile, Arial, sans-serif;
     background-color: $blanc;
+    scroll-behavior: smooth;
 }
 
 #totalPageContent {
@@ -34,10 +35,12 @@ body {
     flex-direction: column;
     margin-top: 80px;
     min-height: calc(100vh - 80px);
+    transition: filter 0.5s ease;
 }
 
 main {
     flex: 1;
+    animation: fadeIn 0.3s ease both;
 }
 
 .commonButtonStyle {
@@ -48,10 +51,13 @@ main {
 
 #findLabTitle {
     font-size: 1.7em;
+    margin: auto;
 }
 
 #commonNavigationBar {
+    padding: .5rem 1rem;
     position: fixed;
+    display: flex;
     top: 0;
     left: 0;
     width: 100%;
@@ -60,14 +66,31 @@ main {
     background-color: $violet-clair;
 }
 
-#commonNavigationBar a {
+#allLinksContainer {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+#defaultNavLinksContainer {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#defaultNavLinksContainer li {
+    margin: auto 10px;
+}
+
+#commonNavigationBar a, footer a {
     color: $blanc;
     transition: color 0.3s ease;
 }
 
-#commonNavigationBar a:hover {
+#commonNavigationBar a:hover, footer a:hover {
     text-decoration: none;
-    color: rgb(180, 180, 180);
+    color: rgb(180, 180, 180) !important;
 }
 
 .defaultNavLinks {
@@ -84,14 +107,133 @@ main {
 }
 
 .nav-item {
-    margin: 0 10px;
+    margin: 0 0 0 8px;
+}
+
+#mobileButton {
+    background-color: $violet-clair;
+    color: $blanc;
+    padding: 0 20px;
+    border: none;
+    font-size: 2.4em;
+    display: none;
+    z-index: 1001;
+}
+
+.defaultNavLinksSeparators {
+    display: none;
 }
 
 /* -------------------------- FOOTER -------------------------- */
 
 footer {
-    background-color: $violet-foncé;
-    padding: 10px;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    background-color: $violet-fonce;
     color: $blanc;
+    height: 80px;
+    padding: .5rem 1rem;
+}
+
+footer div {
+    width: max-content;
+    margin: auto 0;
+}
+
+#findLabTitle2 {
+    font-size: 1.6em;
+    color: white;
+}
+
+.copyright {
+    padding: .5rem;
+}
+
+/* -------------------------- ANIMATIONS -------------------------- */
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(50%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* -------------------------- CLASS FOR JAVASCRIPT -------------------------- */
+
+.invisible {
+    display: none !important;
+}
+
+/* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-width: 1000px) {
+    body {
+        font-size: 95% !important;
+    }
+
+    #mobileButton {
+        display: block;
+    }
+
+    #defaultNavLinksContainer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: $violet-fonce;
+        flex-direction: column;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.5s ease;
+        opacity: 1;
+        padding: 15px 0;
+    }
+
+    #defaultNavLinksContainer li {
+        margin: 8px auto;
+        width: max-content;
+    }
+
+    .defaultNavLinksSeparators {
+        display: inline-block;
+        width: 50%;
+        max-width: 280px;
+        z-index: 1000;
+        background-color: rgba(255, 255, 255, 0.3);
+        margin: 10px auto;
+    }
+
+    .mobileHidden {
+        top: -200% !important;
+        opacity: 0 !important;
+    }
+
+    .blackFilter {
+        filter: brightness(50%);
+    }
 }

@@ -235,13 +235,13 @@ class Offer
         return $this;
     }
 
-    public function getSalary(): ?int
+    public function getSalary(): ?string
     {
         if ($this->salary == null) {
             return "A négocier";
         }
 
-        return $this->salary;
+        return $this->salary . "K annuel";
     }
 
     public function setSalary(?int $salary): self

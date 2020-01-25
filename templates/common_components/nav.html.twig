@@ -1,16 +1,33 @@
-<nav id="commonNavigationBar" class="navbar navbar-expand-lg bgCol ">
-    <a id="findLabTitle" class="navbar-brand" href="{{ path("home") }}">FindLAB</a>
+<nav id="commonNavigationBar">
+    <a id="findLabTitle" href="{{ path("home") }}">FindLAB</a>
 
-    <div class="navbar-collapse justify-content-end" id="navbarTogglerDemo03">
+    <div id="allLinksContainer">
+        <button id="mobileButton"><i class="fas fa-bars"></i></button>
+        <ul id="defaultNavLinksContainer" class="mobileHidden">
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link defaultNavLinks" href="{{ path("login") }}">Se connecter</a>
+            <li>
+                <a class="defaultNavLinks" href="{{ path("login") }}">Se connecter</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link defaultNavLinks" href="{{ path("candidate_register") }}">S'inscrire</a>
+            <li>
+                <a class="defaultNavLinks" href="{{ path("candidate_register") }}">S'inscrire</a>
             </li>
-        </ul>
+
+            <hr class="defaultNavLinksSeparators">
         {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <li>
+                <a class="defaultNavLinks" href="{{ path("easyadmin") }}">Admin</a>
+            </li>
+
+            <hr class="defaultNavLinksSeparators">
+        {% endif %}
+        {% if app.request.attributes.get("_route") != "offers_index" %}
+            <li>
+                <a class="defaultNavLinks" href="{{ path("offers_index") }}">Offres</a>
+            </li>
+
+            <hr class="defaultNavLinksSeparators">
+        {% endif %}
+        </ul>
     </div>
 </nav>
