@@ -4,15 +4,31 @@
     {{ encore_entry_link_tags('register') }}
 {% endblock %}
 
-{% block title %}{{ parent() }}Inscription{% endblock %}
+{% block title %}
+    {{ parent() }}
+    Inscription
+    {% if app.request.attributes.get("_route") == "candidate_register" %}
+        candidat
+    {% else %}
+        recruteur
+    {% endif %}
+{% endblock %}
 
 {% block content %}
+    <section id="firstSection">
+        <div>
+            <div id="headerRegisterForm">
+                {% if app.request.attributes.get("_route") == "candidate_register" %}
+                    <p id="pSelected"><a id="selected" href="{{ path("candidate_register") }}">Je suis candidat</a></p>
+                    <p><a href="{{ path("recruiter_register") }}">Je suis recruteur</a></p>
+                {% elseif app.request.attributes.get("_route") == "recruiter_register" %}
+                    <p><a href="{{ path("candidate_register") }}">Je suis candidat</a></p>
+                    <p id="pSelected"><a id="selected" href="{{ path("recruiter_register") }}">Je suis recruteur</a></p>
+                {% endif %}
+            </div>
 
-     <div class="container">
-        <div class="form">
-                {{ form_start( form ) }}
+            {{ form_start( form ) }}
                 <div class="form-group">
-                    {{ form_label(form.firstName) }}
                     {{ form_widget(form.firstName) }}
                     <div class="errors">
                         {{ form_errors(form.firstName) }}
@@ -20,7 +36,6 @@
                 </div>
 
                 <div class="form-group">
-                    {{ form_label(form.lastName) }}
                     {{ form_widget(form.lastName) }}
                     <div class="errors">
                         {{ form_errors(form.lastName) }}
@@ -29,7 +44,6 @@
                 </div>
 
                 <div class="form-group">
-                    {{ form_label(form.birthDay) }}
                     <div class="row">
                         <div class="col">{{ form_widget(form.birthDay.day) }}</div>
                         <div class="col">{{ form_widget(form.birthDay.month) }}</div>
@@ -41,7 +55,6 @@
                 </div>
 
                 <div class="form-group">
-                    {{ form_label(form.email) }}
                     {{ form_widget(form.email) }}
                     <div class="errors">
                         {{ form_errors(form.email) }}
@@ -58,10 +71,48 @@
 
                 <button type="submit" id="submit" class="btn btn-primary">Inscription</button>
             {{ form_end( form ) }}
-        </div> 
-    </div>
-{% endblock %}
+        </div>
+    </section>
 
-{% block javascripts %}
-    {{ encore_entry_script_tags('register') }}
+    <section id="secondSection">
+        <div>
+            {% if app.request.attributes.get("_route") == "candidate_register" %}
+            <h2>Espace Candidat</h2>
+
+            <p id="youWill">
+                Vous connecter vous offrira l'opportunité de :
+            </p>
+
+            <ul>
+                <li><i class="fas fa-arrow-right"></i> Rechercher une offre en fonction de multitudes de critères qui représentent vos besoins.</li>
+                <li><i class="fas fa-arrow-right"></i> Renseigner votre CV et préparer vos futurs matchings.</li>
+                <li><i class="fas fa-arrow-right"></i> Postuler aux offres qui vous intéressent et faire exploser votre carrière.</li>
+                <li><i class="fas fa-arrow-right"></i> Pouvoir modifier sans limite la visibilité de votre profil par les recruteurs.</li>
+            </ul>
+
+            <p class="citation">
+                « On ne choisit pas sa carrière, elle s’empare de nous. »<br>
+                <span class="author">John Dos Passos.</span>
+            </p>
+            {% elseif app.request.attributes.get("_route") == "recruiter_register" %}
+            <h2>Espace Recruteur</h2>
+
+            <p id="youWill">
+                Vous connecter vous offrira l'opportunité de :
+            </p>
+
+            <ul>
+                <li><i class="fas fa-arrow-right"></i> Créer et modifier des annonces pour réunir les candidats dont vous rêvez.</li>
+                <li><i class="fas fa-arrow-right"></i> Contacter directement ces derniers.</li>
+                <li><i class="fas fa-arrow-right"></i> Consulter l'intégralité des profils rendus publics.</li>
+            </ul>
+
+            <p class="citation">
+                « Les grands leaders trouvent le moyen de se connecter avec leurs employés et de les aider à réaliser leur potentiel. »<br>
+                <span class="author">Steven J. Stowell.</span>
+            </p>
+            {% endif %}
+        </div>
+    </section>
+
 {% endblock %}

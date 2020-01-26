@@ -38,6 +38,9 @@ class UserService
         else if ($user->getRoles() === "ROLE_ADMIN") {
             return new RedirectResponse($this->router->generate("admin_index"));
         }
+        else {
+            return new RedirectResponse($this->router->generate("offers_index"));
+        }
 
     }
 

@@ -45,6 +45,9 @@ main {
 
 .commonButtonStyle {
     background-color: $vert;
+    text-transform: uppercase;
+    color: $blanc;
+    border: none;
 }
 
 /* -------------------------- NAVIGATION -------------------------- */
@@ -80,7 +83,7 @@ main {
 }
 
 #defaultNavLinksContainer li {
-    margin: auto 10px;
+    margin: auto 14px;
 }
 
 #commonNavigationBar a, footer a {
@@ -106,10 +109,6 @@ main {
     text-transform: uppercase;
 }
 
-.nav-item {
-    margin: 0 0 0 8px;
-}
-
 #mobileButton {
     background-color: $violet-clair;
     color: $blanc;
@@ -129,7 +128,7 @@ main {
 footer {
     display: flex;
     justify-content: space-between;
-    background-color: $violet-fonce;
+    background-color: $violet-clair;
     color: $blanc;
     height: 80px;
     padding: .5rem 1rem;
@@ -234,6 +233,6 @@ footer div {
     }
 
     .blackFilter {
-        filter: brightness(50%);
+        filter: brightness(80%);
     }
 }

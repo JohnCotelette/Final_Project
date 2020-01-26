@@ -1,21 +1,120 @@
-/* -------------------------- REGISTER FORM -------------------------- */
+@import "../../core.scss";
 
-.form{
-  form{
-    justify-content: center;
-    top:50%;
-    left:50%;
-    max-width: 450px;
-    margin: 50px auto 0 auto;
-  }
+/* -------------------------- MAIN -------------------------- */
 
-  ul{
+main, section {
+    display: flex;
+}
+
+section {
+    width: 50%;
+    padding: 30px 0;
+}
+
+section > div {
+    width: 80%;
+    margin: auto;
+}
+
+/* -------------------------- LEFT-SECTION -------------------------- */
+
+#firstSection > div {
+    border: 1px solid black;
+}
+
+#headerRegisterForm {
+    display: flex;
+    background-color: $violet-clair;
+    color: $blanc;
+    height: 80px;
+}
+
+#headerRegisterForm p {
+    display: flex;
+    margin: 0;
+    width: 50%;
+    height: 100%;
+}
+
+#headerRegisterForm p a {
+    margin: auto;
+    color: rgb(180, 180, 180);
+    font-size: 1.6em;
+}
+
+#headerRegisterForm p a:hover {
+    text-decoration: none;
+}
+
+#selected {
+    color: $blanc !important;
+}
+
+#pSelected {
+    border-bottom: 7px solid $vert;
+    box-sizing: content-box;
+    z-index: 1;
+}
+
+.form {
+    form {
+        justify-content: center;
+        top:50%;
+        left:50%;
+        max-width: 450px;
+        margin: 50px auto 0 auto;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    .errors {
+        color: red;
+        list-style-type: none;
+    }
+}
+
+/* -------------------------- RIGHT-SECTION -------------------------- */
+
+#secondSection {
+    background-color: $violet-clair;
+    color: $blanc;
+}
+
+#youWill {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-family: buenos_aires_trialblack, Arial, sans-serif;
+    text-transform: uppercase;
+    font-size: 2.3em;
+    text-decoration: underline;
+    margin-bottom: 40px;
+}
+
+section ul {
     list-style: none;
-  }
+    font-size: 1.2em;
+    line-height: 1.7em;
+}
 
-  .errors{
-    color: red;
-    list-style-type: none;
-  }
+.fa-arrow-right {
+    font-size: 1.1em;
+    margin-right: 8px;
+}
+
+.citation {
+    font-size: 0.7em;
+    line-height: 1.4em;
+    margin-top: 60px;
+    text-align: right;
+}
+
+.author {
+    display: block;
+    margin-top: 10px;
 }
 
