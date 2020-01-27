@@ -31,7 +31,9 @@ class User implements UserInterface
      * @Assert\Email(
      *     message="Veuillez renseigner une adresse e-mail valide"
      * )
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner une adresse e-mail valide"
+     * )
      */
     private $email;
 
@@ -42,7 +44,7 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=false)
      * @Assert\Length(
      *     min=8,
      *     max=30,
@@ -50,7 +52,7 @@ class User implements UserInterface
      *     maxMessage="Votre mot de passe ne peut dépasser {{ limit }} caractères"
      * )
      * @Assert\NotBlank(
-     *     message="Veuillez renseigner ce champs"
+     *     message="Veuillez renseigner votre mot de passe"
      * )
      */
     private $password;
@@ -64,7 +66,7 @@ class User implements UserInterface
      *     maxMessage="Votre prénom ne peut dépasser {{ limit }} caractères"
      * )
      * @Assert\NotBlank(
-     *     message="Veuillez renseigner ce champs"
+     *     message="Veuillez renseigner votre prénom"
      * )
      */
     private $firstName;
@@ -85,6 +87,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime(
+     *     message="La date de naissance saisie est invalide"
+     * )
+     * @Assert\NotNull(
+     *     message="Veuillez saisir votre date de naissance"
+     * )
      */
     private $birthDay;
 
@@ -106,7 +114,9 @@ class User implements UserInterface
      *     minMessage="Le nom de votre entreprise doit faire plus de {{ limit }} caractères.",
      *     maxMessage="Le nom de votre entreprise ne peut dépasser {{ limit }} caractères."
      * )
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Vous devez saisir le nom de votre entreprise"
+     * )
      * 
      */
     private $business;
@@ -189,7 +199,7 @@ class User implements UserInterface
         return (string) $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
@@ -242,7 +252,7 @@ class User implements UserInterface
         return $this->birthDay;
     }
 
-    public function setBirthDay(\DateTimeInterface $birthDay): self
+    public function setBirthDay(?\DateTimeInterface $birthDay): self
     {
         $this->birthDay = $birthDay;
 
