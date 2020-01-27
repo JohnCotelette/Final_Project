@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,6 +25,13 @@ class Application
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(
+     *     max=1000,
+     *     maxMessage="Votre motivation ne peut dépasser {{ limit }} caractères"
+     * )
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner votre message de motivation"
+     * )
      */
     private $motivation;
 

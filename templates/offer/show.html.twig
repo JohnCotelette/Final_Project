@@ -1,17 +1,54 @@
 {% extends 'layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ encore_entry_link_tags("offers") }}
+{% endblock %}
+
 {% block content %}
-    <div class="card text-center container my-5">
-        <div class="card-header">
-            <h2> {{offer.user.business|upper}} </h2>
-        </div>
-        <div class="card-body">
-        <h5 class="card-title">{{offer.title}}</h5>
-        <p class="card-text">{{offer.description }}</p>
-        <a href="#" class="btn btn-primary">Postuler</a>
-        </div>
-        <div class="card-footer text-muted">
-            <p> Annonce publié le : {{ offer.createdAt|date("m/d/Y") }} </p>
-        </div>
-    </div> 
+
+    <section>
+        <h2> <a href="{{ path('show_offer', {'id':offer.id}) }}">{{offer.user.business|upper}}</a> </h2>
+            <h3>{{offer.title}}</h3>
+            <p>{{offer.description}}</p>
+            <div class="iconeOffer">
+                <p><i class="fas fa-id-badge"></i> : {{ offer.experience}}</p>
+                <p><i class="fas fa-money-check-alt"></i> : {{ offer.salary}}</p>
+                <p><i class="fas fa-file-contract"></i> : {{ offer.type}}</p>
+            </div>
+        <p> Annonce publié le : {{ offer.createdAt|date("d/m/Y") }} </p>
+        <p id="submitContainer">
+            <button type="submit" id="submit" class="commonButtonStyle">Postuler</button>
+        </p>
+    </section>
+
+    <section id="test" class="invisible">
+
+    {% if form is defined %}
+
+            <p> Message de motivation : </p>
+            
+            {{ form_start(form) }}
+
+                <div class="errors">
+                    {{ form_errors(form.motivation) }}
+                </div>
+                <div>
+                    <div class="form-group">
+                        {{ form_widget(form.motivation) }}
+                    </div>
+                </div>
+
+            {{ form_end(form)}}
+
+    {% else %}
+        <a id="noAccountYetLink" class="commonButtonStyle" href="{{ path("candidate_register") }}">Inscrivez-vous</a>
+        <a id="noAccountYetLink" class="commonButtonStyle" href="{{ path("login") }}">Connectez-vous</a>
+    {% endif %}
+
+    </section>
+
 {% endblock  %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags("offers") }}
+{% endblock %}

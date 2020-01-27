@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Application;
 use App\Entity\Offer;
+use App\Form\ApplyType;
 use App\Repository\OfferRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OfferController extends AbstractController
 {
@@ -40,12 +42,60 @@ class OfferController extends AbstractController
      * @param Offer $offer
      * @return Response
      */
-    public function showOffer(Offer $offer)
+    public function showOffer(Offer $offer, Request $request)
     {
-        return $this->render('offer/show.html.twig', [
-            'offer' => $offer,
-        ]);   
+
+        $application = new Application();
+
+
+        $user = $this->getUser();
+
+        $applicationsOfThisOffer = $offer->getApplications();
+        forEach($applicationsOfThisOffer as $application) {
+            if ($application->getUser() === $user)
+            {	
+                $this->addFlash("error", "Vous avez déjà postulé à cette annonce");
+
+                return $this->redirectToRoute("offers_index");
+            }
+        }
+
+        if ($user && $user->getRoles()) {
+            $form = $this->createForm(ApplyType::class, $application);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid() ) {
+                $entityManager = $this
+                ->getDoctrine()
+                ->getManager();
+
+                $application->setUser($user);
+                $offer->addApplication($application);
+                
+                $entityManager->persist($application);
+                $entityManager->flush();
+            }
+
+            return $this->render('offer/show.html.twig', [
+                'application' => $application,
+                'form' => $form->createView(),
+                'offer' => $offer,
+            ]);
+        }
+        else {
+            return $this->render('offer/show.html.twig', [
+                'application' => $application,
+                'offer' => $offer,
+            ]);
+        }
+          
     }
 
-    
+    // /**
+    //  * @Route("offer/{id}/apply", name="offer_apply")
+    //  */
+    // public function apply(Offer $offer, Request $request)
+    // {
+        
+    // }
 }
