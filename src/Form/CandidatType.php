@@ -63,6 +63,7 @@ class CandidatType extends AbstractType
                 ],
             ])
             ->add("birthDay", BirthdayType::class, [
+                "label" => "Date de naissance",
                 "placeholder" => [
                     "day" => "Jour",
                     "month" => "Mois",
@@ -81,7 +82,7 @@ class CandidatType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            "data_class" => User::class,
             'csrf_protection' => true,
             'attr' => [
                 'novalidate' => 'novalidate',

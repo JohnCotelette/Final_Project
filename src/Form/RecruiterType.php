@@ -63,6 +63,7 @@ class RecruiterType extends AbstractType
                 ],
             ])
             ->add("birthDay", BirthdayType::class, [
+                "label" => "Date de naissance",
                 "placeholder" => [
                     "day" => "Jour",
                     "month" => "Mois",
