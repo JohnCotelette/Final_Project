@@ -80,7 +80,7 @@ class User implements UserInterface
      *     maxMessage="Votre nom ne peut dépasser {{ limit }} caractères"
      * )
      * @Assert\NotBlank(
-     *     message="Veuillez renseigner ce champs"
+     *     message="Veuillez renseigner votre nom"
      * )
      */
     private $lastName;
