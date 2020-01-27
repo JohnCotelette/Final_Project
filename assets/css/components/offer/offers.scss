@@ -4,3 +4,45 @@
         color: inherit;
     }
 }
+
+
+main {
+    display: flex;
+    margin-top: 30px;
+    min-height: 800px;
+}
+
+section {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+section#test {
+    display: flex;
+    width: 30%;
+}
+
+#test form {
+    width: 90%;
+    margin: auto
+}
+
+#apply_motivation {
+    width: 100%;
+    height: calc(100vh - 250px);
+    min-height: 600px;
+}
+
+.iconeOffer{
+    display: flex;
+    justify-content: center;
+
+}
+
+.iconeOffer p{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
