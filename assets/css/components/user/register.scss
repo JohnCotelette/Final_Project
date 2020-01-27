@@ -7,8 +7,15 @@ main, section {
 }
 
 section {
-    width: 50%;
     padding: 30px 0;
+}
+
+#firstSection {
+    width: 58%;
+}
+
+#secondSection {
+    width: 42%;
 }
 
 section > div {
@@ -68,6 +75,7 @@ h1 {
 #identityContainer, #emailContainer, #birthdayContainer, #birthdayContainer > div, #birthdayInputsContainer,
 #passwordContainer, #passwordContainer .form-group > div, #submitContainer, #checkboxContainer .form-group {
     display: flex;
+    position: relative;
 }
 
 #identityContainer, #birthdayContainer, #passwordContainer .form-group > div {
@@ -84,13 +92,14 @@ h1 {
 
 #identityContainer input, #emailContainer input, #birthdayContainer, #passwordContainer input, #businessContainer input {
     width: 100%;
-    padding: 12px;
+    padding: 11px;
     background-color: $blanc;
     border: none;
 }
 
 #birthdayContainer {
-    margin-bottom: 20px;
+    position: relative;
+    margin-bottom: 30px;
 }
 
 #birthdayInputsContainer {
@@ -128,7 +137,11 @@ form button {
 }
 
 #submitContainer {
-    margin-top: 30px;
+    margin-top: 20px;
+}
+
+#checkboxContainer {
+    margin-top: -12px;
 }
 
 #checkboxContainer label {
@@ -145,8 +158,20 @@ form ul {
 }
 
 form ul li {
+    position: absolute;
+    top: -28px;
+    left: 0;
     font-size: 0.7em;
     color: red;
+}
+
+.form-group {
+    position: relative !important;
+    margin-bottom: 30px;
+}
+
+#checkboxContainer li {
+    top: 15px;
 }
 
 /* -------------------------- RIGHT-SECTION -------------------------- */
@@ -192,3 +217,88 @@ section ul {
     margin-top: 10px;
 }
 
+/* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-width: 1390px) {
+    main {
+        flex-direction: column;
+    }
+
+    #firstSection, #secondSection {
+        width: 100%;
+    }
+
+    .citation {
+        margin-bottom: 0;
+    }
+
+    #secondSection h2 {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 800px) {
+    #headerRegisterForm p a {
+        font-size: 1.4em;
+    }
+
+    h1 {
+        font-size: 2.7em;
+    }
+
+    section > div {
+        width: 92%;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    #youWill {
+        font-size: 1.5em;
+    }
+
+    section ul {
+        font-size: 1.1em;
+        line-height: 1.6em;
+        padding-left: 10px;
+    }
+
+    .citation {
+        margin-top: 35px;
+    }
+
+    #birthdayInputsContainer select {
+        font-size: 0.8em;
+    }
+
+    #submitContainer {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 640px) {
+    ::placeholder, #birthdayContainer label {
+        font-size: 0.85em;
+    }
+
+    #headerRegisterForm p a {
+        font-size: 1.2em;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+
+    h1 {
+        font-size: 2.2em;
+    }
+
+    #firstSection form {
+        padding: 15px;
+    }
+
+    #youWill {
+        font-size: 1.3em;
+    }
+}

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Faker\Provider\DateTime;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OfferRepository")
@@ -155,12 +156,17 @@ class Offer
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
+     * @param null $date
+     * @return Offer
+     * @throws \Exception
      */
-    public function setExpiredAt(): void
+    public function setExpiredAt(): self
     {
-        $now = $this->created_at;
+        $now = new \DateTime();
 
         $this->expired_at = $now->add(new \DateInterval("P6M"));
+
+        return $this;
     }
 
     public function getReference(): ?string
@@ -241,7 +247,7 @@ class Offer
             return "A négocier";
         }
 
-        return $this->salary . "K annuel";
+        return $this->salary . " brut annuel";
     }
 
     public function setSalary(?int $salary): self

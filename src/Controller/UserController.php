@@ -33,21 +33,21 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form);
+            if ($form["legalConditions"]->getData() === true) {
+                $password = $encoder->encodePassword($user, $user->getPassword());
 
-            $password = $encoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($password);
+                $user->setRoles(['ROLE_CANDIDAT']);
 
-            $user->setPassword($password);
-            $user->setRoles(['ROLE_CANDIDAT']);
-            
-            $entityManager = $this
-                ->getDoctrine()
-                ->getManager();
+                $entityManager = $this
+                    ->getDoctrine()
+                    ->getManager();
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            $this->redirectToRoute("offers_index");
+                $this->redirectToRoute("offers_index");
+            }
         }
 
         return $this->render('user/register.html.twig', [
@@ -70,23 +70,24 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $encoder->encodePassword( $user, $user->getPassword());
+            if ($form["legalConditions"]->getData() === true) {
+                $password = $encoder->encodePassword( $user, $user->getPassword());
 
-            $user->setPassword( $password );
-            $user->setRoles(['ROLE_RECRUITER']);
+                $user->setPassword( $password );
+                $user->setRoles(['ROLE_RECRUITER']);
 
-            $entityManager = $this
-                ->getDoctrine()
-                ->getManager();
+                $entityManager = $this
+                    ->getDoctrine()
+                    ->getManager();
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            $this->redirectToRoute("recruiter_register");
+                $this->redirectToRoute("recruiter_register");
+            }
         }
 
         return $this->render('user/register.html.twig', [
-            'user' => $user,
             'form' => $form->createView(),
         ]);
     }

@@ -79,6 +79,8 @@ class SecurityController extends AbstractController
             $mailService->sendMailToRecipient($user, $resetPasswordUrl, "resetPassword");
 
             $this->addFlash("success", "Le lien pour changer votre mot de passe est dans votre boite mail.");
+
+            $this->redirectToRoute("login");
         }
 
         return $this->render("security/forgotPassword.html.twig");
@@ -98,7 +100,7 @@ class SecurityController extends AbstractController
         $user = $userRep->findOneBy(["passwordToken" => $resetPasswordToken]);
 
         if (!$user || $user->getPasswordToken() === null) {
-            return $this->redirectToRoute("homepage");
+            return $this->redirectToRoute("home");
         }
 
         $form = $this->createForm(ResetPasswordType::class, []);

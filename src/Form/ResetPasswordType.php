@@ -20,7 +20,6 @@ class ResetPasswordType extends AbstractType
             ->add('password', RepeatedType::class, [
                 "type" => PasswordType::class,
                 "invalid_message" => "Les mots de passe saisis ne correspondent pas",
-                "label" => "Password",
                 "required" => true,
                 "constraints" => [
                     new Length([
@@ -29,18 +28,36 @@ class ResetPasswordType extends AbstractType
                         "minMessage" => "Votre mot de passe doit faire au minimum 8 caractères",
                         "maxMessage" => "Votre mot de passe ne peut dépasser 30 caractères",
                     ]),
-                    new NotBlank(),
+                    new NotBlank([
+                        "message" => "Veuillez renseigner votre mot de passe",
+                    ]),
                     new Regex([
                         "pattern" => "/^\S+$/",
                         "message" => "N'utilisez pas d'espace dans votre mot de passe"
                     ])
                 ],
-                "options" => ["attr" => ["class" => "password-field"]],
-                "first_options" => ["label" => "Entrez votre nouveau mot de passe"],
-                "second_options" => ["label" => "Entrez le de nouveau"],
+                "options" => [
+                    "label" => false,
+                    "attr" => [
+                        "class" => "password-field"
+                    ]
+                ],
+                "first_options" => [
+                    "attr" => [
+                        "placeholder" => "Entrez votre nouveau mot de passe",
+                    ]
+                ],
+                "second_options" => [
+                    "attr" => [
+                        "placeholder" => "Confirmez le mot de passe",
+                    ],
+                ],
             ])
             ->add("save", SubmitType::class, [
                 "label" => "Confirmer",
+                "attr" => [
+                    "class" => "commonButtons"
+                ]
             ])
         ;
     }
@@ -48,7 +65,10 @@ class ResetPasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            "csrf_protection" => true
+            "csrf_protection" => true,
+            "attr" => [
+                "novalidate" => "novalidate",
+            ]
         ]);
     }
 }
