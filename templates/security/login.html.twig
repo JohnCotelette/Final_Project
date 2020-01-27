@@ -1,35 +1,44 @@
-{% extends 'base.html.twig' %}
+{% extends "layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags("login") }}
+{% endblock %}
 
 {% block title %}{{ parent() }}Connexion{% endblock %}
 
-{% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+{% block content %}
+    <section id="firstSection">
+        <form method="post">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Connectez vous</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+            <h1>Connectez vous</h1>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Votre Email" required autofocus>
 
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Se souvenir de moi
-            </label>
-        </div>
+            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Votre mot de passe" required>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Connexion
-    </button>
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}">
 
-    <p>
-        <a href="{{ path("forgotPassword") }}">Mot de passe oublié ?</a>
-    </p>
-</form>
+            <div id="checkboxContainer">
+                <label>
+                    <input type="checkbox" id="rememberMeCheckbox" name="_remember_me"> Se souvenir de moi
+                </label>
+            </div>
+
+            <p id="connectLinkContainer">
+                <button class="commonButtonStyle" type="submit">Se connecter</button>
+            </p>
+
+            <p id="forgotPasswordLinkContainer">
+                <a id="forgotPasswordLink" href="{{ path("forgotPassword") }}">Mot de passe oublié ?</a>
+            </p>
+
+            <p id="noAccountYetLinkContainer">
+                <a id="noAccountYetLink" class="commonButtonStyle" href="{{ path("candidate_register") }}">Je n'ai pas encore de compte</a>
+            </p>
+        </form>
+    </section>
 {% endblock %}

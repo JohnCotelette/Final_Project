@@ -33,7 +33,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $encoder->encodePassword( $user, $user->getPassword());
+            $password = $encoder->encodePassword($user, $user->getPassword());
 
             dd($password);
 
@@ -47,11 +47,10 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->redirectToRoute("candidate_register");
+            $this->redirectToRoute("offers_index");
         }
 
         return $this->render('user/register.html.twig', [
-            'user' => $user,
             'form' => $form->createView(),
         ]);
     }
@@ -86,10 +85,10 @@ class UserController extends AbstractController
             $this->redirectToRoute("recruiter_register");
         }
 
-        return $this->render('user/register.html.twig', array(
+        return $this->render('user/register.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
-        )); 
+        ]);
     }
 
     /**
