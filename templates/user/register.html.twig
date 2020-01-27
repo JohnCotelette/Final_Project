@@ -30,35 +30,29 @@
             </div>
 
             {{ form_start(form) }}
-            <div class="errors">
-                {{ form_errors(form.firstName) }}
-                {{ form_errors(form.lastName) }}
-            </div>
             <div id="identityContainer">
                 <div class="form-group">
+                    {{ form_errors(form.firstName) }}
                     {{ form_widget(form.firstName) }}
                 </div>
 
                 <div class="form-group">
+                    {{ form_errors(form.lastName) }}
                     {{ form_widget(form.lastName) }}
                 </div>
             </div>
 
             <div id="emailContainer">
                 <div class="form-group">
-                    <div class="errors">
-                        {{ form_errors(form.email) }}
-                    </div>
+                    {{ form_errors(form.email) }}
                     {{ form_widget(form.email) }}
                 </div>
             </div>
 
             <div id="birthdayContainer">
+                {{ form_errors(form.birthDay) }}
                 <p>{{ form_label(form.birthDay) }}</p>
                 <div id="birthdayInputsContainer">
-                    <div class="errors">
-                        {{ form_errors(form.birthDay) }}
-                    </div>
                     {{ form_widget(form.birthDay.day) }}
                     {{ form_widget(form.birthDay.month) }}
                     {{ form_widget(form.birthDay.year) }}
@@ -74,9 +68,7 @@
             {% if app.request.attributes.get("_route") == "recruiter_register" %}
                 <div id="businessContainer">
                     <div class="form-group">
-                        <div class="errors">
-                            {{ form_errors(form.business) }}
-                        </div>
+                        {{ form_errors(form.business) }}
                         {{ form_widget(form.business) }}
                     </div>
                 </div>
@@ -84,11 +76,9 @@
 
             <div id="checkboxContainer">
                 <div class="form-group">
-                    <div class="errors">
-                        {{ form_errors(form.legalConditions) }}
-                    </div>
                     {{ form_widget(form.legalConditions) }}
                     <p>{{ form_label(form.legalConditions) }}</p>
+                    {{ form_errors(form.legalConditions) }}
                 </div>
             </div>
 

@@ -12,6 +12,10 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Regex;
 
 class RecruiterType extends AbstractType
@@ -49,7 +53,7 @@ class RecruiterType extends AbstractType
                     new Regex([
                         "pattern" => "/^\S+$/",
                         "message" => "N'utilisez pas d'espace dans votre mot de passe",
-                    ])
+                    ]),
                 ],
             ])
             ->add("firstName", TextType::class, [
@@ -69,7 +73,7 @@ class RecruiterType extends AbstractType
                     "month" => "Mois",
                     "year" => "Année",
                 ],
-                "years" => range(date('Y') - 65, date('Y') - 17)
+                "years" => range(date('Y') - 65, date('Y') - 17),
             ])
             ->add("business", TextType::class, [
                 "label" => false,
@@ -80,7 +84,12 @@ class RecruiterType extends AbstractType
             ->add("legalConditions", CheckboxType::class, [
                 "mapped" => false,
                 "required" => true,
-                "label" => "En cochant ceci, vous acceptez les conditions générales d'utilisation et vous certifiez être majeur."
+                "label" => "En cochant ceci, vous acceptez les conditions générales d'utilisation et vous certifiez être majeur.",
+                "constraints" => [
+                    new IsTrue([
+                        "message" => "Vous devez accepter nos conditions générales d'utilisation si vous souhaitez poursuivre",
+                    ])
+                ],
             ])
         ;
     }
