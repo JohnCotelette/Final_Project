@@ -145,7 +145,7 @@ class SecurityController extends AbstractController
     {
         $user = $userRepository->find($uuid);
 
-        if (!$user) {
+        if (!$user || $user->getIsActive() === true) {
             return $this->redirectToRoute("home");
         }
 
