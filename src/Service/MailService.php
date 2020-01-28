@@ -38,6 +38,7 @@ class MailService {
         $this->view = $view;
         $this->templatesLinks = [
             "resetPassword" => "mail/resetPassword.html.twig",
+            "activationLink" => "mail/activationLink.html.twig",
         ];
     }
 
