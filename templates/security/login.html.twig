@@ -13,7 +13,19 @@
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
 
+            {% for error in app.flashes("errorNeedActivated") %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endfor %}
+
             {% for success in app.flashes("successResetPassword") %}
+                <div class="alert alert-success">{{ success }}</div>
+            {% endfor %}
+
+            {% for success in app.flashes("successAccountCreated") %}
+                <div class="alert alert-success">{{ success }}</div>
+            {% endfor %}
+
+            {% for success in app.flashes("successAccountActivated") %}
                 <div class="alert alert-success">{{ success }}</div>
             {% endfor %}
 

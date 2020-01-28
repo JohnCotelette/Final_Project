@@ -15,13 +15,14 @@ security:
             security: false
 
         main:
+            pattern: ^/
             anonymous: lazy
             guard:
                 authenticators:
                     - App\Security\AppAuthenticator
+            user_checker: App\Security\UserChecker
             logout:
                 path: logout
-
             remember_me:
                 secret:   '%kernel.secret%'
                 lifetime: 2592000
