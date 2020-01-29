@@ -188,6 +188,23 @@ footer div {
     display: none !important;
 }
 
+.linkSelected {
+    color: $blanc !important;
+    background-color: $violet-fonce;
+    transition: all 0.3s ease;
+}
+
+.reduced {
+    height: 0;
+    transform: scaleY(0);
+}
+
+.deployed {
+    height: max-content;
+    transform: scaleY(1);
+    transition: all 0.3s ease;
+}
+
 /* -------------------------- RESPONSIVE -------------------------- */
 
 @media (max-width: 1000px) {

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Application;
 use App\Entity\Offer;
 use App\Form\ApplyType;
+use App\Repository\FieldRepository;
 use App\Repository\OfferRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,11 +20,13 @@ class OfferController extends AbstractController
      * @param OfferRepository $offerRepository
      * @param Request $request
      * @param PaginatorInterface $paginator
+     * @param FieldRepository $fieldRepository
      * @return Response
      */
-    public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator)
+    public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator, FieldRepository $fieldRepository)
     {
         $query = $offerRepository->findAll();
+        $fields = $fieldRepository->findAll();
         
         $pagination = $paginator->paginate(
             $query,
@@ -32,8 +35,8 @@ class OfferController extends AbstractController
         );
 
         return $this->render('offer/index.html.twig', [
+            'fields' => $fields,
             'pagination' => $pagination,
-
         ]);
     }
 

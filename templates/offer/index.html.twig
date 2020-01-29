@@ -1,48 +1,86 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}{{ parent() }} Offre{% endblock %}
+{% block title %}{{ parent() }}Liste des offres{% endblock %}
 
 {% block stylesheets %}
     {{ encore_entry_link_tags("offers") }}
 {% endblock %}
 
 {% block content %}
+    <div class="row">
+        <section id="leftSection">
+            <div id="fieldsContainer" class="categoryContainers">
+                <h3>Domaines</h3>
 
-    <div class="container my-5">
-        <h2 class="text-center">A la une </h2>
-        <div class="row">
-            <div class="col-md-4">
-                <aside>
-                    <h3>Experience</h3>
-                </aside>
-            </div>
-            <div class="col-md-8">
-                {% for offer in pagination %}
-                    <div class="mx-3 mb-4 container d-flex bg-white">
-                        <div class="col-md-4 d-flex">
-                            <img class="card-img-top align-self-center" src="http://via.placeholder.com/660x360" alt="Card image cap">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <div class=" linkOffer">
-                                    <h4 class="card-title"><a href="{{ path('show_offer', {'id':offer.id}) }}">{{ offer.title }}  </a></h4>
-                                    <h5> Chez <a href="{{ path('show_offer', {'id':offer.id}) }}"> {{offer.user.business|upper}}</a> </h5>
-                                    <div class="container col-md-12 d-flex justify-content-around">
-                                        <p class="card-text"><i class="fas fa-id-badge"></i> : {{ offer.experience}}</p>
-                                        <p class="card-text"><i class="fas fa-money-check-alt"></i> : {{ offer.salary}}</p>
-                                        <p class="card-text"><i class="fas fa-file-contract"></i> : {{ offer.type}}</p>
-                                    </div>
-                                </div>
-                                <p class="card-text">{{ offer.description|truncate(50) }} <a href="{{ path('show_offer', {'id':offer.id}) }}">En savoir plus</a></p>
+                <div>
+                    {% for field in fields %}
+                        <div class="fieldsContainers">
+                            <a href="#" class="categoriesControllers">{{ field.name }}</a> <i class="arrowsStates fas fa-angle-up"></i>
+                            <div class="categoriesContainers reduced">
+                                {% for category in field.categories %}
+                                    <a class="categoriesLinks" href="#">{{ category.name }}</a>
+                                {% endfor %}
                             </div>
-                        </div>  
-                    </div>
-                {% endfor %}
-                <div class="container col-md-12 d-flex justify-content-center">
-                    {{ knp_pagination_render(pagination) }}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-        </div>
+
+            <hr class="categoriesSeparators">
+
+            <div id="expContainer"  class="categoryContainers">
+                <h3>Experience</h3>
+
+                <div>
+                    <a class="categoriesLinks defaultsLinks" href="#">Tous</a>
+                    <a class="categoriesLinks" href="#">Junior (0 à 2 ans)</a>
+                    <a class="categoriesLinks" href="#">Confirmé (3 à 6 ans)</a>
+                    <a class="categoriesLinks" href="#">Senior (7 ans et plus)</a>
+                </div>
+            </div>
+
+            <hr class="categoriesSeparators">
+
+            <div id="salaryContainer"  class="categoryContainers">
+                <h3>Salaire annuel minimum</h3>
+
+                <div>
+                    <a class="categoriesLinks defaultsLinks" href="#">Tous</a>
+                    <a class="categoriesLinks" href="#">25000</a>
+                    <a class="categoriesLinks" href="#">30000</a>
+                    <a class="categoriesLinks" href="#">35000</a>
+                    <a class="categoriesLinks" href="#">40000</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="rightSection">
+            {% for offer in pagination %}
+                <div class="mb-4 container d-flex bg-white">
+                    <div class="col-md-4 d-flex">
+                        <img class="card-img-top align-self-center" src="http://via.placeholder.com/660x360" alt="Card image cap">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <div class=" linkOffer">
+                                <h4 class="card-title"><a href="{{ path('show_offer', {'id':offer.id}) }}">{{ offer.title }}  </a></h4>
+                                <h5> Chez <a href="{{ path('show_offer', {'id':offer.id}) }}"> {{offer.user.business|upper}}</a> </h5>
+                                <div class="container col-md-12 d-flex justify-content-around">
+                                    <p class="card-text"><i class="fas fa-id-badge"></i> : {{ offer.experience}}</p>
+                                    <p class="card-text"><i class="fas fa-money-check-alt"></i> : {{ offer.salary}}</p>
+                                    <p class="card-text"><i class="fas fa-file-contract"></i> : {{ offer.type}}</p>
+                                </div>
+                            </div>
+                            <p class="card-text">{{ offer.description|truncate(50) }} <a href="{{ path('show_offer', {'id':offer.id}) }}">En savoir plus</a></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div id="paginationContainer" class="container mt-3 d-flex justify-content-center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </section>
     </div>
 {% endblock %}
 
