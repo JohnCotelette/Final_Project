@@ -1,0 +1,95 @@
+main {
+    display: flex;
+    margin-top: 30px;
+    min-height: 800px;
+    font-size: 1.2rem;
+}
+
+section {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+section#formApply {
+    display: flex;
+    width: 30%;
+}
+
+#formApply form {
+    width: 90%;
+    margin: auto
+}
+
+#apply_motivation {
+    width: 100%;
+    height: calc(100vh - 600px);
+    min-height: 200px;
+}
+
+.detailOffer{
+    display: flex;
+    justify-content: center;
+}
+
+.detailOffer p{
+    margin-left: 15px;
+    margin-right: 15px;
+    font-size: 0.9rem;
+}
+
+.descriptionOffer {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.accountAction {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.accountAction a {
+   margin-top: 15px;
+   margin-bottom: 15px;
+   padding: 5px;
+}
+
+#messageSuccessApply {
+    width: 50%;
+    
+}
+@media (max-width: 900px) {
+    
+    .detailOffer{
+        display: inline;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        font-size: 1.2rem;
+    }
+
+    section {
+        width: 100%;
+    }
+
+    section#test {
+        width: 100%;
+    }
+
+    section#formApply {
+        width: 100%;
+    }
+
+    #apply_motivation {
+        width: 100%;
+        height: calc(100vh - 250px);
+        min-height: 200px;
+    }
+}
