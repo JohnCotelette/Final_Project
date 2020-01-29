@@ -1,3 +1,87 @@
+/* -------------------------- MAIN -------------------------- */
+
+#totalPageContent {
+    max-height: calc(100vh - 100px);
+}
+
+main {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+}
+
+.row {
+    justify-content: space-between !important;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* -------------------------- LEFT-SECTION -------------------------- */
+
+.categoryContainers {
+    margin: 10px 0;
+}
+
+#leftSection {
+    text-align: left;
+    background-color: white;
+    padding: 15px;
+    width: 30%;
+    height: max-content;
+}
+
+h3 {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.categoriesControllers {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: black;
+}
+
+.categoriesLinks {
+    display: inline-block;
+    color: rgba(51, 51, 51, 0.5);
+    font-size: 0.8em;
+    padding: 3px 6px;
+    border: 1px solid rgba(51, 51, 51, 0.5);
+    white-space: nowrap;
+    margin: 3px 2px;
+    font-weight: bold;
+}
+
+.categoriesLinks:hover {
+    color: rgba(51, 51, 51, 0.5);
+    text-decoration: inherit;
+}
+
+.categoriesSeparators {
+    width: 100%;
+    height: 1px;
+    margin: 5px 0;
+}
+
+.fieldsContainers {
+    margin-bottom: 10px;
+}
+
+.categoriesContainers {
+
+}
+
+/* -------------------------- RIGHT-SECTION -------------------------- */
+
+#rightSection {
+    overflow: auto;
+    width: 65%;
+    height: 100%;
+    padding-right: 20px;
+}
+
 .linkOffer {
     a:hover, a:visited, a:active, a:link{
         text-decoration: none;
@@ -5,4 +89,47 @@
     }
 }
 
+main {
+    display: flex;
+    margin-top: 30px;
+    min-height: 800px;
+}
+
+section {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+section#test {
+    display: flex;
+    width: 30%;
+}
+
+#test form {
+    width: 90%;
+    margin: auto
+}
+
+#apply_motivation {
+    width: 100%;
+    height: calc(100vh - 250px);
+    min-height: 600px;
+}
+
+.iconeOffer{
+    display: flex;
+    justify-content: center;
+
+}
+
+.iconeOffer p{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+#paginationContainer {
+    height: max-content !important;
+}
 

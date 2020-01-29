@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Offer;
 use App\Form\ApplyType;
+use App\Repository\FieldRepository;
 use App\Entity\Application;
 use App\Service\OfferService;
 use App\Repository\OfferRepository;
@@ -20,11 +21,13 @@ class OfferController extends AbstractController
      * @param OfferRepository $offerRepository
      * @param Request $request
      * @param PaginatorInterface $paginator
+     * @param FieldRepository $fieldRepository
      * @return Response
      */
-    public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator)
+    public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator, FieldRepository $fieldRepository)
     {
         $query = $offerRepository->findAll();
+        $fields = $fieldRepository->findAll();
         
         $pagination = $paginator->paginate(
             $query,
@@ -33,14 +36,16 @@ class OfferController extends AbstractController
         );
 
         return $this->render('offer/index.html.twig', [
+            'fields' => $fields,
             'pagination' => $pagination,
-
         ]);
     }
 
     /**
      * @Route("/offer/{id}", name="show_offer", methods={"GET", "POST"})
+     * @param OfferService $offerService
      * @param Offer $offer
+     * @param Request $request
      * @return Response
      */
     public function showOffer(OfferService $offerService, Offer $offer, Request $request)
