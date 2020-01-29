@@ -136,8 +136,8 @@ class User implements UserInterface
         $this->applications = new ArrayCollection();
         $this->offers = new ArrayCollection();
     }
-
-    public function getId(): UUID
+    //UUID
+    public function getId()
     {
         return $this->id;
     }
