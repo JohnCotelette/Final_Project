@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
 use App\Service\MailService;
 use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +26,7 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils, UserService $userService): Response
     {
         if ($this->getUser()) {
-            $userService->redirectBasedOnRoles($this->getUser());
+            return $userService->redirectBasedOnRoles($this->getUser());
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -131,5 +133,32 @@ class SecurityController extends AbstractController
         return $this->render("security/changePassword.html.twig", [
             "form" => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/account/activate/{uuid}", name="account_activate")
+     * @param string $uuid
+     * @param UserRepository $userRepository
+     * @return RedirectResponse
+     */
+    public function activate(string $uuid, UserRepository $userRepository)
+    {
+        $user = $userRepository->find($uuid);
+
+        if (!$user || $user->getIsActive() === true) {
+            return $this->redirectToRoute("home");
+        }
+
+        $user->setIsActive(true);
+
+        $entityManager = $this
+            ->getDoctrine()
+            ->getManager();
+
+        $entityManager->flush();
+
+        $this->addFlash("successAccountActivated", "Votre compte a bien été activé, vous pouvez désormais vous connecter.");
+
+        return $this->redirectToRoute("login");
     }
 }

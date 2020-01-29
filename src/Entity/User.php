@@ -108,16 +108,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=70, nullable=true)
-     * @Assert\Length(
-     *     min=3,
-     *     max=80,
-     *     minMessage="Le nom de votre entreprise doit faire plus de {{ limit }} caractères.",
-     *     maxMessage="Le nom de votre entreprise ne peut dépasser {{ limit }} caractères."
-     * )
-     * @Assert\NotBlank(
-     *     message="Vous devez saisir le nom de votre entreprise"
-     * )
-     * 
      */
     private $business;
 

@@ -15,17 +15,18 @@ security:
             security: false
 
         main:
+            pattern: ^/
             anonymous: lazy
             guard:
                 authenticators:
                     - App\Security\AppAuthenticator
+            user_checker: App\Security\UserChecker
             logout:
                 path: logout
-
             remember_me:
                 secret:   '%kernel.secret%'
                 lifetime: 2592000
 
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

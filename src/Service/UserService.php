@@ -41,7 +41,6 @@ class UserService
         else {
             return new RedirectResponse($this->router->generate("offers_index"));
         }
-
     }
 
     /**

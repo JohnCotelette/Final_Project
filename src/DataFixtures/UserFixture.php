@@ -4,7 +4,6 @@ namespace App\DataFixtures;
 
 use App\DataFixtures\BaseFixture;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 
@@ -41,27 +40,38 @@ class UserFixture extends BaseFixture
      */
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(User::class, 100, function(User $user) {
-            if ($this->index % 2 === 0) {
+        $this->createMany(User::class, 101, function(User $user) {
+            if ($this->index % 2 === 0 && $this->index < 100) {
                 $user
                     ->setEmail(self::DEFAULT_CANDIDATE . $this->index . self::DEFAULT_ENDMAIL)
                     ->setPassword($this->passwordEncoder->encodePassword($user, "12345678"))
                     ->setFirstName($this->faker->firstname)
                     ->setLastName($this->faker->lastname)
-                    ->setIsActive(1)
+                    ->setIsActive(true)
                     ->setRoles(["ROLE_CANDIDATE"])
-                    ->setBirthDay($this->faker->dateTimeBetween($startDate = "-60 years", $endDate = "- 18 years", $timezone = "Europe/Paris"));
-            } else {
+                    ->setBirthDay($this->faker->dateTimeBetween($startDate = "-60 years", $endDate = "- 18 years", $timezone = "Europe/Paris"))
+                    ;
+            } else if ($this->index % 2 !== 0 && $this->index < 100) {
                 $user
                     ->setEmail(self::DEFAULT_RECRUITER . $this->index . self::DEFAULT_ENDMAIL)
                     ->setPassword($this->passwordEncoder->encodePassword($user, "12345678"))
                     ->setFirstName($this->faker->firstname)
                     ->setLastName($this->faker->lastname)
-                    ->setIsActive(1)
+                    ->setIsActive(true)
                     ->setRoles(["ROLE_RECRUITER"])
                     ->setBusiness($this->faker->company)
                     ->setBirthDay($this->faker->dateTimeBetween($startDate = "-60 years", $endDate = "- 18 years", $timezone = "Europe/Paris"))
-                ;
+                    ;
+            } else {
+                $user
+                    ->setEmail("admin@findlab.com")
+                    ->setPassword($this->passwordEncoder->encodePassword($user, "12345678"))
+                    ->setFirstName("Robert")
+                    ->setLastName("Hue")
+                    ->setIsActive(true)
+                    ->setRoles(["ROLE_ADMIN"])
+                    ->setBirthDay($this->faker->dateTimeBetween($startDate = "-60 years", $endDate = "- 18 years", $timezone = "Europe/Paris"))
+                    ;
             }
 
             $this->index++;

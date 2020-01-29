@@ -80,6 +80,17 @@ class RecruiterType extends AbstractType
                 "attr" => [
                     "placeholder" => "Entreprise",
                 ],
+                "constraints" => [
+                    new Length([
+                       "min" => 2,
+                       "max" => 40,
+                       "minMessage" => "Le nom de votre entreprise doit faire au moins 2 caractères",
+                       "maxMessage" => "Le nom de votre entreprise ne peut dépasser 40 catactères",
+                    ]),
+                    new NotBlank([
+                        "message" => "Veuillez renseigner le nom de votre entreprise",
+                    ]),
+                ],
             ])
             ->add("legalConditions", CheckboxType::class, [
                 "mapped" => false,
