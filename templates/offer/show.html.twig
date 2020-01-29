@@ -1,7 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags("offers") }}
+    {{ encore_entry_link_tags("offer") }}
 {% endblock %}
 
 {% block content %}
@@ -9,46 +9,75 @@
     <section>
         <h2> <a href="{{ path('show_offer', {'id':offer.id}) }}">{{offer.user.business|upper}}</a> </h2>
             <h3>{{offer.title}}</h3>
-            <p>{{offer.description}}</p>
-            <div class="iconeOffer">
-                <p><i class="fas fa-id-badge"></i> : {{ offer.experience}}</p>
-                <p><i class="fas fa-money-check-alt"></i> : {{ offer.salary}}</p>
-                <p><i class="fas fa-file-contract"></i> : {{ offer.type}}</p>
+            <div class="descriptionOffer">
+                <p>{{offer.description}}</p>
+            </div>
+
+            <div class="detailOffer">
+                <p>Experience : {{ offer.experience}}</p>
+                <p>Salaire : {{ offer.salary}}</p>
+                <p>Contrat : {{ offer.type}}</p>
             </div>
         <p> Annonce publié le : {{ offer.createdAt|date("d/m/Y") }} </p>
-        <p id="submitContainer">
-            <button type="submit" id="submit" class="commonButtonStyle">Postuler</button>
+
+            {% if hasAlreadyApply %}
+                <div class="messageSuccessApply">
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% elseif hasAlreadyApply is same as(false) %}
+                <div class="messageErrorApply">
+                    {% for message in app.flashes('error') %}
+                        <div class="alert alert-danger">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %} 
+                <p id="submitContainer">
+                    <button type="submit" id="submit" class="commonButtonStyle">Postuler</button>
+                </p> 
+            {% endif %}
+
+        <p>
+            {# <a href="{{ path('show_business', {'id':offer.user.business}) }}" class="commonButtonStyle">Voir l'entreprise</a>  #}
         </p>
+
     </section>
 
-    <section id="test" class="invisible">
+    <section id="formApply" class="invisible">
 
-    {% if form is defined %}
+        {% if form is defined %}
+            <div >
+                <p> Message de motivation vous avez 1000 caractères : </p>
+                {{ form_start(form) }}
 
-            <p> Message de motivation : </p>
-            
-            {{ form_start(form) }}
-
-                <div class="errors">
-                    {{ form_errors(form.motivation) }}
-                </div>
-                <div>
-                    <div class="form-group">
-                        {{ form_widget(form.motivation) }}
+                    <div class="form-error">
+                        {{ form_errors(form.motivation) }}
                     </div>
-                </div>
-
-            {{ form_end(form)}}
-
-    {% else %}
-        <a id="noAccountYetLink" class="commonButtonStyle" href="{{ path("candidate_register") }}">Inscrivez-vous</a>
-        <a id="noAccountYetLink" class="commonButtonStyle" href="{{ path("login") }}">Connectez-vous</a>
-    {% endif %}
-
+                    <div>
+                        <div class="form-group">
+                            {{ form_widget(form.motivation) }}
+                        </div>
+                    </div>
+                    <p>
+                        <button type="submit" id="submit" class="commonButtonStyle">Envoyer</button>
+                    </p>
+                {{ form_end(form)}}
+            </div>
+        {% else %}
+            <div class="accountAction"> 
+                <a id="noAccountYetLink" class="commonButtonStyle" href="{{ path("candidate_register") }}">Inscrivez-vous</a>
+                <a id="noAccountYetLink" class="commonButtonStyle" href="{{ path("login") }}">Connectez-vous</a>
+            </div>
+        {% endif %}
+        
     </section>
-
 {% endblock  %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags("offers") }}
+    {{ encore_entry_script_tags("offer") }}
 {% endblock %}
