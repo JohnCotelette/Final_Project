@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Offer;
 use App\Form\ApplyType;
 use App\Form\CategoriesType;
-use App\Repository\FieldRepository;
 use App\Entity\Application;
 use App\Service\OfferService;
 use App\Repository\OfferRepository;
@@ -18,16 +17,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class OfferController extends AbstractController
 {
     /**
-     * @Route("/offers", name="offers_index")
+     * @Route("/offers", name="offers_index", methods={"GET", "POST"})
      * @param OfferRepository $offerRepository
      * @param Request $request
      * @param PaginatorInterface $paginator
-     * @param FieldRepository $fieldRepository
      * @return Response
      */
-    public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator, FieldRepository $fieldRepository)
+    public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator)
     {
-        $offers = $offerRepository->findAllOrderByDate();
+        $category = null;
+        $experience = null;
+        $salary = null;
+        $type = null;
 
         $form = $this->createForm(CategoriesType::class);
 
@@ -41,11 +42,12 @@ class OfferController extends AbstractController
             }
 
             $experience = $form["experience"]->getData();
+            $request->request->set("experience", $experience);
             $salary = $form["salary"]->getData();
             $type = $form["type"]->getData();
-
-            $offers = $offerRepository->findByCategoriesOrderByDate($category, $experience, $salary, $type);
         }
+
+        $offers = $offerRepository->findByCategoriesOrderByDate($category, $experience, $salary, $type);
 
         $pagination = $paginator->paginate(
             $offers,

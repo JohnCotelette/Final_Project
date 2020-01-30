@@ -27,17 +27,6 @@ class OfferRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array
-     */
-    public function findAllOrderByDate() :array
-    {
-        return $qb = $this->createQueryBuilder('o')
-                    ->orderBy('o.created_at', 'DESC')
-                    ->getQuery()
-                    ->getResult();
-    }
-
-    /**
      * @param $category
      * @param $experience
      * @param $salary
