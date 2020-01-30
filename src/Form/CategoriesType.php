@@ -60,6 +60,7 @@ class CategoriesType extends AbstractType
     {
         $resolver->setDefaults([
             "csrf_protection" => true,
+            "method" => "GET",
             "attr" => [
                 "novalidate" => "novalidate",
             ],

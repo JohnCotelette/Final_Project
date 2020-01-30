@@ -1,3 +1,5 @@
+@import "../../core";
+
 /* -------------------------- MAIN -------------------------- */
 
 #totalPageContent {
@@ -36,6 +38,7 @@ main {
     width: 160px;
     height: 160px;
 }
+
 .lds-ring div {
     box-sizing: border-box;
     display: block;
@@ -116,7 +119,6 @@ h3 {
     white-space: nowrap;
     margin: 3px 2px;
     font-weight: bold;
-    cursor: pointer;
 }
 
 .categoriesLinks label {
@@ -206,3 +208,8 @@ section#test {
     height: max-content !important;
 }
 
+#noOfferErrorMessageContainer {
+    background-color: $violet-clair;
+    color: $blanc;
+    padding: 15px;
+}
