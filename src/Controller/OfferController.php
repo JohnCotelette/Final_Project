@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Offer;
 use App\Form\ApplyType;
+use App\Form\CategoriesType;
 use App\Repository\FieldRepository;
 use App\Entity\Application;
 use App\Service\OfferService;
@@ -26,18 +27,35 @@ class OfferController extends AbstractController
      */
     public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator, FieldRepository $fieldRepository)
     {
-        $query = $offerRepository->findAll();
-        $fields = $fieldRepository->findAll();
-        
+        $offers = $offerRepository->findAllOrderByDate();
+
+        $form = $this->createForm(CategoriesType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $category = null;
+
+            if ($form["category"]->getData()) {
+                $category = $form["category"]->getData();
+            }
+
+            $experience = $form["experience"]->getData();
+            $salary = $form["salary"]->getData();
+            $type = $form["type"]->getData();
+
+            $offers = $offerRepository->findByCategoriesOrderByDate($category, $experience, $salary, $type);
+        }
+
         $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
+            $offers,
+            $request->query->getInt('page', 1),
+            10
         );
 
         return $this->render('offer/index.html.twig', [
-            'fields' => $fields,
-            'pagination' => $pagination,
+            "pagination" => $pagination,
+            "form" => $form->createView(),
         ]);
     }
 
