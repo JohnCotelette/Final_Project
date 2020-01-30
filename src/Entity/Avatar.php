@@ -31,10 +31,6 @@ class Avatar
      */
     private $updated_at;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", mappedBy="cv", cascade={"persist", "remove"})
-     */
-    private $user;
 
     public function getId(): ?int
     {
@@ -73,24 +69,6 @@ class Avatar
     public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newCv = null === $user ? null : $this;
-        if ($user->getCv() !== $newCv) {
-            $user->setCv($newCv);
-        }
 
         return $this;
     }

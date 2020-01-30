@@ -11,7 +11,6 @@ use App\Repository\OfferRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -30,6 +29,7 @@ class OfferController extends AbstractController
         $experience = null;
         $salary = null;
         $type = null;
+        $city = null;
 
         $form = $this->createForm(CategoriesType::class);
 
@@ -43,12 +43,12 @@ class OfferController extends AbstractController
             }
 
             $experience = $form["experience"]->getData();
-            $request->request->set("experience", $experience);
             $salary = $form["salary"]->getData();
             $type = $form["type"]->getData();
+            $city = $form["city"]->getData();
         }
 
-        $offers = $offerRepository->findByCategoriesOrderByDate($category, $experience, $salary, $type);
+        $offers = $offerRepository->findByCategoriesOrderByDate($category, $experience, $salary, $type, $city);
 
         $pagination = $paginator->paginate(
             $offers,

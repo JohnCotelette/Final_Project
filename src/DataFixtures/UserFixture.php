@@ -6,6 +6,7 @@ use App\DataFixtures\BaseFixture;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
+use App\Entity\Business;
 
 /**
  * Class UserFixture
@@ -25,6 +26,13 @@ class UserFixture extends BaseFixture
     const DEFAULT_CANDIDATE = "candidate";
 
     const DEFAULT_RECRUITER = "recruiter";
+
+    const employeesNumber = [
+            "20 employés et moins",
+            "21 à 100 employés",
+            "101 à 500 employés",
+            "Plus de 500 employés",
+        ];
 
     /**
      * UserFixture constructor.
@@ -52,6 +60,16 @@ class UserFixture extends BaseFixture
                     ->setBirthDay($this->faker->dateTimeBetween($startDate = "-60 years", $endDate = "- 18 years", $timezone = "Europe/Paris"))
                     ;
             } else if ($this->index % 2 !== 0 && $this->index < 100) {
+                $business = new Business();
+
+                $business
+                    ->setEmployeesNumber(self::employeesNumber[rand(0, 3)])
+                    ->setName($this->faker->company)
+                    ->setLocation($this->faker->city)
+                    ->setSiretNumber(rand(11111111111111, 99999999999999))
+                    ->setActivityArea($this->faker->text($maxNbChars = 100))
+                    ;
+
                 $user
                     ->setEmail(self::DEFAULT_RECRUITER . $this->index . self::DEFAULT_ENDMAIL)
                     ->setPassword($this->passwordEncoder->encodePassword($user, "12345678"))
@@ -59,8 +77,8 @@ class UserFixture extends BaseFixture
                     ->setLastName($this->faker->lastname)
                     ->setIsActive(true)
                     ->setRoles(["ROLE_RECRUITER"])
-                    ->setBusiness($this->faker->company)
                     ->setBirthDay($this->faker->dateTimeBetween($startDate = "-60 years", $endDate = "- 18 years", $timezone = "Europe/Paris"))
+                    ->setBusiness($business)
                     ;
             } else {
                 $user
