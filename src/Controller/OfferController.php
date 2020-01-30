@@ -68,34 +68,14 @@ class OfferController extends AbstractController
      */
     public function showOffer(OfferService $offerService, Offer $offer, Request $request)
     {
-        $checkApply = $offerService->checkIfCandidateAlreadyApply($offer, $request);
-        $application = new Application();
 
+        $application = new Application;
         $user = $this->getUser();
-
-        $hasAlreadyApply = null;
-
+        $checkApply = $offerService->checkIfCandidateAlreadyApply($offer, $application);
+    
         if ($user && $user->getRoles() === ["ROLE_CANDIDATE"]) {
             $form = $this->createForm(ApplyType::class, $application);
             $form->handleRequest($request);
-
-            $applicationsOfThisOffer = $offer->getApplications();
-            
-            forEach($applicationsOfThisOffer as $application) {
-                if ($application->getUser() === $user)
-                {	
-                    $this->addFlash("error", "Vous avez déjà postulé à cette annonce");
-                    $hasAlreadyApply = false;
-
-                    return $this->render('offer/show.html.twig', [
-                        'application' => $application,
-                        'form' => $form->createView(),
-                        'offer' => $offer,
-                        'hasAlreadyApply' => $hasAlreadyApply,
-                    ]);
-                }
-            }
-
             if ($form->isSubmitted() && $form->isValid() ) {
 
                 $entityManager = $this
@@ -108,25 +88,17 @@ class OfferController extends AbstractController
                 $entityManager->persist($application);
                 $entityManager->flush();
 
-                $hasAlreadyApply = true;
+                $checkApply = true;
 
                 $this->addFlash("success", "Vous avez postulé");
             }
-                        
-            return $this->render('offer/show.html.twig', [
-                'application' => $application,
-                'form' => $form->createView(),
-                'offer' => $offer,
-                'hasAlreadyApply' => $hasAlreadyApply,
-            ]);
-            
         }
-            
-        else {
-            return $this->render('offer/show.html.twig', [
-                'application' => $application,
-                'offer' => $offer,
-            ]);
-        }     
+                    
+        return $this->render('offer/show.html.twig', [
+            'application' => $application,
+            'form' => !empty($form) ? $form->createView() : null,
+            'offer' => $offer,
+            'checkApply' => $checkApply,
+        ]);
     }
 }
