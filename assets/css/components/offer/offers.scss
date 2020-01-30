@@ -1,3 +1,5 @@
+@import "../../core";
+
 /* -------------------------- MAIN -------------------------- */
 
 #totalPageContent {
@@ -15,6 +17,71 @@ main {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* -------------------------- LOADER -------------------------- */
+
+#loading {
+    display: flex;
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    height: calc(100% + 30px);
+    top: -30px;
+    animation: changeBackgroundColor 0.2s ease both;
+}
+
+.lds-ring {
+    display: inline-block;
+    margin: auto;
+    position: relative;
+    width: 160px;
+    height: 160px;
+}
+
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 128px;
+    height: 128px;
+    margin: 8px;
+    border: 8px solid #3812b2;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #3812b2 transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes changeBackgroundColor {
+    0% {
+        background-color: rgba(255, 255, 255, 0);
+    }
+
+    100% {
+        background-color: rgba(255, 255, 255, 0.4);
+    }
 }
 
 /* -------------------------- LEFT-SECTION -------------------------- */
@@ -37,7 +104,7 @@ h3 {
     margin-bottom: 10px;
 }
 
-.categoriesControllers {
+.fieldsCategoriesControllers {
     font-size: 0.9em;
     font-weight: bold;
     color: black;
@@ -54,6 +121,10 @@ h3 {
     font-weight: bold;
 }
 
+.categoriesLinks label {
+    cursor: pointer;
+}
+
 .categoriesLinks:hover {
     color: rgba(51, 51, 51, 0.5);
     text-decoration: inherit;
@@ -62,15 +133,19 @@ h3 {
 .categoriesSeparators {
     width: 100%;
     height: 1px;
-    margin: 5px 0;
+    margin: 14px 0;
 }
 
 .fieldsContainers {
     margin-bottom: 10px;
 }
 
-.categoriesContainers {
+#leftSection input[type=radio] {
+    display: none;
+}
 
+#leftSection label {
+    margin: 0;
 }
 
 /* -------------------------- RIGHT-SECTION -------------------------- */
@@ -133,3 +208,8 @@ section#test {
     height: max-content !important;
 }
 
+#noOfferErrorMessageContainer {
+    background-color: $violet-clair;
+    color: $blanc;
+    padding: 15px;
+}

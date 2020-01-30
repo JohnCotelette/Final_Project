@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Offer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Mapping\OrderBy;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Offer|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,48 +17,53 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class OfferRepository extends ServiceEntityRepository
 {
+    /**
+     * OfferRepository constructor.
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Offer::class);
     }
 
-    // /**
-    //  * @return Offer[] Returns an array of Offer objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $category
+     * @param $experience
+     * @param $salary
+     * @param $type
+     * @return array
+     */
+    public function findByCategoriesOrderByDate(?Category $category, ?string $experience, ?int $salary, ?string $type) :array
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder("o");
 
-    public function findByType($type)
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.type = :type')
-            ->setParameter('type', $type)
-            ->orderBy('o.id', 'ASC')
+        if ($category != null) {
+            $qb
+                ->andWhere(':categoryId MEMBER OF o.categories')
+                ->setParameter(':categoryId', $category->getId());
+        }
+
+        if ($experience != null) {
+            $qb
+                ->andWhere('o.experience = :experience')
+                ->setParameter(':experience', $experience);
+        }
+
+        if ($salary != null) {
+            $qb
+                ->andWhere('o.salary >= :salary')
+                ->setParameter(':salary', $salary);
+        }
+
+        if($type != null) {
+            $qb
+                ->andWhere('o.type = :type')
+                ->setParameter(':type', $type);
+        }
+
+        return $qb
+            ->orderBy('o.created_at', 'DESC')
             ->getQuery()
-            ->getResult()
-        ; 
+            ->getResult();
     }
-    /*
-    public function findOneBySomeField($value): ?Offer
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-  
 }

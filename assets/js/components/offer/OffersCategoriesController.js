@@ -1,17 +1,19 @@
 class OffersCategoriesController {
     constructor() {
-        this.categoriesControllers = document.getElementsByClassName("categoriesControllers");
-        this.categoriesContainers = document.getElementsByClassName("categoriesContainers");
+        this.fieldsCategoriesControllers = document.getElementsByClassName("fieldsCategoriesControllers");
+        this.fieldsCategoriesContainers = document.getElementsByClassName("fieldsCategoriesContainers");
         this.arrowsStates = document.getElementsByClassName("arrowsStates");
+        this.radioButtons = document.querySelectorAll("#leftSection input[type=radio]");
+        this.allCategoriesLinks = document.getElementsByClassName("categoriesLinks");
+        this.categoriesForm = document.getElementById("categoriesForm");
 
-        this.categoriesLinks = document.getElementsByClassName("categoriesLinks");
-
-        this.defaultsLinks = document.getElementsByClassName("defaultsLinks")
+        this.loadingContainer = document.getElementById("loading");
+        this.loadingCircle = document.getElementById("loadingCircle");
     };
 
     displayCategoryContainer(i) {
-        this.categoriesContainers[i].classList.toggle("reduced");
-        this.categoriesContainers[i].classList.toggle("Sdeployed");
+        this.fieldsCategoriesContainers[i].classList.toggle("reduced");
+        this.fieldsCategoriesContainers[i].classList.toggle("deployed");
 
         if (this.arrowsStates[i].dataset.icon === "angle-up") {
             this.arrowsStates[i].dataset.icon = "angle-down";
@@ -21,35 +23,57 @@ class OffersCategoriesController {
         }
     };
 
-    attributeFocusOnButton(i) {
-        this.categoriesLinks[i].classList.toggle("linkSelected");
+    checkRadioButtonForStylingLabels() {
+        setTimeout(() => {
+            for (let i = 0; i < this.radioButtons.length; i++) {
+                if (this.radioButtons[i].checked === true) {
+                    this.allCategoriesLinks[i].classList.add("linkSelected");
+                }
+                else {
+                    this.allCategoriesLinks[i].classList.remove("linkSelected");
+                }
+            }
+
+            this.categoriesForm.submit();
+        }, 10);
+
+        this.displayLoader();
+    }
+
+    displayLoader() {
+        console.log(this.loadingCircle);
+        this.loadingContainer.classList.remove("invisible");
+        this.loadingCircle.classList.remove("invisible");
     }
 
     init() {
-        for (let i = 0; i < this.defaultsLinks.length; i++) {
-            this.defaultsLinks[i].classList.add("linkSelected");
+        for (let i = 0; i < this.radioButtons.length; i++) {
+            if (this.radioButtons[i].checked === true) {
+                this.allCategoriesLinks[i].classList.add("linkSelected");
+            }
+            else {
+                this.allCategoriesLinks[i].classList.remove("linkSelected");
+            }
         }
     }
 
     initControls() {
-        for (let i = 0; i < this.categoriesControllers.length; i++) {
-            this.categoriesControllers[i].addEventListener("click", (e) => {
+        for (let i = 0; i < this.fieldsCategoriesControllers.length; i++) {
+            this.fieldsCategoriesControllers[i].addEventListener("click", (e) => {
                 e.preventDefault();
 
                 this.displayCategoryContainer(i);
             });
         }
 
-        for (let i = 0; i < this.categoriesLinks.length; i++) {
-            this.categoriesLinks[i].addEventListener("click", (e) => {
-                e.preventDefault();
-
-                this.attributeFocusOnButton(i);
-            });
+        for (let i = 0; i < this.allCategoriesLinks.length; i++) {
+            this.allCategoriesLinks[i].addEventListener("click", () => {
+                this.checkRadioButtonForStylingLabels();
+            })
         }
     };
 }
 
 let offersCategoriesController = new OffersCategoriesController();
-offersCategoriesController.init();
 offersCategoriesController.initControls();
+offersCategoriesController.init();

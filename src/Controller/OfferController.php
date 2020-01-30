@@ -4,40 +4,61 @@ namespace App\Controller;
 
 use App\Entity\Offer;
 use App\Form\ApplyType;
-use App\Repository\FieldRepository;
+use App\Form\CategoriesType;
 use App\Entity\Application;
 use App\Service\OfferService;
 use App\Repository\OfferRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OfferController extends AbstractController
 {
     /**
-     * @Route("/offers", name="offers_index")
+     * @Route("/offers", name="offers_index", methods={"GET", "POST"})
      * @param OfferRepository $offerRepository
      * @param Request $request
      * @param PaginatorInterface $paginator
-     * @param FieldRepository $fieldRepository
      * @return Response
      */
-    public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator, FieldRepository $fieldRepository)
+    public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator)
     {
-        $query = $offerRepository->findAll();
-        $fields = $fieldRepository->findAll();
-        
+        $category = null;
+        $experience = null;
+        $salary = null;
+        $type = null;
+
+        $form = $this->createForm(CategoriesType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $category = null;
+
+            if ($form["category"]->getData()) {
+                $category = $form["category"]->getData();
+            }
+
+            $experience = $form["experience"]->getData();
+            $request->request->set("experience", $experience);
+            $salary = $form["salary"]->getData();
+            $type = $form["type"]->getData();
+        }
+
+        $offers = $offerRepository->findByCategoriesOrderByDate($category, $experience, $salary, $type);
+
         $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
+            $offers,
+            $request->query->getInt('page', 1),
+            10
         );
 
         return $this->render('offer/index.html.twig', [
-            'fields' => $fields,
-            'pagination' => $pagination,
+            "pagination" => $pagination,
+            "form" => $form->createView(),
         ]);
     }
 
