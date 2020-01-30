@@ -100,4 +100,74 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    //candidate dashbord
+    //--------------------------------------------------------------------------------------------------------------------------
+    /**
+     * @Route("/dashbord/{id}", name= "user_dashbord", methods={"GET", "POST"})
+     * 
+     * @param RenewPasswordType $renewPasswordType
+     * @param UserRepository $userRepository
+     * @param UserPasswordEncoderInterface $encoder
+     * 
+     */
+    public function dashbordUser(Request $request , $user, UserPasswordEncoderInterface $encoder)
+    {
+         if($user) 
+         {
+            if( $user->getRoles === "ROLE_CANDIDAT" )
+            { 
+                
+                    $form= $this->createForm(CandidatType::class, $user, ["legalConditions", ]);
+
+                    $form->handleRequest($request);
+
+
+                    if($form->isSubmitted() && $form->isValid())
+                    {
+                        $password = $encoder->encodePassword( $user, $user->getPassword());
+                        $user->setPassword( $password );
+                        $entityManager = $this ->getDoctrine()->getManager();
+
+                    
+                    
+                        $entityManager->persist($user);
+                      
+                        $this->addFlash("success", "Votre profile est bien mis à jour ");
+                        return $this->redirectToRoute('user_dashbord');
+
+                    }
+
+            } 
+            // if the user is Recruiter
+            elseif( $user->getRoles() === "ROLE_RECRUITER" )
+            {
+                $form = $this->createForm(RecruiterType::class, $user);
+                if($form->isSubmitted() && $form->isValid())
+                {
+                    $password = $encoder->encodePassword( $user, $user->getPassword());
+
+                    $user->setPassword( $password );
+                    $entityManager = $this ->getDoctrine()->getManager();
+                    $entityManager->persist($user);
+                    $this->addFlash("success", "Votre profile est bien mis à jour ");
+                    return $this->redirectToRoute('user_dashbord');    
+                }
+            }
+            else
+            {
+                $this->addFlash("info", " vous éte ni candidat ni entreprise ");
+            }
+            $entityManager->flush();  
+         }  
+         
+         
+           return $this->render('/user/dashbord.html.twig', [
+               "form" => $form->createView(),
+               "user" => $user
+           ]) ;
+    }
+
+
+
 }
