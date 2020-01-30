@@ -18,6 +18,10 @@
 
     <div class="row">
         <section id="leftSection">
+            {% for success in app.flashes("notice") %}
+                <div class="alert alert-success">{{ success }}</div>
+            {% endfor %}
+
             {{ form_start(form, {'attr': {'id': 'categoriesForm'}}) }}
             <div id="fieldsContainer" class="categoryContainers">
                 <h3>Domaines</h3>
@@ -80,7 +84,7 @@
         </section>
 
         <section id="rightSection">
-            {% if pagination %}
+            {% if pagination|length > 0 %}
                 {% for offer in pagination %}
                     <div class="mb-4 container d-flex bg-white">
                         <div class="col-md-4 d-flex">
@@ -102,15 +106,17 @@
                         </div>
                     </div>
                 {% endfor %}
-
-                <div id="paginationContainer" class="container mt-3 d-flex justify-content-center">
-                    {{ knp_pagination_render(pagination) }}
-                </div>
             {% else %}
-                Oups! Il semble que vous soyez trop séléctif et qu'aucune annonce ne corresponde à vos critères.<br>
-                Vous pouvez tenter une recherche en revoyant ces derniers.
+                <div id="noOfferErrorMessageContainer">
+                    Oups! Il semble que vous soyez trop séléctif et qu'aucune annonce ne corresponde à vos critères.<br>
+                    Vous pouvez tenter une nouvelle recherche en revoyant ces derniers.
+                </div>
             {% endif %}
-        </section>
+
+            <div id="paginationContainer" class="container mt-3 d-flex justify-content-center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+    </section>
     </div>
 {% endblock %}
 
