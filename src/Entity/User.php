@@ -107,11 +107,6 @@ class User implements UserInterface
     private $passwordToken;
 
     /**
-     * @ORM\Column(type="string", length=70, nullable=true)
-     */
-    private $business;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist", "remove"})
      */
     private $avatar;
@@ -130,6 +125,11 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Offer", mappedBy="user", orphanRemoval=true)
      */
     private $offers;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Business", inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $business;
 
     public function __construct()
     {
@@ -273,18 +273,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getBusiness(): ?string
-    {
-        return $this->business;
-    }
-
-    public function setBusiness(?string $business): self
-    {
-        $this->business = $business;
-
-        return $this;
-    }
-
     public function getAvatar(): ?Avatar
     {
         return $this->avatar;
@@ -371,7 +359,19 @@ class User implements UserInterface
         return $this;
     }
 
-    public function __toString()
+    public function getBusiness(): ?Business
+    {
+        return $this->business;
+    }
+
+    public function setBusiness(?Business $business): self
+    {
+        $this->business = $business;
+
+        return $this;
+    }
+
+    public function __toString() :string
     {
         return $this->email;
     }

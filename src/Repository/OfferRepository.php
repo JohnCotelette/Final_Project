@@ -27,13 +27,14 @@ class OfferRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $category
-     * @param $experience
-     * @param $salary
-     * @param $type
+     * @param Category|null $category
+     * @param string|null $experience
+     * @param int|null $salary
+     * @param string|null $type
+     * @param string|null $city
      * @return array
      */
-    public function findByCategoriesOrderByDate(?Category $category, ?string $experience, ?int $salary, ?string $type) :array
+    public function findByCategoriesOrderByDate(?Category $category, ?string $experience, ?int $salary, ?string $type, ?string $city) :array
     {
         $qb = $this->createQueryBuilder("o");
 
@@ -59,6 +60,10 @@ class OfferRepository extends ServiceEntityRepository
             $qb
                 ->andWhere('o.type = :type')
                 ->setParameter(':type', $type);
+        }
+
+        if($city != null) {
+
         }
 
         return $qb

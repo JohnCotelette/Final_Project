@@ -94,11 +94,11 @@
                             <div class="card-body">
                                 <div class=" linkOffer">
                                     <h4 class="card-title"><a href="{{ path('show_offer', {'id':offer.id}) }}">{{ offer.title }}  </a></h4>
-                                    <h5> Chez <a href="{{ path('show_offer', {'id':offer.id}) }}"> {{offer.user.business|upper}}</a> </h5>
+                                    <h5> Chez <a href="{{ path('show_offer', {'id':offer.id}) }}"> {{ offer.user.business.name|upper }}</a> </h5>
                                     <div class="container col-md-12 d-flex justify-content-around">
-                                        <p class="card-text"><i class="fas fa-id-badge"></i> : {{ offer.experience}}</p>
-                                        <p class="card-text"><i class="fas fa-money-check-alt"></i> : {{ offer.salary}}</p>
-                                        <p class="card-text"><i class="fas fa-file-contract"></i> : {{ offer.type}}</p>
+                                        <p class="card-text"><i class="fas fa-id-badge"></i> : {{ offer.experience }}</p>
+                                        <p class="card-text"><i class="fas fa-money-check-alt"></i> : {{ offer.salary }}</p>
+                                        <p class="card-text"><i class="fas fa-file-contract"></i> : {{ offer.type }}</p>
                                     </div>
                                 </div>
                                 <p class="card-text">{{ offer.description|truncate(50) }} <a href="{{ path('show_offer', {'id':offer.id}) }}">En savoir plus</a></p>

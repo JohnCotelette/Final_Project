@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Validator\Constraints\UniqueSiret;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,9 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Regex;
 
 class RecruiterType extends AbstractType
@@ -77,19 +76,19 @@ class RecruiterType extends AbstractType
             ])
             ->add("business", TextType::class, [
                 "label" => false,
+                "mapped" => false,
                 "attr" => [
-                    "placeholder" => "Entreprise",
+                    "placeholder" => "Siret Entreprise",
                 ],
                 "constraints" => [
-                    new Length([
-                       "min" => 2,
-                       "max" => 40,
-                       "minMessage" => "Le nom de votre entreprise doit faire au moins 2 caractères",
-                       "maxMessage" => "Le nom de votre entreprise ne peut dépasser 40 catactères",
+                    new Regex([
+                        "pattern" => "/^\d{14}$/",
+                        "message" => "Les numéros de Siret Français sont composés de 14 chiffres",
                     ]),
                     new NotBlank([
-                        "message" => "Veuillez renseigner le nom de votre entreprise",
+                        "message" => "Veuillez renseigner le numéro de Siret de votre entreprise",
                     ]),
+                    new UniqueSiret(),
                 ],
             ])
             ->add("legalConditions", CheckboxType::class, [
@@ -99,7 +98,7 @@ class RecruiterType extends AbstractType
                 "constraints" => [
                     new IsTrue([
                         "message" => "Vous devez accepter nos conditions générales d'utilisation si vous souhaitez poursuivre",
-                    ])
+                    ]),
                 ],
             ])
         ;

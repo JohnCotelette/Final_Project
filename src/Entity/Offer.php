@@ -156,7 +156,6 @@ class Offer
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
-     * @param null $date
      * @return Offer
      * @throws \Exception
      */
