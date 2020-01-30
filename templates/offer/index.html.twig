@@ -63,6 +63,19 @@
                     {% endfor %}
                 </div>
             </div>
+
+            <hr class="categoriesSeparators">
+
+            <div id="typeContainer" class="categoryContainers">
+                <h3>Type de contrat</h3>
+
+                <div>
+                    {% for name, choice in form.type.vars.choices %}
+                        {{ form_widget(form.type[name]) }}
+                        <span class="categoriesLinks">{{ form_label(form.type[name]) }}</span>
+                    {% endfor %}
+                </div>
+            </div>
             {{ form_end(form) }}
         </section>
 

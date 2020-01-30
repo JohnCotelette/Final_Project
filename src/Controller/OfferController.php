@@ -27,7 +27,7 @@ class OfferController extends AbstractController
      */
     public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator, FieldRepository $fieldRepository)
     {
-        $offers = $offerRepository->findAll();
+        $offers = $offerRepository->findAllOrderByDate();
 
         $form = $this->createForm(CategoriesType::class);
 
@@ -37,13 +37,14 @@ class OfferController extends AbstractController
             $category = null;
 
             if ($form["category"]->getData()) {
-                $category = $form["category"]->getData()->getName();
+                $category = $form["category"]->getData();
             }
 
             $experience = $form["experience"]->getData();
             $salary = $form["salary"]->getData();
+            $type = $form["type"]->getData();
 
-            $offers = $offerRepository->findByCategories($category, $experience, $salary);
+            $offers = $offerRepository->findByCategoriesOrderByDate($category, $experience, $salary, $type);
         }
 
         $pagination = $paginator->paginate(

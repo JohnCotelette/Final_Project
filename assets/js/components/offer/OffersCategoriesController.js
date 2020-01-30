@@ -33,16 +33,28 @@ class OffersCategoriesController {
                     this.allCategoriesLinks[i].classList.remove("linkSelected");
                 }
             }
+
+            this.categoriesForm.submit();
         }, 10);
 
         this.displayLoader();
-        this.categoriesForm.submit();
     }
 
     displayLoader() {
         console.log(this.loadingCircle);
         this.loadingContainer.classList.remove("invisible");
         this.loadingCircle.classList.remove("invisible");
+    }
+
+    init() {
+        for (let i = 0; i < this.radioButtons.length; i++) {
+            if (this.radioButtons[i].checked === true) {
+                this.allCategoriesLinks[i].classList.add("linkSelected");
+            }
+            else {
+                this.allCategoriesLinks[i].classList.remove("linkSelected");
+            }
+        }
     }
 
     initControls() {
@@ -64,3 +76,4 @@ class OffersCategoriesController {
 
 let offersCategoriesController = new OffersCategoriesController();
 offersCategoriesController.initControls();
+offersCategoriesController.init();
