@@ -108,7 +108,7 @@ h1 {
 
 #leftSection {
     text-align: left;
-    background-color: white;
+    background-color: $blanc-clair;
     padding: 15px;
     width: 30%;
     height: max-content;
@@ -211,6 +211,10 @@ h3 {
         text-decoration: none;
         color: inherit;
     }
+}
+
+.d-flex {
+    background-color: $blanc-clair !important;
 }
 
 main {
