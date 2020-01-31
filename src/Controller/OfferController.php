@@ -71,11 +71,10 @@ class OfferController extends AbstractController
      */
     public function showOffer(OfferService $offerService, Offer $offer, Request $request)
     {
-
         $application = new Application;
         $user = $this->getUser();
         $checkApply = $offerService->checkIfCandidateAlreadyApply($offer, $application);
-    
+        
         if ($user && $user->getRoles() === ["ROLE_CANDIDATE"]) {
             $form = $this->createForm(ApplyType::class, $application);
             $form->handleRequest($request);

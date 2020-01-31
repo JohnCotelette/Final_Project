@@ -7,7 +7,6 @@
 {% block content %}
 
     <section>
-        <h2> <a href="{{ path('show_offer', {'id':offer.id}) }}">{{offer.user.business|upper}}</a> </h2>
             <h3>{{offer.title}}</h3>
             <div class="descriptionOffer">
                 <p>{{offer.description}}</p>
@@ -29,32 +28,29 @@
                     {% endfor %}
                 </div>
             {% elseif checkApply is same as(false) %}
-                <div class="messageErrorApply">
+                <div id="messageErrorApply">
                     {% for message in app.session.flashbag.get('errorHasAlreadyApply') %}
                         <div class="alert alert-warning">
                             {{ message }}
                         </div>
                     {% endfor %}
                 </div>
+            {% elseif is_granted('ROLE_RECRUITER') %}
+                <div id="messageForRecruiter" class="alert alert-warning">
+                    <p class=""> Vous ne pouvez pas postuler à une annonce car vous êtes connectés en tant que recruteur</p>
+                </div>
             {% else %} 
                 <p id="submitContainer">
                     <button type="submit" id="submit" class="commonButtonStyle">Postuler</button>
                 </p> 
             {% endif %}
-
-        <p>
-            {# <a href="{{ path('show_business', {'id':offer.user.business}) }}" class="commonButtonStyle">Voir l'entreprise</a>  #}
-        </p>
-
     </section>
 
     <section id="formApply" class="invisible">
-
         {% if form is not null %}
-            <div >
+            <div>
                 <p> Message de motivation vous avez 1000 caractères : </p>
                 {{ form_start(form) }}
-
                     <div class="form-error">
                         {{ form_errors(form.motivation) }}
                     </div>
@@ -68,9 +64,6 @@
                     </p>
                 {{ form_end(form)}}
             </div>
-            {% if is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
-                <a class="link" href="{{ path('logout') }}">Logout</a>
-            {% endif %}
         {% else %}
             <div class="accountAction"> 
                 <a id="noAccountYetLink" class="commonButtonStyle" href="{{ path("candidate_register") }}">Inscrivez-vous</a>
