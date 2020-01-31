@@ -55,9 +55,10 @@ class CategoriesType extends AbstractType
                 ],
             ])
             ->add("city", TextType::class, [
+                "label" => false,
                 "attr" => [
-                    "placeholder" => "Ville"
-                ]
+                    "placeholder" => "Ville",
+                ],
             ])
         ;
     }
