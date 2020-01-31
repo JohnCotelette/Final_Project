@@ -335,6 +335,14 @@ h5 {
         flex-direction: column;
     }
 
+    #paginationContainer nav {
+        display: flex;
+    }
+
+    #paginationContainer ul {
+        margin: auto;
+    }
+
     #businessImgContainer {
         margin-top: 20px;
     }
