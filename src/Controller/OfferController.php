@@ -71,7 +71,6 @@ class OfferController extends AbstractController
      */
     public function showOffer(OfferService $offerService, Offer $offer, Request $request)
     {
-
         $application = new Application;
         $user = $this->getUser();
         $checkApply = $offerService->checkIfCandidateAlreadyApply($offer, $application);

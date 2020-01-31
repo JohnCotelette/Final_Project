@@ -36,7 +36,7 @@ section#formApply {
 .detailOffer p{
     margin-left: 15px;
     margin-right: 15px;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 .descriptionOffer {
@@ -61,18 +61,47 @@ section#formApply {
 
 #messageSuccessApply {
     width: 50%;
-    
 }
+
+#messageForRecruiter {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#messageErrorApply {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 1600px) {
+
+    .detailOffer{
+        display: inline;
+    }
+
+    .detailOffer p{
+        margin-left: 15px;
+        margin-right: 15px;
+        font-size: 1rem;
+    }
+}
+
 @media (max-width: 900px) {
     
     .detailOffer{
         display: inline;
     }
 
+    .detailOffer p{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
     main {
         display: flex;
         flex-direction: column;
-        font-size: 1.2rem;
     }
 
     section {
@@ -91,5 +120,23 @@ section#formApply {
         width: 100%;
         height: calc(100vh - 250px);
         min-height: 200px;
+    }
+
+    #messageForRecruiter {
+       width: 50%;
+    }
+
+    #messageErrorApply {
+        width: 50%;
+    }
+}
+
+@media (max-width: 600px) {
+    main {
+        font-size: 0.9rem;
+    }
+
+    .detailOffer p{
+        font-size: 0.9rem;
     }
 }

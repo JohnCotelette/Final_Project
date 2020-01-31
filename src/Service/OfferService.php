@@ -43,7 +43,7 @@ class OfferService
         forEach($applicationsOfThisOffer as $application) {
             if ($application->getUser() === $user)
             {	
-                $flashbag = $this->bag->add("errorHasAlreadyApply", "T'as déjà postulé à cette annonce");
+                $flashbag = $this->bag->add("errorHasAlreadyApply", "Vous avez déjà postulé à cette annonce");
                 return $hasAlreadyApply = false;
             }
         } 
