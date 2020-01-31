@@ -68,6 +68,7 @@ class UserFixture extends BaseFixture
                     ->setLocation($this->faker->city)
                     ->setSiretNumber(rand(11111111111111, 99999999999999))
                     ->setActivityArea($this->faker->text($maxNbChars = 100))
+                    ->setDescription($this->faker->text($maxNbChars = 2000))
                     ;
 
                 $user

@@ -41,7 +41,7 @@ class UserController extends AbstractController
 
                 $user
                     ->setPassword($password)
-                    ->setRoles(['ROLE_CANDIDAT']);
+                    ->setRoles(['ROLE_CANDIDATE']);
 
                 $entityManager = $this
                     ->getDoctrine()

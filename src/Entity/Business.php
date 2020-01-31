@@ -32,6 +32,11 @@ class Business
     private $employeesNumber;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $activityArea;
@@ -88,6 +93,18 @@ class Business
     public function setEmployeesNumber(?string $employeesNumber): self
     {
         $this->employeesNumber = $employeesNumber;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
