@@ -8,6 +8,7 @@ use App\Form\CategoriesType;
 use App\Entity\Application;
 use App\Service\OfferService;
 use App\Repository\OfferRepository;
+use App\Service\MailService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,7 +70,7 @@ class OfferController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function showOffer(OfferService $offerService, Offer $offer, Request $request)
+    public function showOffer(OfferService $offerService, Offer $offer, Request $request, MailService $mailService)
     {
         $application = new Application;
         $user = $this->getUser();
@@ -91,6 +92,7 @@ class OfferController extends AbstractController
                 $entityManager->flush();
 
                 $checkApply = true;
+                $mailService->sendMailToConfirmApply($user, "confirmApply", $offer);
 
                 $this->addFlash("success", "Vous avez postulé");
             }
