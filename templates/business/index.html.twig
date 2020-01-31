@@ -1,20 +1,44 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
-{% block title %}Hello BusinessController!{% endblock %}
+{% block stylesheets %}
+    {{encore_entry_link_tags("allBusiness")}}
+{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block title %}{{ parent() }} Business{% endblock %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/symfony/Final_Project/src/Controller/BusinessController.php'|file_link(0) }}">src/Controller/BusinessController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/symfony/Final_Project/templates/business/index.html.twig'|file_link(0) }}">templates/business/index.html.twig</a></code></li>
-    </ul>
-</div>
+{% block content %}
+    <div class="bodyBusinessPage">
+        {% for business in pagination %}
+            <div class="displayBusiness">
+                <div class="businessImg">
+                    <img src="https://assets.chooseyourboss.com/companies/logos/000/007/085/thumb/Dataiku_logo_circle.png?1508142513" alt="">
+                </div>
+                <div class="displayBusinessDetails">
+                    <div class="businessName">
+                        <h2> {{business.name}} </h2>
+                    </div>
+                    <ul class="displayUlBusinessDetails">
+                        <div class="businessEmployees">{{business.employeesNumber}}<li class="separatorBusinessDetails"> &#8226;</li></div>
+                        <div class="businessActivity">
+                            {{business.activityArea}}
+                            <li class="separatorBusinessDetails">&#8226;</li>
+                        </div>
+                        <div class="businessLocation">
+                            {{business.location}}
+                        </div>
+                    </ul>
+                </div>                
+            </div> 
+            <hr>
+        {% endfor %}
+    </div>
+    <div class="container mt-3 d-flex justify-content-center">
+        
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock  %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags("allBusiness") }}
 {% endblock %}
