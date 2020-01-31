@@ -40,6 +40,14 @@
             <hr class="defaultNavLinksSeparators">
 
         {% endif %}
+        {% if app.request.attributes.get("_route") != "home" %}
+            <li>
+                <a class="defaultNavLinks" href="{{ path("home") }}">Accueil</a>
+            </li>
+
+            <hr class="defaultNavLinksSeparators">
+
+        {% endif %}
         {% if app.request.attributes.get("_route") != "offers_index" %}
             <li>
                 <a class="defaultNavLinks" href="{{ path("offers_index") }}">Offres</a>
