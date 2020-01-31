@@ -56,14 +56,16 @@ class OfferRepository extends ServiceEntityRepository
                 ->setParameter(':salary', $salary);
         }
 
-        if($type != null) {
+        if ($type != null) {
             $qb
                 ->andWhere('o.type = :type')
                 ->setParameter(':type', $type);
         }
 
-        if($city != null) {
-
+        if ($city != null) {
+            $qb
+                ->andWhere('o.location = :city')
+                ->setParameter(':city', $city);
         }
 
         return $qb
