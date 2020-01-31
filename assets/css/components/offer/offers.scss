@@ -2,14 +2,9 @@
 
 /* -------------------------- MAIN -------------------------- */
 
-#totalPageContent {
-    max-height: calc(100vh - 100px);
-}
-
 main {
     width: 100%;
-    display: flex;
-    overflow: hidden;
+    margin-top: 0;
 }
 
 .row {
@@ -17,17 +12,21 @@ main {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 125px;
 }
 
 /* -------------------------- LOADER -------------------------- */
 
 #loading {
     display: flex;
-    position: absolute;
+    position: fixed;
     z-index: 999;
     width: 100%;
-    height: calc(100% + 30px);
-    top: -30px;
+    height: 100% !important;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     animation: changeBackgroundColor 0.2s ease both;
 }
 
@@ -84,6 +83,23 @@ main {
     }
 }
 
+/* -------------------------- DESCRIPTION-SECTION -------------------------- */
+
+#offersPageDescription {
+    position: absolute;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+h1 {
+    font-size: 2em;
+    font-family: buenos_aires_trialblack, Arial, sans-serif;
+    color: $violet-fonce;
+    margin-bottom: 5px;
+}
+
 /* -------------------------- LEFT-SECTION -------------------------- */
 
 .categoryContainers {
@@ -96,6 +112,7 @@ main {
     padding: 15px;
     width: 30%;
     height: max-content;
+    margin-bottom: 30px;
 }
 
 h3 {
@@ -148,13 +165,45 @@ h3 {
     margin: 0;
 }
 
+#categories_city {
+    padding: 4px 7px;
+    font-size: 0.85em;
+}
+
+#submitCitySearch {
+    margin-left: 10px;
+    padding: 4px 18px;
+    background-color: $violet-fonce;
+    border: none;
+    color: white;
+    border-radius: 2px;
+}
+
+#submitCitySearch:hover {
+    background-color: $violet-clair;
+}
+
+#displayCategoriesForMobilesContainer {
+    display: none;
+    width: 100%;
+}
+
+#displayCategoriesForMobiles {
+    width: max-content;
+    margin: 10px auto 30px;
+    color: $violet-clair;
+    font-size: 0.9em;
+}
+
+#displayCategoriesForMobiles:hover {
+    text-decoration: none;
+}
+
 /* -------------------------- RIGHT-SECTION -------------------------- */
 
 #rightSection {
-    overflow: auto;
     width: 65%;
     height: 100%;
-    padding-right: 20px;
 }
 
 .linkOffer {
@@ -166,50 +215,132 @@ h3 {
 
 main {
     display: flex;
-    margin-top: 30px;
-    min-height: 800px;
+    min-height: 830px;
 }
 
 section {
     width: 70%;
     display: flex;
     flex-direction: column;
-    text-align: center;
 }
 
-section#test {
+#rightSection h4 {
+    font-family: aktivgrotesk-mediuploadedfile, Arial, sans-serif;
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 1.6em;
+}
+
+h5 {
+    font-size: 1em;
+}
+
+.offersLinks {
+    font-family: aktivgrotesk-mediuploadedfile, Arial, sans-serif;
+    color: $violet-fonce !important;
+    font-weight: bold;
+}
+
+.offersCategoriesContainers {
     display: flex;
-    width: 30%;
+    flex-wrap: wrap;
 }
 
-#test form {
-    width: 90%;
-    margin: auto
+.offersCategoriesContainers p {
+    white-space: nowrap;
+    font-size: 0.9em;
+    color: rgba(51, 51, 51, 0.5);
+    margin: 0 10px 4px 0;
 }
 
-#apply_motivation {
-    width: 100%;
-    height: calc(100vh - 250px);
-    min-height: 600px;
+.offersDescriptions {
+    font-size: 0.9em;
 }
 
-.iconeOffer{
-    display: flex;
-    justify-content: center;
-
-}
-
-.iconeOffer p{
-    margin-left: 15px;
-    margin-right: 15px;
+.clickToKnowMoreLinks {
+    font-size: 0.9em;
+    color: $violet-clair;
 }
 
 #paginationContainer {
     height: max-content !important;
+    margin-bottom: 30px;
+}
+
+.page-link {
+    border-color: $violet-fonce !important;
+    color: $violet-clair !important;
+}
+
+.page-item.active .page-link {
+    background-color: rgba(51, 51, 51, 0.7) !important;
+    color: white !important;
 }
 
 #noOfferErrorMessageContainer {
     background-color: $violet-clair;
     color: $blanc;
     padding: 15px;
+}
+
+/* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-width: 1500px) {
+    .row, #offersPageDescription {
+        width: 90%;
+    }
+
+    #offersPageDescription {
+        margin-left: 5%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .row, main {
+        flex-direction: column !important;
+    }
+
+    #leftSection, #rightSection {
+        width: 100%;
+    }
+
+    #rightSection .container {
+        max-width: inherit;
+    }
+
+    #leftSection {
+        margin-top: 30px;
+        margin-bottom: 0;
+    }
+
+    #displayCategoriesForMobilesContainer {
+        display: flex;
+    }
+
+    .mobileReduced {
+        display: none;
+    }
+
+    .card-title, .offersCategoriesContainers {
+        margin-bottom: 8px !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .pagination {
+        font-size: 0.8em !important;
+    }
+
+    .d-flex {
+        flex-direction: column;
+    }
+
+    #businessImgContainer {
+        margin-top: 20px;
+    }
+
+    .card-body {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
 }
