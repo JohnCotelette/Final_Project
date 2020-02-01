@@ -94,6 +94,15 @@ main {
     color: white;
 }
 
+#userHasAlreadyApply {
+    width: max-content;
+    padding: 6px 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: white;
+    background-color: $violet-clair;
+}
+
 /* -------------------------- CONTENT -------------------------- */
 
 #contentContainer {
@@ -115,17 +124,6 @@ main {
     color: rgb(51, 51, 51);
 }
 
-#applyContainer {
-    position: fixed;
-    width: calc(30% - 40px);
-    top: 110px;
-    bottom: 350px;
-    min-height: 300px;
-    right: 10%;
-    left: calc(10% + 50.4%);
-    margin-left: 40px;
-}
-
 h2 {
     font-family: buenos_aires_trialblack, Arial, sans-serif;
     color: $violet-clair;
@@ -137,10 +135,41 @@ h2 {
     margin: 40px 0;
 }
 
-#applyContainer {
+/* -------------------------- FIXED-CONTENT -------------------------- */
+
+.fixedContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 25px;
     background-color: $blanc-clair;
     height: max-content;
+    position: fixed;
+    width: calc(30% - 40px);
+    top: 110px;
+    bottom: 350px;
+    min-height: 300px;
+    right: 10%;
+    left: calc(10% + 50.4%);
+    margin-left: 40px;
+}
+
+.indicationsContainers {
+    display: flex;
+}
+
+.indicationsContainers {
+    margin: 15px 0;
+}
+
+.indicationsContainers > span, .indicationsContainers svg {
+    display: block;
+    align-self: auto;
+}
+
+.indicationsContainers svg {
+    font-size: 1.4em;
+    margin-right: 10px;
 }
 
 #numberOfApplys {
@@ -148,5 +177,47 @@ h2 {
     color: $violet-clair;
 }
 
-/* -------------------------- FIXED-CONTENT -------------------------- */
+#connected {
+    color: $vert;
+}
 
+#nonConnected, #needConnectorRegister {
+    color: red;
+}
+
+#nonAllowed {
+    color: $violet-clair;
+}
+
+#errorNotAllowedToApply {
+    font-size: 1.2em;
+}
+
+#applyContainer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.specials {
+    margin: 0 0 6px 15px;
+    font-size: 0.97em;
+}
+
+.specials {
+    margin-bottom: 15px;
+}
+
+.specials a {
+    color: $violet-clair;
+    font-weight: bold;
+}
+
+.specials a:hover {
+    text-decoration: none;
+    $color: $violet-fonce;
+}
+
+#newWindowLinkInfo {
+    color: rgba(51, 51, 51, 0.8);
+}

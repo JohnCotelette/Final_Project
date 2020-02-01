@@ -214,7 +214,7 @@ h3 {
 }
 
 .d-flex {
-    background-color: $blanc-clair !important;
+    background-color: $blanc-clair;
 }
 
 main {
@@ -269,6 +269,7 @@ h5 {
 #paginationContainer {
     height: max-content !important;
     margin-bottom: 30px;
+    background-color: inherit !important;
 }
 
 .page-link {

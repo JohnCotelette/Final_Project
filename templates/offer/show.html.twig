@@ -32,7 +32,13 @@
 
             <p id="startedAt">Pour une prise de poste le {{ offer.startedAt|date("d/m/y") }}</p>
 
-            <button id="applyButton" class="commonButtons">Postuler</button>
+            {% if app.user == null or is_granted('ROLE_CANDIDATE') %}
+                {% if checkApply %}
+                    <p id="userHasAlreadyApply">Candidature enregistree</p>
+                {% else %}
+                    <button id="applyButton" class="commonButtons">Postuler</button>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 
@@ -55,17 +61,90 @@
             <p>{{ offer.location }}</p>
         </div>
 
-        <div id="applyContainer">
-            <div id="applyStatut">
-                <p id="applyStatutText">
+        <div id="offerStatutContainer" class="fixedContent">
+            <p id="applyStatutText" class="indicationsContainers">
+                <i class="fas fa-info-circle"></i>
+                <span>
                     Les candidatures pour cette annonce sont ouvertes.<br>
                     Vous pouvez candidater en cliquant sur le bouton <strong>"POSTULER"</strong> présent en haut de page.<br>
-                </p>
-                <p id="numberOfApplysContainer">
+                </span>
+            </p>
+
+            <p id="numberOfApplysContainer" class="indicationsContainers">
+                <i class="fas fa-info-circle"></i>
+                <span>
                     Cette annonce a déjà recueilli <span id="numberOfApplys">{{ offer.applications|length }}</span> candidature{{ offer.applications|length > 1 ? "s" : "" }}.
+                </span>
+            </p>
+
+            {% if app.user %}
+                {% if app.user.roles == ["ROLE_CANDIDATE"] %}
+                    <p id="connected"  class="indicationsContainers">
+                        <i class="fas fa-user-alt"></i>
+                        <span>
+                            Vous êtes actuellement connecté en tant que candidat.
+                        </span>
+                    </p>
+                {% else %}
+                    <p id="nonAllowed"  class="indicationsContainers">
+                        <i class="fas fa-user-alt"></i>
+                        <span>
+                            Vous êtes recruteur ?<br>
+                            Postez vous aussi une annonce en cliquant <a id="redirectForRecruiters" href="#">ici</a>.
+                        </span>
+                    </p>
+                {% endif %}
+            {% else %}
+                <p id="nonConnected"  class="indicationsContainers">
+                    <i class="fas fa-user-alt-slash"></i>
+                    <span>
+                        Vous n'êtes actuellement pas connecté.
+                    </span>
                 </p>
-                <p></p>
-            </div>
+            {% endif %}
+        </div>
+
+        <div id="applyContainer" class="fixedContent invisible">
+            {% if app.user %}
+                {% if app.user.roles == ["ROLE_CANDIDATE"] %}
+                    {% if checkApply == null %}
+                        Vous pouvez postuler
+                        <!-- HAVE TO WORK HERE AFTER BDD/ENTITIES UPDATE -->
+                    {% else %}
+                        Vous avez déjà postulé
+                    {% endif %}
+                {% else %}
+                    lol
+                {% endif %}
+            {% else %}
+                <p id="needConnectorRegister"  class="indicationsContainers">
+                    <i class="fas fa-user-alt-slash"></i>
+                    <span>
+                        Seuls les utilisateurs inscrits peuvent postuler aux annonces présentes sur le site.
+                    </span>
+                </p>
+
+                <p id="errorNotAllowedToApply" class="indicationsContainers">
+                    <i class="fas fa-info-circle"></i>
+                    <span>
+                        Vous n'avez pas encore de compte ?<br>
+                    </span>
+                </p>
+
+                <p class="indicationsContainers specials">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>
+                        Cliquez <a href="{{ path("candidate_register") }}">ici</a> pour en créér un.
+                    </span>
+                </p>
+
+                <p id="lastRedirectIndicationContainer" class="indicationsContainers specials">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>
+                        Si vous avez juste oublié de vous connecter, cliquez sur ce <a target="_blank" href="{{ path("login") }}">lien</a> <span id="newWindowLinkInfo">(pratique, ce dernier s'ouvrira dans une nouvelle fenêtre, vous pourrez actualiser cette page ensuite)</span>.
+                    </span>
+                </p>
+            {% endif %}
         </div>
     </section>
 {% endblock  %}

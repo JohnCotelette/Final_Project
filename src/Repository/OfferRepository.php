@@ -36,6 +36,8 @@ class OfferRepository extends ServiceEntityRepository
      */
     public function findByCategoriesOrderByDate(?Category $category, ?string $experience, ?int $salary, ?string $type, ?string $city) :array
     {
+        $defaultExperience = "Tous";
+
         $qb = $this->createQueryBuilder("o");
 
         if ($category != null) {
@@ -45,9 +47,21 @@ class OfferRepository extends ServiceEntityRepository
         }
 
         if ($experience != null) {
+            $parameters = [
+                "experience" => $experience,
+                "defaultExperience" => $defaultExperience,
+            ];
+
             $qb
                 ->andWhere('o.experience = :experience')
-                ->setParameter(':experience', $experience);
+                ->orWhere('o.experience = :defaultExperience')
+                ->setParameter(':experience', $experience)
+                ->setParameter(':defaultExperience', $defaultExperience);
+        }
+        else {
+            $qb
+                ->andWhere('o.experience = :defaultExperience')
+                ->setParameter(':defaultExperience', $defaultExperience);
         }
 
         if ($salary != null) {
