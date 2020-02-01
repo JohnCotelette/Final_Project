@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 class OfferService
 {
     private $security;
+
     private $bag;
 
     const LETTERS = ["A", "C", "Y", "Z"];
@@ -20,7 +21,6 @@ class OfferService
     public function __construct(Security $security, FlashBagInterface $bag) {
         $this->security = $security;
         $this->bag = $bag;
-
     }
 
     /**
@@ -33,9 +33,15 @@ class OfferService
         $offer->setReference($reference);
     }
 
+    /**
+     * @param Offer $offer
+     * @param Application $application
+     * @return bool
+     */
     public function checkIfCandidateAlreadyApply(Offer $offer, Application $application)
     {        
         $user = $this->security->getUser();
+
         $hasAlreadyApply = null;
 
         $applicationsOfThisOffer = $offer->getApplications();
@@ -44,6 +50,7 @@ class OfferService
             if ($application->getUser() === $user)
             {	
                 $flashbag = $this->bag->add("errorHasAlreadyApply", "Vous avez déjà postulé à cette annonce");
+
                 return $hasAlreadyApply = false;
             }
         } 

@@ -68,17 +68,21 @@ class OfferController extends AbstractController
      * @param OfferService $offerService
      * @param Offer $offer
      * @param Request $request
+     * @param MailService $mailService
      * @return Response
      */
     public function showOffer(OfferService $offerService, Offer $offer, Request $request, MailService $mailService)
     {
         $application = new Application;
         $user = $this->getUser();
+
         $checkApply = $offerService->checkIfCandidateAlreadyApply($offer, $application);
     
         if ($user && $user->getRoles() === ["ROLE_CANDIDATE"]) {
             $form = $this->createForm(ApplyType::class, $application);
+
             $form->handleRequest($request);
+
             if ($form->isSubmitted() && $form->isValid() ) {
 
                 $entityManager = $this
@@ -92,9 +96,10 @@ class OfferController extends AbstractController
                 $entityManager->flush();
 
                 $checkApply = true;
+
                 $mailService->sendMailToConfirmApply($user, "confirmApply", $offer);
 
-                $this->addFlash("success", "Vous avez postulé");
+                $this->addFlash("success", "Votre candidature a bien été enregistrée, vous recevrez prochainement une réponse de la part de l'auteur de cette offre.");
             }
         }
                     

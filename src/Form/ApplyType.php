@@ -15,7 +15,7 @@ class ApplyType extends AbstractType
         $builder
             ->add('motivation', TextareaType::class, [
                 "attr" => [
-                    "placeholder" => "Message de motivation",
+                    "placeholder" => "Message de candidature",
                 ],
             ])
         ;
@@ -25,6 +25,7 @@ class ApplyType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Application::class,
+            'csrf_protection' => true,
             'attr' => [
                 'novalidate' => 'novalidate',
             ],

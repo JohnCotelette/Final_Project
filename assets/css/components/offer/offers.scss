@@ -108,7 +108,7 @@ h1 {
 
 #leftSection {
     text-align: left;
-    background-color: white;
+    background-color: $blanc-clair;
     padding: 15px;
     width: 30%;
     height: max-content;
@@ -213,6 +213,10 @@ h3 {
     }
 }
 
+.d-flex {
+    background-color: $blanc-clair;
+}
+
 main {
     display: flex;
     min-height: 830px;
@@ -265,6 +269,7 @@ h5 {
 #paginationContainer {
     height: max-content !important;
     margin-bottom: 30px;
+    background-color: inherit !important;
 }
 
 .page-link {

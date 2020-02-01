@@ -161,6 +161,16 @@ footer div {
     }
 }
 
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 @keyframes fadeInLeft {
     0% {
         opacity: 0;
@@ -204,6 +214,18 @@ footer div {
     height: max-content;
     transform: scaleY(1);
     transition: all 0.3s ease;
+}
+
+.appear {
+    animation: fadeIn 0.5s ease both;
+}
+
+.disapear {
+    animation: fadeOut 0.4s ease both;
+}
+
+.fadeInRight {
+    animation: fadeInRight 0.4s ease both;
 }
 
 /* -------------------------- RESPONSIVE -------------------------- */
