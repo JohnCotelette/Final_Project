@@ -107,6 +107,11 @@ class User implements UserInterface
     private $passwordToken;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $public = true;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist", "remove"})
      */
     private $avatar;
@@ -269,6 +274,18 @@ class User implements UserInterface
     public function setPasswordToken(?string $passwordToken): self
     {
         $this->passwordToken = $passwordToken;
+
+        return $this;
+    }
+
+    public function getPublic(): ?bool
+    {
+        return $this->public;
+    }
+
+    public function setPublic(?bool $public): self
+    {
+        $this->public = $public;
 
         return $this;
     }
