@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class ApplyType extends AbstractType
 {
@@ -16,6 +17,14 @@ class ApplyType extends AbstractType
             ->add('motivation', TextareaType::class, [
                 "attr" => [
                     "placeholder" => "Message de candidature",
+                    "maxlength" => 1000,
+                ],
+                "label" => false,
+                "constraints" => [
+                    new Length([
+                        "max" => 1000,
+                        "maxMessage" => "Votre message est trop long (max : {{ limit }} caractères",
+                    ]),
                 ],
             ])
         ;

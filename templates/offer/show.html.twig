@@ -5,6 +5,14 @@
 {% endblock %}
 
 {% block content %}
+    {% for success in app.flashes("success") %}
+        <div class="alert alert-success">{{ success }}</div>
+    {% endfor %}
+
+    {% for error in app.flashes("errorAlreadyApply") %}
+        <div class="alert alert-dark">{{ error }}</div>
+    {% endfor %}
+
     <div id="offerInfosContainer">
         <div id="businessImgContainer">
             <figure>
@@ -105,13 +113,52 @@
         </div>
 
         <div id="applyContainer" class="fixedContent invisible">
+            <button id="applyContainerButton"><i class="fas fa-window-close"></i></button>
+
             {% if app.user %}
                 {% if app.user.roles == ["ROLE_CANDIDATE"] %}
-                    {% if checkApply == null %}
-                        Vous pouvez postuler
-                        <!-- HAVE TO WORK HERE AFTER BDD/ENTITIES UPDATE -->
+                    {% if checkApply == false %}
+                        {% if app.user.cv != null %}
+                            <p id="errorNoCV" class="indicationsContainers">
+                                <i id="errorCvIcon" class="fas fa-times"></i>
+                                <span>
+                                    Il semble que vous ne disposiez pas encore d'un CV enregistré.
+                                 </span>
+                            </p>
+
+                            <p id="noCVIndicator" class="indicationsContainers">
+                                <i class="fas fa-info-circle"></i>
+                                <span>
+                                    Pour régler ce problème :<br>
+                                 </span>
+                            </p>
+
+                            <p id="noCVRedirect" class="indicationsContainers specials">
+                                <i class="fas fa-arrow-right"></i>
+                                <span>
+                                    Vous pouvez cliquer directement <span id="noCvRedirect"><a href="#">ici</a></span> pour ajouter un CV à votre compte.
+                                 </span>
+                            </p>
+                        {% else %}
+                            <p id="applyIndicator" class="indicationsContainers">
+                                <i class="fas fa-info-circle"></i>
+                                <span>
+                                    Votre CV personnel sera automatiquement joint et accessible par l'employeur.
+                                 </span>
+                            </p>
+
+                            {{ form_start(form) }}
+                                {{ form_widget(form.motivation) }}
+
+                                <p id="motivationCountContainer">
+                                    Il vous reste <span id="motivationCount">1000</span> caractère(s)
+                                </p>
+
+                                <button id="submitButtonForApply" class="commonButtons" type="submit">Envoyer</button>
+                            {{ form_end(form) }}
+                        {% endif %}
                     {% else %}
-                        Vous avez déjà postulé
+                        Vous avez déjà postulé à cette annonce.
                     {% endif %}
                 {% else %}
                     lol

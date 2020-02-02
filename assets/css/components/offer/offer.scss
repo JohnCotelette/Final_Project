@@ -8,6 +8,11 @@ main {
     padding: 30px 0;
 }
 
+.alert-success, .alert-dark {
+    width: max-content;
+    margin-bottom: 35px;
+}
+
 /* -------------------------- OFFER-INFO -------------------------- */
 
 #offerInfosContainer {
@@ -19,18 +24,20 @@ main {
 
 #businessImgContainer {
     display: flex;
-    width: 15%;
+    width: 18%;
 }
 
 #offerInfosTextContainer {
-    width: 85%;
+    width: 82%;
     padding-left: 25px;
 }
 
 #businessImgContainer figure {
     display: flex;
     width: 150px;
+    min-width: 150px;
     height: 150px;
+    min-height: 150px;
     margin: auto;
     border-radius: 50%;
     border: 1px solid rgba(51, 51, 51, 0.4);
@@ -181,7 +188,7 @@ h2 {
     color: $vert;
 }
 
-#nonConnected, #needConnectorRegister {
+#nonConnected, #needConnectorRegister, #errorNoCV {
     color: red;
 }
 
@@ -189,8 +196,9 @@ h2 {
     color: $violet-clair;
 }
 
-#errorNotAllowedToApply {
+#errorNotAllowedToApply, #noCVIndicator {
     font-size: 1.2em;
+    line-height: 1.4em;
 }
 
 #applyContainer ul {
@@ -208,16 +216,70 @@ h2 {
     margin-bottom: 15px;
 }
 
-.specials a {
+.specials a, #noCVIndicator a {
     color: $violet-clair;
     font-weight: bold;
 }
 
-.specials a:hover {
+.specials a:hover, #noCVIndicator a:hover {
     text-decoration: none;
     $color: $violet-fonce;
 }
 
+#errorCvIcon {
+    font-size: 2.5em;
+}
+
 #newWindowLinkInfo {
     color: rgba(51, 51, 51, 0.8);
+}
+
+#applyContainerButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: $violet-clair;
+    font-size: 1.6em;
+    transition: color 0.3s ease;
+    border: none;
+    background-color: $blanc-clair;
+    padding: 0;
+}
+
+#applyContainerButton:hover {
+    color: $violet-fonce;
+}
+
+#applyContainer form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+#apply_motivation {
+    width: 94%;
+    height: 300px;
+    min-height: 300px;
+    max-height: 600px;
+    padding: 15px;
+    font-size: 0.9em;
+    margin: auto;
+}
+
+#submitButtonForApply {
+    border: none;
+    padding: 7px 14px;
+    margin: 5px 15px;
+    width: max-content;
+    transition: 0.3s ease;
+}
+
+#submitButtonForApply:hover {
+    color: white;
+}
+
+#motivationCountContainer {
+    text-align: right;
+    font-size: 0.8em;
+    margin: 3px 3% 0 0;
 }

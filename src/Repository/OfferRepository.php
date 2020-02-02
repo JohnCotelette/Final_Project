@@ -6,8 +6,6 @@ use App\Entity\Category;
 use App\Entity\Offer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\Mapping\OrderBy;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Offer|null find($id, $lockMode = null, $lockVersion = null)
@@ -56,11 +54,6 @@ class OfferRepository extends ServiceEntityRepository
                 ->andWhere('o.experience = :experience')
                 ->orWhere('o.experience = :defaultExperience')
                 ->setParameter(':experience', $experience)
-                ->setParameter(':defaultExperience', $defaultExperience);
-        }
-        else {
-            $qb
-                ->andWhere('o.experience = :defaultExperience')
                 ->setParameter(':defaultExperience', $defaultExperience);
         }
 

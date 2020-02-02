@@ -73,38 +73,43 @@ class OfferController extends AbstractController
      */
     public function showOffer(OfferService $offerService, Offer $offer, Request $request, MailService $mailService)
     {
-        $application = new Application;
         $user = $this->getUser();
 
-        $checkApply = $offerService->checkIfCandidateAlreadyApply($offer, $application);
+        $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
     
         if ($user && $user->getRoles() === ["ROLE_CANDIDATE"]) {
+            $application = new Application;
+
             $form = $this->createForm(ApplyType::class, $application);
 
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid() ) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
-                $entityManager = $this
-                ->getDoctrine()
-                ->getManager();
+                $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
 
-                $application->setUser($user);
-                $offer->addApplication($application);
-                
-                $entityManager->persist($application);
-                $entityManager->flush();
+                if ($checkApply != true) {
+                    $entityManager = $this
+                        ->getDoctrine()
+                        ->getManager();
 
-                $checkApply = true;
+                    $application->setUser($user);
+                    $offer->addApplication($application);
 
-                $mailService->sendMailToConfirmApply($user, "confirmApply", $offer);
+                    $entityManager->persist($application);
+                    $entityManager->flush();
 
-                $this->addFlash("success", "Votre candidature a bien été enregistrée, vous recevrez prochainement une réponse de la part de l'auteur de cette offre.");
+                    $mailService->sendMailToConfirmApply($user, "confirmApply", $offer);
+
+                    $this->addFlash("success", "Votre candidature a bien été enregistrée, vous recevrez prochainement une réponse de la part de l'auteur de cette offre.");
+                }
+                else {
+                    $this->addFlash("errorAlreadyApply", "Vous avez déjà postulé à cette annonce");
+                }
             }
         }
                     
         return $this->render('offer/show.html.twig', [
-            'application' => $application,
             'form' => !empty($form) ? $form->createView() : null,
             'offer' => $offer,
             'checkApply' => $checkApply,
