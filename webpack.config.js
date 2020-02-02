@@ -8,6 +8,17 @@ Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     .addEntry('app', './assets/js/app.js')
+    .addEntry('home', './assets/js/components/home/home.js')
+    .addEntry('offers', './assets/js/components/offer/offers.js')
+    .addEntry('offer', './assets/js/components/offer/offer.js')
+    .addEntry('business', './assets/js/components/business/business.js')
+    .addEntry('allBusiness', './assets/js/components/business/allBusiness.js')
+    .addStyleEntry('login', './assets/css/components/security/login.scss')
+    .addStyleEntry('register', './assets/css/components/user/register.scss')
+    .addStyleEntry('forgotPassword', './assets/css/components/security/forgotPassword.scss')
+    .addStyleEntry('changePassword', './assets/css/components/security/changePassword.scss')
+    .addStyleEntry('easyAdmin', './assets/css/components/easyAdmin/easyAdmin.scss')
+    .addStyleEntry("404", './assets/css/components/error/404.scss')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
@@ -20,6 +31,10 @@ Encore
     })
     .enableSassLoader()
     .autoProvidejQuery()
+    .copyFiles({
+        from: './assets/img',
+        to: 'images/[path][name].[hash:8].[ext]',
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();

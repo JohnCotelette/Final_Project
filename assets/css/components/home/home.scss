@@ -1,0 +1,224 @@
+@import "../../core.scss";
+
+/* -------------------------- HEADER -------------------------- */
+
+header {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 250px);
+    background-color: $violet-clair;
+    text-align: center;
+}
+
+#headerConnect {
+    background-color: $violet-fonce;
+    z-index: 1;
+}
+
+#slogan {
+    z-index: 1;
+    margin-top: 50px;
+}
+
+#headerTitleContainer {
+    position: relative;
+    min-height: 60%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: $blanc;
+}
+
+#headerTitleContainer figure {
+    display: flex;
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    animation: fadeIn 1.5s ease both;
+}
+
+#headerTitleContainer figure img {
+    margin: auto;
+    height: 115%;
+}
+
+h1 {
+    font-family: buenos_aires_trialblack, Arial, sans-serif;
+    font-size: 5.4em;
+    z-index: 1;
+    letter-spacing: 2px;
+    animation: fadeInLeft 1s ease both;
+    animation-delay: 0.4s;
+}
+
+#headerTitleContainer p {
+    font-size: 2em;
+}
+
+#headerConnectContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90%;
+    min-height: 40%;
+    margin: 0 auto;
+    background-color: $violet-fonce;
+    color: $blanc;
+    font-size: 3em;
+}
+
+#sloganText {
+    animation: fadeInLeft 1s ease both;
+    animation-delay: 0.8s;
+}
+
+#headerConnectContainer p {
+    display: flex;
+    justify-content: center;
+    margin: 9px auto;
+}
+
+#headerConnectContainer p {
+    animation: fadeIn 0.8s ease both;
+    animation-delay: 1.7s;
+}
+
+#headerConnectContainer p:first-child {
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+#headerRegisterLink {
+    font-size: 0.4em;
+    padding: 7px 40px;
+    transition: color 0.3s ease;
+}
+
+#headerRegisterLink:hover {
+    text-decoration: none;
+    color: white;
+}
+
+/* -------------------------- CONTENT -------------------------- */
+
+h2 {
+    color: $violet-clair;
+    text-align: center;
+    font-weight: bold;
+}
+
+.card-body {
+    padding-bottom: 0;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.card-title, .card-text {
+    margin-bottom: 15px;
+}
+
+.card-title {
+    color: $violet-clair;
+}
+
+.moreInfosContainer {
+    display: flex;
+    height: 60px;
+    background-color: $vert;
+    color: $blanc;
+    width: 120%;
+    margin-left: -10%;
+}
+
+.moreInfosContainer a {
+    margin: auto;
+    text-transform: uppercase;
+    color: $blanc;
+    letter-spacing: 3px;
+    transition: color 0.3s ease;
+}
+
+.moreInfosContainer a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.lastOffers {
+    margin-bottom: 30px;
+}
+
+/* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-height: 900px) and (min-width: 581px) {
+    header {
+        min-height: 600px;
+    }
+}
+
+@media (max-height: 900px) and (max-width: 580px) {
+    header {
+        min-height: calc(100vh - 180px);
+    }
+}
+
+@media (max-width: 950px) {
+    header {
+        font-size: 80%;
+    }
+}
+
+@media (max-width: 780px) {
+    header {
+        font-size: 70%;
+    }
+
+    h1 {
+        font-size: 4.6em;
+    }
+
+    #headerTitleContainer figure {
+        height: inherit;
+    }
+
+    #headerTitleContainer figure img {
+        width: 92%;
+        height: auto !important;
+    }
+
+    #slogan {
+        margin-top: 0;
+    }
+
+    #headerConnectContainer p:first-child {
+        margin-top: 0;
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 650px) {
+    #headerTitleContainer figure img {
+        width: 100%;
+    }
+
+    h2.my-5 {
+        margin: 30px 0 !important;
+    }
+}
+
+@media (max-width: 580px) {
+    h1 {
+        font-size: 3.5em;
+    }
+}
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 3.2em;
+    }
+}

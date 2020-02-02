@@ -1,0 +1,13 @@
+{% extends 'base.html.twig'  %}
+
+{% block body %}
+    {{ include("common_components/nav.html.twig") }}
+
+    <div id="totalPageContent">
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+
+        {{ include("common_components/footer.html.twig") }}
+    </div>
+{% endblock %}

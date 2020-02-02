@@ -7,6 +7,9 @@
         "ext-iconv": "*",
         "doctrine/annotations": "^1.8",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "easycorp/easyadmin-bundle": "^2.3",
+        "knplabs/knp-paginator-bundle": "^5.1",
+        "ramsey/uuid-doctrine": "^1.5",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
@@ -18,12 +21,16 @@
         "symfony/profiler-pack": "^1.0",
         "symfony/security-bundle": "4.4.*",
         "symfony/security-csrf": "4.4.*",
+        "symfony/swiftmailer-bundle": "^3.4",
+        "symfony/translation": "4.4.*",
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "4.4.*",
+        "symfony/web-server-bundle": "^4.4",
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/yaml": "4.4.*"
     },
     "require-dev": {
+        "fzaninotto/faker": "^1.9",
         "symfony/maker-bundle": "^1.14"
     },
     "config": {
