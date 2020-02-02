@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Offer;
 use App\Entity\Application;
+use App\Entity\User;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
@@ -12,14 +13,19 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
  */
 class OfferService
 {
-    private $security;
-
+    /**
+     * @var FlashBagInterface
+     */
     private $bag;
 
     const LETTERS = ["A", "C", "Y", "Z"];
 
+    /**
+     * OfferService constructor.
+     * @param Security $security
+     * @param FlashBagInterface $bag
+     */
     public function __construct(Security $security, FlashBagInterface $bag) {
-        $this->security = $security;
         $this->bag = $bag;
     }
 
@@ -34,25 +40,25 @@ class OfferService
     }
 
     /**
+     * @param User $user
      * @param Offer $offer
-     * @param Application $application
      * @return bool
      */
-    public function checkIfCandidateAlreadyApply(Offer $offer, Application $application)
-    {        
-        $user = $this->security->getUser();
+    public function checkIfCandidateAlreadyApply(?User $user, Offer $offer) :bool
+    {
+        if ($user) {
+            $applicationsOfThisOffer = $offer->getApplications();
 
-        $hasAlreadyApply = null;
-
-        $applicationsOfThisOffer = $offer->getApplications();
-        
-        forEach($applicationsOfThisOffer as $application) {
-            if ($application->getUser() === $user)
-            {	
-                $flashbag = $this->bag->add("errorHasAlreadyApply", "Vous avez déjà postulé à cette annonce");
-
-                return $hasAlreadyApply = false;
+            if ($applicationsOfThisOffer) {
+                forEach($applicationsOfThisOffer as $application) {
+                    if ($application->getUser() === $user)
+                    {
+                        return true;
+                    }
+                }
             }
-        } 
+        }
+
+        return false;
     }
 }
