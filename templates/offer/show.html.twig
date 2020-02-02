@@ -51,24 +51,6 @@
     </div>
 
     <section id="contentContainer">
-        <div id="offerDetailsContainer">
-            <h2>Le poste</h2>
-
-            <p>{{ offer.description }}</p>
-
-            <hr class="offerDetailsSeparators">
-
-            <h2>A propos de {{ offer.user.business.name }}</h2>
-
-            <p>{{ offer.user.business.description }}</p>
-
-            <hr class="offerDetailsSeparators">
-
-            <h2>Localisation</h2>
-
-            <p>{{ offer.location }}</p>
-        </div>
-
         <div id="offerStatutContainer" class="fixedContent">
             <p id="applyStatutText" class="indicationsContainers">
                 <i class="fas fa-info-circle"></i>
@@ -148,13 +130,13 @@
                             </p>
 
                             {{ form_start(form) }}
-                                {{ form_widget(form.motivation) }}
+                            {{ form_widget(form.motivation) }}
 
-                                <p id="motivationCountContainer">
-                                    Il vous reste <span id="motivationCount">1000</span> caractère(s)
-                                </p>
+                            <p id="motivationCountContainer">
+                                Il vous reste <span id="motivationCount">1000</span> caractère(s)
+                            </p>
 
-                                <button id="submitButtonForApply" class="commonButtons" type="submit">Envoyer</button>
+                            <button id="submitButtonForApply" class="commonButtons" type="submit">Envoyer</button>
                             {{ form_end(form) }}
                         {% endif %}
                     {% else %}
@@ -192,6 +174,24 @@
                     </span>
                 </p>
             {% endif %}
+        </div>
+
+        <div id="offerDetailsContainer">
+            <h2>Le poste</h2>
+
+            <p>{{ offer.description }}</p>
+
+            <hr class="offerDetailsSeparators">
+
+            <h2>A propos de {{ offer.user.business.name }}</h2>
+
+            <p>{{ offer.user.business.description }}</p>
+
+            <hr class="offerDetailsSeparators">
+
+            <h2>Localisation</h2>
+
+            <p>{{ offer.location }}</p>
         </div>
     </section>
 {% endblock  %}

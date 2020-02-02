@@ -10,6 +10,7 @@ main {
 
 .alert-success, .alert-dark {
     width: max-content;
+    max-width: 63%;
     margin-bottom: 35px;
 }
 
@@ -260,7 +261,7 @@ h2 {
     width: 94%;
     height: 300px;
     min-height: 300px;
-    max-height: 600px;
+    max-height: 550px;
     padding: 15px;
     font-size: 0.9em;
     margin: auto;
@@ -283,3 +284,70 @@ h2 {
     font-size: 0.8em;
     margin: 3px 3% 0 0;
 }
+
+/* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-width: 1800px) {
+    #offerInfosTextContainer {
+        width: 78%;
+    }
+
+    #businessImgContainer {
+        width: 22%;
+    }
+}
+
+@media (max-width: 1500px) {
+    main {
+        width: 90%;
+    }
+
+    .fixedContent {
+        width: calc(34% - 40px);
+        right: 5%;
+        left: calc(11% + 50.4%);
+    }
+}
+
+@media (max-width: 1200px) {
+    #offerInfosTextContainer {
+        width: 75%;
+    }
+
+    #businessImgContainer {
+        width: 25%;
+    }
+}
+
+@media (max-width: 1100px) {
+    .fixedContent {
+        position: static;
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 40px;
+    }
+
+    .alert-success, .alert-dark {
+        max-width: 100%;
+    }
+
+    #offerInfosContainer, #contentContainer {
+        width: 100%;
+    }
+}
+
+@media (max-width: 740px) {
+    #businessImgContainer {
+        display: none;
+    }
+
+    #offerInfosTextContainer {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    h1 {
+        font-size: 1.6em;
+    }
+}
+
