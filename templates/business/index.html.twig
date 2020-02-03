@@ -8,25 +8,29 @@
 
 
 {% block content %}
+    <div class="title">
+        <h1>
+                Ils peuvent vous apprendre a faire du bon cafe
+        </h1>
+    </div>
     <div class="bodyBusinessPage">
         {% for business in pagination %}
             <div class="displayBusiness">
-                <div class="businessImg">
-                    <img src="https://assets.chooseyourboss.com/companies/logos/000/007/085/thumb/Dataiku_logo_circle.png?1508142513" alt="">
+                <div class="businessImgContainer">
+                    <figure>
+                        <img src="{{ business.avatar ? "public/business_avatars/" ~ business.avatar.name : asset("build/images/question_mark.42e63c4a.png") }}" alt="">
+                    </figure>
                 </div>
                 <div class="displayBusinessDetails">
                     <div class="businessName">
-                        <h2> {{business.name}} </h2>
+                        <h2> <a href="{{ path ("show_business", {'id': business.id}) }}"> {{business.name}} </a> </h2>
                     </div>
-                    <ul class="displayUlBusinessDetails">
-                        <div class="businessEmployees">{{business.employeesNumber}}<li class="separatorBusinessDetails"> &#8226;</li></div>
-                        <div class="businessActivity">
-                            {{business.activityArea}}
-                            <li class="separatorBusinessDetails">&#8226;</li>
-                        </div>
-                        <div class="businessLocation">
-                            {{business.location}}
-                        </div>
+                    <ul>
+                        <li>{{business.employeesNumber}}</li>
+                        <li> &#8226;</li>
+                        <li>{{business.kind}}</li>
+                        <li> &#8226;</li>
+                        <li>{{business.location}}</li>
                     </ul>
                 </div>                
             </div> 

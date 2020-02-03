@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Business;
+use App\Entity\User;
+use App\Repository\ApplicationRepository;
 use App\Repository\BusinessRepository;
+use App\Repository\OfferRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,14 +31,20 @@ class BusinessController extends AbstractController
 
         return $this->render('business/index.html.twig', [
             'pagination' => $pagination,
-          ]);
+        ]);
     }
 
     /**
-     * @Route("/business", name="show_business")
+     * @Route("/business/{id}", name="show_business", methods={"GET", "POST"})
      */
-    public function showBusiness(Type $var = null)
+    public function showBusiness(Business $business, OfferRepository $offerRepository, ApplicationRepository $applicationRepository)
     {
-        # code...
+        $offers = $offerRepository->findOffersByBusinessOrderByDate($business);
+        return $this->render('business/show.html.twig', [
+            'business' => $business,
+            'offers' => $offers,
+        ]);
     }
+
+
 }

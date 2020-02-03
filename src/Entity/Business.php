@@ -56,6 +56,11 @@ class Business
      */
     private $avatar;
 
+    /**
+     * @ORM\Column(type="string", columnDefinition="enum('Cabinet de recrutement', 'Editeur de logiciel', 'Entreprise', 'ESN / Cabinet de conseil')")
+     */
+    private $kind;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -162,4 +167,17 @@ class Business
 
         return $this;
     }
+
+    public function getKind(): ?string
+    {
+        return $this->kind;
+    }
+
+    public function setKind(string $kind): self
+    {
+        $this->kind = $kind;
+
+        return $this;
+    }
+
 }

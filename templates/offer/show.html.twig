@@ -100,11 +100,11 @@
             {% if app.user %}
                 {% if app.user.roles == ["ROLE_CANDIDATE"] %}
                     {% if checkApply == false %}
-                        {% if app.user.cv != null %}
+                        {% if app.user.cv == null %}
                             <p id="errorNoCV" class="indicationsContainers">
                                 <i id="errorCvIcon" class="fas fa-times"></i>
                                 <span>
-                                    Il semble que vous ne disposiez pas encore d'un CV enregistré.
+                                    Il semble que vous ne disposiez d'aucun CV enregistré.
                                  </span>
                             </p>
 

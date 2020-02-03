@@ -86,29 +86,33 @@ class OfferController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
+                if ($user->getRoles() === ["ROLE_CANDIDATE"] && $user->getCv() == null) {
+                    $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
 
-                if ($checkApply != true) {
-                    $entityManager = $this
-                        ->getDoctrine()
-                        ->getManager();
+                    if ($checkApply != true) {
+                        $entityManager = $this
+                            ->getDoctrine()
+                            ->getManager();
 
-                    $application->setUser($user);
-                    $offer->addApplication($application);
+                        $application->setUser($user);
+                        $offer->addApplication($application);
 
-                    $entityManager->persist($application);
-                    $entityManager->flush();
+                        $entityManager->persist($application);
+                        $entityManager->flush();
 
-                    $mailService->sendMailToConfirmApply($user, "confirmApply", $offer);
+                        $mailService->sendMailToConfirmApply($user, "confirmApply", $offer);
 
-                    $this->addFlash("success", "Votre candidature a bien été enregistrée, vous recevrez prochainement une réponse de la part de l'auteur de cette offre.");
-                }
-                else {
-                    $this->addFlash("errorAlreadyApply", "Vous avez déjà postulé à cette annonce");
+                        $this->addFlash("success", "Votre candidature a bien été enregistrée, vous recevrez prochainement une réponse de la part de l'auteur de cette offre.");
+
+                        $checkApply = true;
+                    }
+                    else {
+                        $this->addFlash("errorAlreadyApply", "Vous avez déjà postulé à cette annonce");
+                    }
                 }
             }
         }
-                    
+
         return $this->render('offer/show.html.twig', [
             'form' => !empty($form) ? $form->createView() : null,
             'offer' => $offer,
