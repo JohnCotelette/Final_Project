@@ -34,12 +34,12 @@
             <div class="card mx-3 mb-4 align-items-center" style="width: 25rem;">
                 <img class="card-img-top" src="http://via.placeholder.com/640x360" alt="Card image cap">
                 <div class="card-body">
-                    <h4 class="card-title">{{ offer.title}}</h4>
+                    <h4 class="card-title">{{ offer.title }}</h4>
 
                     <p class="card-text">{{ offer.description | truncate(200) }}</p>
 
                     <div class="moreInfosContainer">
-                        <a href="#">Plus d'infos</a>
+                        <a href="{{ path("show_offer", {"id" : offer.id}) }}">Plus d'infos</a>
                     </div>
                 </div>
             </div>

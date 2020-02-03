@@ -11,6 +11,8 @@ Encore
     .addEntry('home', './assets/js/components/home/home.js')
     .addEntry('offers', './assets/js/components/offer/offers.js')
     .addEntry('offer', './assets/js/components/offer/offer.js')
+    .addEntry('business', './assets/js/components/business/business.js')
+    .addEntry('allBusiness', './assets/js/components/business/allBusiness.js')
     .addStyleEntry('login', './assets/css/components/security/login.scss')
     .addStyleEntry('register', './assets/css/components/user/register.scss')
     .addStyleEntry('dashbord', './assets/css/components/user/dashbord.scss')

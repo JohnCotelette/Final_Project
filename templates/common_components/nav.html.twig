@@ -4,6 +4,27 @@
     <div id="allLinksContainer">
         <button id="mobileButton"><i class="fas fa-bars"></i></button>
         <ul id="defaultNavLinksContainer" class="mobileHidden">
+        {% if app.request.attributes.get("_route") != "home" %}
+            <li>
+                <a class="defaultNavLinks" href="{{ path("home") }}">Accueil</a>
+            </li>
+        {% endif %}
+            {% if app.request.attributes.get("_route") != "offers_index" %}
+                <li>
+                    <a class="defaultNavLinks" href="{{ path("offers_index") }}">Offres</a>
+                </li>
+            {% endif %}
+
+            <hr class="defaultNavLinksSeparators">
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <li>
+                <a class="defaultNavLinks" href="{{ path("easyadmin") }}">Admin</a>
+            </li>
+
+            <hr class="defaultNavLinksSeparators">
+
+        {% endif %}
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {% if app.request.attributes.get("_route") != "login" %}
                 <li>
@@ -34,23 +55,6 @@
         {% endif %}
 
             <hr class="defaultNavLinksSeparators">
-
-        {% if is_granted('ROLE_ADMIN') %}
-            <li>
-                <a class="defaultNavLinks" href="{{ path("easyadmin") }}">Admin</a>
-            </li>
-
-            <hr class="defaultNavLinksSeparators">
-
-        {% endif %}
-        {% if app.request.attributes.get("_route") != "offers_index" %}
-            <li>
-                <a class="defaultNavLinks" href="{{ path("offers_index") }}">Offres</a>
-            </li>
-
-            <hr class="defaultNavLinksSeparators">
-
-        {% endif %}
         </ul>
     </div>
 </nav>

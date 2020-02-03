@@ -1,95 +1,353 @@
+@import "../../core.scss";
+
+/* -------------------------- MAIN -------------------------- */
+
 main {
-    display: flex;
-    margin-top: 30px;
-    min-height: 800px;
-    font-size: 1.2rem;
+    width: 80%;
+    margin: auto;
+    padding: 30px 0;
 }
 
-section {
+.alert-success, .alert-dark {
+    width: max-content;
+    max-width: 63%;
+    margin-bottom: 35px;
+}
+
+/* -------------------------- OFFER-INFO -------------------------- */
+
+#offerInfosContainer {
+    display: flex;
+    width: 63%;
+    background-color: $blanc-clair;
+    padding: 25px;
+}
+
+#businessImgContainer {
+    display: flex;
+    width: 18%;
+}
+
+#offerInfosTextContainer {
+    width: 82%;
+    padding-left: 25px;
+}
+
+#businessImgContainer figure {
+    display: flex;
+    width: 150px;
+    min-width: 150px;
+    height: 150px;
+    min-height: 150px;
+    margin: auto;
+    border-radius: 50%;
+    border: 1px solid rgba(51, 51, 51, 0.4);
+    background-color: $blanc-clair;
+}
+
+#businessImgContainer figure img {
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+
+#offerInfosTextContainer {
     width: 70%;
+}
+
+#offerInfosTextContainer h1 {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#businessName {
+    color: $violet-clair;
+    font-weight: bold;
+}
+
+.offersCategoriesContainers {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.offersCategoriesContainers p {
+    white-space: nowrap;
+    font-size: 0.9em;
+    color: rgba(51, 51, 51, 0.5);
+    margin: 0 10px 6px 0;
+}
+
+#businessNameContainer, #postedAtContainer {
+    margin-bottom: 5px;
+}
+
+#postedAtContainer, #startedAt {
+    font-size: 0.9em;
+}
+
+#startedAt {
+    color: $violet-fonce;
+    font-weight: bold;
+}
+
+#applyButton {
+    padding: 6px 12px;
+    letter-spacing: 2px;
+    border: none;
+    transition: color 0.3s ease;
+}
+
+#applyButton:hover {
+    color: white;
+}
+
+#userHasAlreadyApply {
+    width: max-content;
+    padding: 6px 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: white;
+    background-color: $violet-clair;
+}
+
+/* -------------------------- CONTENT -------------------------- */
+
+#contentContainer {
+    width: 63%;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+#offerDetailsContainer {
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 25px;
+    background-color: $blanc-clair;
+}
+
+#offerDetailsContainer p {
+    font-size: 1.1em;
+    line-height: 1.6em;
+    color: rgb(51, 51, 51);
+}
+
+h2 {
+    font-family: buenos_aires_trialblack, Arial, sans-serif;
+    color: $violet-clair;
+    margin-bottom: 20px;
+    font-size: 1.6em;
+}
+
+.offerDetailsSeparators {
+    margin: 40px 0;
+}
+
+/* -------------------------- FIXED-CONTENT -------------------------- */
+
+.fixedContent {
     display: flex;
     flex-direction: column;
-    text-align: center;
+    justify-content: center;
+    padding: 25px;
+    background-color: $blanc-clair;
+    height: max-content;
+    position: fixed;
+    width: calc(30% - 40px);
+    top: 110px;
+    bottom: 350px;
+    min-height: 300px;
+    right: 10%;
+    left: calc(10% + 50.4%);
+    margin-left: 40px;
 }
 
-section#formApply {
+.indicationsContainers {
     display: flex;
-    width: 30%;
 }
 
-#formApply form {
-    width: 90%;
-    margin: auto
+.indicationsContainers {
+    margin: 15px 0;
+}
+
+.indicationsContainers > span, .indicationsContainers svg {
+    display: block;
+    align-self: auto;
+}
+
+.indicationsContainers svg {
+    font-size: 1.4em;
+    margin-right: 10px;
+}
+
+#numberOfApplys {
+    font-weight: bold;
+    color: $violet-clair;
+}
+
+#connected {
+    color: $vert;
+}
+
+#nonConnected, #needConnectorRegister, #errorNoCV {
+    color: red;
+}
+
+#nonAllowed {
+    color: $violet-clair;
+}
+
+#errorNotAllowedToApply, #noCVIndicator {
+    font-size: 1.2em;
+    line-height: 1.4em;
+}
+
+#applyContainer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.specials {
+    margin: 0 0 6px 15px;
+    font-size: 0.97em;
+}
+
+.specials {
+    margin-bottom: 15px;
+}
+
+.specials a, #noCVIndicator a {
+    color: $violet-clair;
+    font-weight: bold;
+}
+
+.specials a:hover, #noCVIndicator a:hover {
+    text-decoration: none;
+    $color: $violet-fonce;
+}
+
+#errorCvIcon {
+    font-size: 2.5em;
+}
+
+#newWindowLinkInfo {
+    color: rgba(51, 51, 51, 0.8);
+}
+
+#applyContainerButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: $violet-clair;
+    font-size: 1.6em;
+    transition: color 0.3s ease;
+    border: none;
+    background-color: $blanc-clair;
+    padding: 0;
+}
+
+#applyContainerButton:hover {
+    color: $violet-fonce;
+}
+
+#applyContainer form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
 }
 
 #apply_motivation {
-    width: 100%;
-    height: calc(100vh - 600px);
-    min-height: 200px;
+    width: 94%;
+    height: 300px;
+    min-height: 300px;
+    max-height: 550px;
+    padding: 15px;
+    font-size: 0.9em;
+    margin: auto;
 }
 
-.detailOffer{
-    display: flex;
-    justify-content: center;
+#submitButtonForApply {
+    border: none;
+    padding: 7px 14px;
+    margin: 5px 15px;
+    width: max-content;
+    transition: 0.3s ease;
 }
 
-.detailOffer p{
-    margin-left: 15px;
-    margin-right: 15px;
-    font-size: 0.9rem;
+#submitButtonForApply:hover {
+    color: white;
 }
 
-.descriptionOffer {
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+#motivationCountContainer {
+    text-align: right;
+    font-size: 0.8em;
+    margin: 3px 3% 0 0;
 }
 
+/* -------------------------- RESPONSIVE -------------------------- */
 
-.accountAction {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-}
-
-.accountAction a {
-   margin-top: 15px;
-   margin-bottom: 15px;
-   padding: 5px;
-}
-
-#messageSuccessApply {
-    width: 50%;
-    
-}
-@media (max-width: 900px) {
-    
-    .detailOffer{
-        display: inline;
+@media (max-width: 1800px) {
+    #offerInfosTextContainer {
+        width: 78%;
     }
 
+    #businessImgContainer {
+        width: 22%;
+    }
+}
+
+@media (max-width: 1500px) {
     main {
-        display: flex;
-        flex-direction: column;
-        font-size: 1.2rem;
+        width: 90%;
     }
 
-    section {
-        width: 100%;
-    }
-
-    section#test {
-        width: 100%;
-    }
-
-    section#formApply {
-        width: 100%;
-    }
-
-    #apply_motivation {
-        width: 100%;
-        height: calc(100vh - 250px);
-        min-height: 200px;
+    .fixedContent {
+        width: calc(34% - 40px);
+        right: 5%;
+        left: calc(11% + 50.4%);
     }
 }
+
+@media (max-width: 1200px) {
+    #offerInfosTextContainer {
+        width: 75%;
+    }
+
+    #businessImgContainer {
+        width: 25%;
+    }
+}
+
+@media (max-width: 1100px) {
+    .fixedContent {
+        position: static;
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 40px;
+    }
+
+    .alert-success, .alert-dark {
+        max-width: 100%;
+    }
+
+    #offerInfosContainer, #contentContainer {
+        width: 100%;
+    }
+}
+
+@media (max-width: 740px) {
+    #businessImgContainer {
+        display: none;
+    }
+
+    #offerInfosTextContainer {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    h1 {
+        font-size: 1.6em;
+    }
+}
+

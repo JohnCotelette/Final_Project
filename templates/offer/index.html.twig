@@ -16,8 +16,14 @@
         </div>
     </div>
 
+    <div id="offersPageDescription">
+        <h1>Toutes nos offres</h1>
+        Retrouvez sur cette page toutes les offres d'emploi du site.<br>
+        Vous avez la possibilité de postuler directement à ces dernières et ainsi démarrer une nouvelle carrière !
+    </div>
+
     <div class="row">
-        <section id="leftSection">
+        <section id="leftSection" class="mobileReduced">
             {% for success in app.flashes("notice") %}
                 <div class="alert alert-success">{{ success }}</div>
             {% endfor %}
@@ -29,7 +35,7 @@
                 <div>
                     {% for name, choices in form.category.vars.choices %}
                         <div>
-                            <a href="#" class="fieldsCategoriesControllers">{{ name }} <i class="arrowsStates fas fa-angle-up"></i></a>
+                            <a href="#" class="fieldsCategoriesControllers">{{ name }} <i id="arrowMobile" class="arrowsStates fas fa-angle-up"></i></a>
                         </div>
 
                         <div class="fieldsCategoriesContainers reduced">
@@ -80,28 +86,50 @@
                     {% endfor %}
                 </div>
             </div>
+
+            <hr class="categoriesSeparators">
+
+            <div id="locationContainer" class="categoryContainers">
+                <h3>Recherche par localisaton</h3>
+
+                <div>
+                    {{ form_widget(form.city) }}
+                    <button id="submitCitySearch"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
             {{ form_end(form) }}
         </section>
+
+        <div id="displayCategoriesForMobilesContainer">
+            <a href="#" id="displayCategoriesForMobiles">Recherche avancée <i class="arrowsStates fas fa-angle-up"></i></a>
+        </div>
 
         <section id="rightSection">
             {% if pagination|length > 0 %}
                 {% for offer in pagination %}
                     <div class="mb-4 container d-flex bg-white">
-                        <div class="col-md-4 d-flex">
+                        <div id="businessImgContainer" class="col-md-4 d-flex">
                             <img class="card-img-top align-self-center" src="http://via.placeholder.com/660x360" alt="Card image cap">
                         </div>
+
                         <div class="col-md-8">
                             <div class="card-body">
                                 <div class=" linkOffer">
                                     <h4 class="card-title"><a href="{{ path('show_offer', {'id':offer.id}) }}">{{ offer.title }}  </a></h4>
-                                    <h5> Chez <a href="{{ path('show_offer', {'id':offer.id}) }}"> {{offer.user.business|upper}}</a> </h5>
-                                    <div class="container col-md-12 d-flex justify-content-around">
-                                        <p class="card-text"><i class="fas fa-id-badge"></i> : {{ offer.experience}}</p>
-                                        <p class="card-text"><i class="fas fa-money-check-alt"></i> : {{ offer.salary}}</p>
-                                        <p class="card-text"><i class="fas fa-file-contract"></i> : {{ offer.type}}</p>
+
+                                    <h5>Chez <a class="offersLinks" href="#"> {{ offer.user.business.name|upper }}</a> </h5>
+
+                                    <div class="offersCategoriesContainers">
+                                        <p><i class="fas fa-user"></i></i> {{ offer.experience }}</p>
+                                        <p><i class="fas fa-suitcase"></i> {{ offer.salary }}</p>
+                                        <p><i class="fas fa-file-contract"></i> {{ offer.type }}</p>
+                                        <p><i class="fas fa-map-marker-alt"></i> {{ offer.location }}</p>
                                     </div>
                                 </div>
-                                <p class="card-text">{{ offer.description|truncate(50) }} <a href="{{ path('show_offer', {'id':offer.id}) }}">En savoir plus</a></p>
+
+                                <p class="offersDescriptions card-text">{{ offer.description|truncate(100) }}
+                                    <a class="clickToKnowMoreLinks" href="{{ path('show_offer', {'id':offer.id}) }}">En savoir plus</a>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -116,7 +144,7 @@
             <div id="paginationContainer" class="container mt-3 d-flex justify-content-center">
                 {{ knp_pagination_render(pagination) }}
             </div>
-    </section>
+        </section>
     </div>
 {% endblock %}
 

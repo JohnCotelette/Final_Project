@@ -32,11 +32,11 @@ class UserService
      */
     public function redirectBasedOnRoles(User $user)
     {
-        if ($user->getRoles() === "ROLE_RECRUITER") {
+        if ($user->getRoles() === ["ROLE_RECRUITER"]) {
             return new RedirectResponse($this->router->generate("recruiters_index"));
         }
-        else if ($user->getRoles() === "ROLE_ADMIN") {
-            return new RedirectResponse($this->router->generate("admin_index"));
+        else if ($user->getRoles() === ["ROLE_ADMIN"]) {
+            return new RedirectResponse($this->router->generate("easyadmin"));
         }
         else {
             return new RedirectResponse($this->router->generate("offers_index"));

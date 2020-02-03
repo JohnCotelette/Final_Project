@@ -71,7 +71,7 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
 
             $offer
                 ->setTitle($this->faker->text($maxNbChars = 40))
-                ->setDescription($this->faker->text($maxNbChars = 300))
+                ->setDescription($this->faker->text($maxNbChars = 2000))
                 ->setExperience(self::OFFERS_EXPERIENCES[rand(0, 3)])
                 ->setType(self::OFFERS_TYPE[rand(0, 2)])
                 ->setLocation($this->faker->city)

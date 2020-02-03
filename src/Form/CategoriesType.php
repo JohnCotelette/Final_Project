@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Category;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -51,6 +52,12 @@ class CategoriesType extends AbstractType
                     "CDI" => "CDI",
                     "CDD" => "CDD",
                     "Stage" => "Stage",
+                ],
+            ])
+            ->add("city", TextType::class, [
+                "label" => false,
+                "attr" => [
+                    "placeholder" => "Ville",
                 ],
             ])
         ;

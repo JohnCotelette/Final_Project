@@ -6,8 +6,6 @@ use App\Entity\Category;
 use App\Entity\Offer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\Mapping\OrderBy;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Offer|null find($id, $lockMode = null, $lockVersion = null)
@@ -27,14 +25,17 @@ class OfferRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $category
-     * @param $experience
-     * @param $salary
-     * @param $type
+     * @param Category|null $category
+     * @param string|null $experience
+     * @param int|null $salary
+     * @param string|null $type
+     * @param string|null $city
      * @return array
      */
-    public function findByCategoriesOrderByDate(?Category $category, ?string $experience, ?int $salary, ?string $type) :array
+    public function findByCategoriesOrderByDate(?Category $category, ?string $experience, ?int $salary, ?string $type, ?string $city) :array
     {
+        $defaultExperience = "Tous";
+
         $qb = $this->createQueryBuilder("o");
 
         if ($category != null) {
@@ -44,9 +45,16 @@ class OfferRepository extends ServiceEntityRepository
         }
 
         if ($experience != null) {
+            $parameters = [
+                "experience" => $experience,
+                "defaultExperience" => $defaultExperience,
+            ];
+
             $qb
                 ->andWhere('o.experience = :experience')
-                ->setParameter(':experience', $experience);
+                ->orWhere('o.experience = :defaultExperience')
+                ->setParameter(':experience', $experience)
+                ->setParameter(':defaultExperience', $defaultExperience);
         }
 
         if ($salary != null) {
@@ -55,10 +63,16 @@ class OfferRepository extends ServiceEntityRepository
                 ->setParameter(':salary', $salary);
         }
 
-        if($type != null) {
+        if ($type != null) {
             $qb
                 ->andWhere('o.type = :type')
                 ->setParameter(':type', $type);
+        }
+
+        if ($city != null) {
+            $qb
+                ->andWhere('o.location = :city')
+                ->setParameter(':city', $city);
         }
 
         return $qb

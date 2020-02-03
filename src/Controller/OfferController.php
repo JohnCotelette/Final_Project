@@ -8,10 +8,10 @@ use App\Form\CategoriesType;
 use App\Entity\Application;
 use App\Service\OfferService;
 use App\Repository\OfferRepository;
+use App\Service\MailService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -30,6 +30,7 @@ class OfferController extends AbstractController
         $experience = null;
         $salary = null;
         $type = null;
+        $city = null;
 
         $form = $this->createForm(CategoriesType::class);
 
@@ -43,12 +44,12 @@ class OfferController extends AbstractController
             }
 
             $experience = $form["experience"]->getData();
-            $request->request->set("experience", $experience);
             $salary = $form["salary"]->getData();
             $type = $form["type"]->getData();
+            $city = $form["city"]->getData();
         }
 
-        $offers = $offerRepository->findByCategoriesOrderByDate($category, $experience, $salary, $type);
+        $offers = $offerRepository->findByCategoriesOrderByDate($category, $experience, $salary, $type, $city);
 
         $pagination = $paginator->paginate(
             $offers,
@@ -67,69 +68,51 @@ class OfferController extends AbstractController
      * @param OfferService $offerService
      * @param Offer $offer
      * @param Request $request
+     * @param MailService $mailService
      * @return Response
      */
-    public function showOffer(OfferService $offerService, Offer $offer, Request $request)
+    public function showOffer(OfferService $offerService, Offer $offer, Request $request, MailService $mailService)
     {
-        $checkApply = $offerService->checkIfCandidateAlreadyApply($offer, $request);
-        $application = new Application();
-
         $user = $this->getUser();
 
-        $hasAlreadyApply = null;
-
+        $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
+    
         if ($user && $user->getRoles() === ["ROLE_CANDIDATE"]) {
+            $application = new Application;
+
             $form = $this->createForm(ApplyType::class, $application);
+
             $form->handleRequest($request);
 
-            $applicationsOfThisOffer = $offer->getApplications();
-            
-            forEach($applicationsOfThisOffer as $application) {
-                if ($application->getUser() === $user)
-                {	
-                    $this->addFlash("error", "Vous avez déjà postulé à cette annonce");
-                    $hasAlreadyApply = false;
+            if ($form->isSubmitted() && $form->isValid()) {
 
-                    return $this->render('offer/show.html.twig', [
-                        'application' => $application,
-                        'form' => $form->createView(),
-                        'offer' => $offer,
-                        'hasAlreadyApply' => $hasAlreadyApply,
-                    ]);
+                $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
+
+                if ($checkApply != true) {
+                    $entityManager = $this
+                        ->getDoctrine()
+                        ->getManager();
+
+                    $application->setUser($user);
+                    $offer->addApplication($application);
+
+                    $entityManager->persist($application);
+                    $entityManager->flush();
+
+                    $mailService->sendMailToConfirmApply($user, "confirmApply", $offer);
+
+                    $this->addFlash("success", "Votre candidature a bien été enregistrée, vous recevrez prochainement une réponse de la part de l'auteur de cette offre.");
+                }
+                else {
+                    $this->addFlash("errorAlreadyApply", "Vous avez déjà postulé à cette annonce");
                 }
             }
-
-            if ($form->isSubmitted() && $form->isValid() ) {
-
-                $entityManager = $this
-                ->getDoctrine()
-                ->getManager();
-
-                $application->setUser($user);
-                $offer->addApplication($application);
-                
-                $entityManager->persist($application);
-                $entityManager->flush();
-
-                $hasAlreadyApply = true;
-
-                $this->addFlash("success", "Vous avez postulé");
-            }
-                        
-            return $this->render('offer/show.html.twig', [
-                'application' => $application,
-                'form' => $form->createView(),
-                'offer' => $offer,
-                'hasAlreadyApply' => $hasAlreadyApply,
-            ]);
-            
         }
-            
-        else {
-            return $this->render('offer/show.html.twig', [
-                'application' => $application,
-                'offer' => $offer,
-            ]);
-        }     
+                    
+        return $this->render('offer/show.html.twig', [
+            'form' => !empty($form) ? $form->createView() : null,
+            'offer' => $offer,
+            'checkApply' => $checkApply,
+        ]);
     }
 }
