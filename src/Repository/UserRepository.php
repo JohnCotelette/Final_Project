@@ -43,7 +43,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     public function getCandidatesWithPublicProfilOrderByDates() {
-        $defaultRole = "[ROLE_CANDIDATE]";
+        $defaultRole = "ROLE_CANDIDATE";
         $defaultPublic = true;
 
         $qb = $this->createQueryBuilder('c');
@@ -51,7 +51,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $qb
             ->andWhere('c.roles LIKE :role')
             ->andWhere('c.public = :public')
-            ->setParameter(':role', $defaultRole)
+            ->setParameter(':role', '%"'.$defaultRole.'"%')
             ->setParameter(':public', $defaultPublic)
             ->orderBy('c.id', 'DESC')
             ->getQuery()
