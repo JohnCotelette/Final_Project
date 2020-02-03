@@ -27,14 +27,18 @@ class BusinessController extends AbstractController
 
         return $this->render('business/index.html.twig', [
             'pagination' => $pagination,
-          ]);
+        ]);
     }
 
     /**
-     * @Route("/business", name="show_business")
+     * @Route("/business/{id}", name="show_business", methods={"GET", "POST"})
      */
-    public function showBusiness(Type $var = null)
+    public function showBusiness(BusinessRepository $businessRepository ,Business $business)
     {
-        # code...
+        dd($businessRepository);
+
+        return $this->render('business/show.html.twig', [
+            'businessRepository' => $businessRepository,
+        ]);
     }
 }
