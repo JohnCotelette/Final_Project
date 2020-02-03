@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Cv;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\CandidatType;
+use App\Form\CvType;
 use App\Form\RecruiterType;
 use App\Service\MailService;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Vich\UploaderBundle\Handler\DownloadHandler;
 
 /**
  * Class UserController
@@ -105,7 +108,7 @@ class UserController extends AbstractController
     //candidate dashbord
     //--------------------------------------------------------------------------------------------------------------------------
     /**
-     * @Route("/candidate/dashbord", name= "user_dashbord")
+     * @Route("/candidate/dashbord", name= "candidate_dashbord")
      * 
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
@@ -120,13 +123,16 @@ class UserController extends AbstractController
       
          if( $user)
         {
-            $entityManager = $this ->getDoctrine()->getManager();
-                   
+                    $entityManager = $this ->getDoctrine()->getManager();
+
+                    $cv = new Cv();
                     $form = $this->createForm(CandidatType::class, $user);
 
                     $form->handleRequest($request);
+                    $formCv = $this->createForm(CvType::class, $cv);
+                    $formCv->handleRequest($request);
 
-
+                     // Update profile candidate   
                     if($form->isSubmitted() && $form->isValid())
                     {
                         $password = $encoder->encodePassword( $user, $user->getPassword());
@@ -137,9 +143,28 @@ class UserController extends AbstractController
                         $entityManager->persist($user);
                       
                         $this->addFlash("success", "Votre profile est bien mis à jour ");
-                        return $this->redirectToRoute('user_dashbord');
+                        return $this->redirectToRoute('candidate_dashbord');
                         $entityManager->flush();  
 
+                    }
+
+                     // candidate change Cv   
+                    if($formCv->isSubmitted() && $formCv->isValid())
+                    {
+
+                            $em = $this->getDoctrine()->getManager();
+
+                            if ($user->getCv()) {
+                                $em->remove( $user->getCv() );  
+                            }  
+                            
+                            $user->setCv($cv);
+                
+                            $em->persist($cv);
+                            $em->flush();
+                
+                            return $this->redirectToRoute("candidate_dashbord");
+                                // return $downloadHandler->downloadObject($image, $fileField = 'imageFile');
                     }
                
                     
@@ -147,6 +172,7 @@ class UserController extends AbstractController
                   
                     return $this->render('/user/dashbordCandidate.html.twig', [
                         "form" => $form->createView(),
+                        "formCv" => $formCv->createView(),
                         "user" => $user
 
                      
