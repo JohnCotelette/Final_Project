@@ -51,6 +51,7 @@ easy_admin:
         
            
       form:
+        form_options: { validation_groups: [] }
         new:
           title: Ajouter un utilisateur
         edit:
@@ -61,6 +62,13 @@ easy_admin:
             label: Prénom
           - property: lastName
             label: Nom
+          - property: password
+            label: mot de passe 
+            type: text
+            type_options:
+              mapped: true
+              disabled: false
+            
           - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_ADMIN': 'ROLE_ADMIN',  	'ROLE_CANDIDATE': 	'ROLE_CANDIDATE', 'ROLE_RECRUITER': 'ROLE_RECRUITER' } } }  
           - { type: 'group', label: ' informations de contact ', icon: 'phone', columns: 4 }
           - property: email

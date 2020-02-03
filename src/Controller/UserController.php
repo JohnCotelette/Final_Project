@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Cv;
 use App\Entity\Business;
 use App\Entity\User;
 use App\Form\CandidatType;
+use App\Form\CvType;
 use App\Form\RecruiterType;
 use App\Repository\BusinessRepository;
 use App\Service\MailService;
@@ -12,7 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Vich\UploaderBundle\Handler\DownloadHandler;
 
 /**
  * Class UserController
@@ -120,5 +124,64 @@ class UserController extends AbstractController
         return $this->render('user/register.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+    
+    /**
+     * @Route("/candidate/dashbord", name= "candidate_dashbord")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     */
+    public function dashbordUser( Request $request ,  UserPasswordEncoderInterface $encoder)
+    {
+        $user = $this->getUser();
+      
+         if( $user)
+        {
+                    $entityManager = $this ->getDoctrine()->getManager();
+
+                    $cv = new Cv();
+                    $form = $this->createForm(CandidatType::class, $user);
+
+                    $form->handleRequest($request);
+                    $formCv = $this->createForm(CvType::class, $cv);
+                    $formCv->handleRequest($request);
+
+                     // Update profile candidate   
+                    if($form->isSubmitted() && $form->isValid())
+                    {
+                        $password = $encoder->encodePassword( $user, $user->getPassword());
+                        $user->setPassword( $password );
+
+                        $entityManager->persist($user);
+                      
+                        $this->addFlash("success", "Votre profile est bien mis à jour ");
+                        return $this->redirectToRoute('candidate_dashbord');
+                        $entityManager->flush();  
+                    }
+
+                     // candidate change Cv   
+                    if($formCv->isSubmitted() && $formCv->isValid())
+                    {
+                            $em = $this->getDoctrine()->getManager();
+
+                            if ($user->getCv()) {
+                                $em->remove( $user->getCv() );  
+                            }  
+                            
+                            $user->setCv($cv);
+                
+                            $em->persist($cv);
+                            $em->flush();
+                
+                            return $this->redirectToRoute("candidate_dashbord");
+                                // return $downloadHandler->downloadObject($image, $fileField = 'imageFile');
+                    }
+                  
+                    return $this->render('/user/dashbordCandidate.html.twig', [
+                        "form" => $form->createView(),
+                        "formCv" => $formCv->createView(),
+                        "user" => $user
+                    ]) ;    
+         }   
     }
 }
