@@ -33,12 +33,11 @@ class BusinessController extends AbstractController
     /**
      * @Route("/business/{id}", name="show_business", methods={"GET", "POST"})
      */
-    public function showBusiness(BusinessRepository $businessRepository ,Business $business)
+    public function showBusiness(Business $business)
     {
-        dd($businessRepository);
 
         return $this->render('business/show.html.twig', [
-            'businessRepository' => $businessRepository,
+            'business' => $business,
         ]);
     }
 }
