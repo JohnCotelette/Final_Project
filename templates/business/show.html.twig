@@ -1,0 +1,32 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    {{encore_entry_link_tags("business")}}
+{% endblock %}
+
+{% block content %}
+
+    <div>
+        <div>
+            <figure>
+                <!-- <img src="{{ business.avatar ? "public/business_avatars/" ~ business.avatar.name : asset("build/images/question_mark.42e63c4a.png") }}" alt=""> -->
+            </figure>
+        </div>
+        <div>
+            <div>
+                <h2> {{business.name}} </h2>
+            </div>
+            <div>
+                <p>{{business.activityArea}}</p>
+            </div>  
+            {{business.description}}
+            <p>{{business.employeesNumber}}</p>
+            <p>{{business.location}}</p>
+        </div>                
+    </div> 
+
+{% endblock  %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags("business") }}
+{% endblock %}

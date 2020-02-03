@@ -34,6 +34,13 @@ class UserFixture extends BaseFixture
             "Plus de 500 employés",
         ];
 
+    const kind = [
+        "Cabinet de recrutement",
+        "Editeur de logiciel",
+        "Entreprise",
+        "ESN / Cabinet de conseil",
+    ];
+
     /**
      * UserFixture constructor.
      * @param UserPasswordEncoderInterface $passwordEncoder
@@ -69,6 +76,7 @@ class UserFixture extends BaseFixture
                     ->setSiretNumber(rand(11111111111111, 99999999999999))
                     ->setActivityArea($this->faker->text($maxNbChars = 100))
                     ->setDescription($this->faker->text($maxNbChars = 2000))
+                    ->setKind(self::kind[rand(0,3)])
                     ;
 
                 $user
