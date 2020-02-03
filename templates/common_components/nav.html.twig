@@ -26,6 +26,9 @@
             {% endif %}
         {% else %}
             <li>
+                <a class="defaultNavLinks" href="{{ path("user_dashbord" ) }}">Mon Compte</a>
+            </li>  
+            <li>
                 <a class="defaultNavLinks" href="{{ path("logout") }}">Déconnexion</a>
             </li>
         {% endif %}

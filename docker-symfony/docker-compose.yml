@@ -26,6 +26,7 @@ services:
         networks:
             - db
             - php
+            - mail
     phpmyadmin:
         container_name: phpmyadmin
         image: phpmyadmin/phpmyadmin
@@ -48,6 +49,16 @@ services:
         volumes:
             - ./logs/nginx:/var/log/nginx:cached
             - ../:/var/www/symfony:cached
+    mail:
+        container_name: mail
+        image: djfarrelly/maildev
+        ports:
+            - "1080:80"
+            - "1025:25"       
+        networks:
+            - php
+            - mail
 networks:
     db:
     php:
+    mail:

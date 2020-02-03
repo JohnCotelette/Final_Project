@@ -13,6 +13,7 @@ Encore
     .addEntry('offer', './assets/js/components/offer/offer.js')
     .addStyleEntry('login', './assets/css/components/security/login.scss')
     .addStyleEntry('register', './assets/css/components/user/register.scss')
+    .addStyleEntry('dashbord', './assets/css/components/user/dashbord.scss')
     .addStyleEntry('forgotPassword', './assets/css/components/security/forgotPassword.scss')
     .addStyleEntry('changePassword', './assets/css/components/security/changePassword.scss')
     .addStyleEntry('easyAdmin', './assets/css/components/easyAdmin/easyAdmin.scss')

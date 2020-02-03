@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -104,21 +105,24 @@ class UserController extends AbstractController
     //candidate dashbord
     //--------------------------------------------------------------------------------------------------------------------------
     /**
-     * @Route("/dashbord/{id}", name= "user_dashbord", methods={"GET", "POST"})
+     * @Route("/candidate/dashbord", name= "user_dashbord")
      * 
-     * @param RenewPasswordType $renewPasswordType
-     * @param UserRepository $userRepository
+     * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * 
      */
-    public function dashbordUser(Request $request , $user, UserPasswordEncoderInterface $encoder)
+    public function dashbordUser( Request $request ,  UserPasswordEncoderInterface $encoder)
     {
-         if($user) 
-         {
-            if( $user->getRoles === "ROLE_CANDIDAT" )
-            { 
-                
-                    $form= $this->createForm(CandidatType::class, $user, ["legalConditions", ]);
+        // dump($this->getUser());
+       
+        $user = $this->getUser();
+     
+      
+         if( $user)
+        {
+            $entityManager = $this ->getDoctrine()->getManager();
+                   
+                    $form = $this->createForm(CandidatType::class, $user);
 
                     $form->handleRequest($request);
 
@@ -127,45 +131,37 @@ class UserController extends AbstractController
                     {
                         $password = $encoder->encodePassword( $user, $user->getPassword());
                         $user->setPassword( $password );
-                        $entityManager = $this ->getDoctrine()->getManager();
-
+                        
                     
                     
                         $entityManager->persist($user);
                       
                         $this->addFlash("success", "Votre profile est bien mis à jour ");
                         return $this->redirectToRoute('user_dashbord');
+                        $entityManager->flush();  
 
                     }
+               
+                    
 
-            } 
-            // if the user is Recruiter
-            elseif( $user->getRoles() === "ROLE_RECRUITER" )
-            {
-                $form = $this->createForm(RecruiterType::class, $user);
-                if($form->isSubmitted() && $form->isValid())
-                {
-                    $password = $encoder->encodePassword( $user, $user->getPassword());
+                  
+                    return $this->render('/user/dashbordCandidate.html.twig', [
+                        "form" => $form->createView(),
+                        "user" => $user
 
-                    $user->setPassword( $password );
-                    $entityManager = $this ->getDoctrine()->getManager();
-                    $entityManager->persist($user);
-                    $this->addFlash("success", "Votre profile est bien mis à jour ");
-                    return $this->redirectToRoute('user_dashbord');    
-                }
-            }
-            else
-            {
-                $this->addFlash("info", " vous éte ni candidat ni entreprise ");
-            }
-            $entityManager->flush();  
+                     
+                    ]) ;     
+                   
+
+           
+           
+
+          
+                
          }  
          
          
-           return $this->render('/user/dashbord.html.twig', [
-               "form" => $form->createView(),
-               "user" => $user
-           ]) ;
+         
     }
 
 
