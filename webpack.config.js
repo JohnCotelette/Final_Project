@@ -13,6 +13,7 @@ Encore
     .addEntry('offer', './assets/js/components/offer/offer.js')
     .addEntry('business', './assets/js/components/business/business.js')
     .addEntry('allBusiness', './assets/js/components/business/allBusiness.js')
+    .addEntry('candidatesList', './assets/js/components/recruiter/candidatesList.js')
     .addStyleEntry('login', './assets/css/components/security/login.scss')
     .addStyleEntry('register', './assets/css/components/user/register.scss')
     .addStyleEntry('forgotPassword', './assets/css/components/security/forgotPassword.scss')
