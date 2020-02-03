@@ -1,0 +1,49 @@
+@import "../../core.scss";
+
+main {
+    width: 80%;
+    margin: auto 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.BusinessDetail {
+    background-color: $blanc-clair;
+
+}
+
+.BusinessDetail ul {
+    list-style: none;
+    text-align: center;
+}
+
+.BusinessDetail ul > li {
+    padding: 10px;
+    display: inline-block;
+}
+
+.BusinessGlobalDescription div {
+    background-color: $blanc-clair;
+}
+
+.BusinessGlobalDescription p{
+    text-align: justify;
+}
+
+@media (max-width: 660px) {
+    
+    .BusinessDetail ul {
+        list-style: none;
+        text-align: center;
+
+    }
+    
+    .BusinessDetail ul > li {
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+}
