@@ -31,26 +31,32 @@
 
             {{ form_start(form) }}
             <div id="identityContainer">
-                <div class="form-group">
-                    {{ form_errors(form.firstName) }}
+                <div class="form-group field-firstname">
+                    <div class="error">
+                        {{ form_errors(form.firstName) }}
+                    </div>
                     {{ form_widget(form.firstName) }}
                 </div>
 
-                <div class="form-group">
-                    {{ form_errors(form.lastName) }}
+                <div class="form-group field-lastName">
+                    <div class="error">
+                        {{ form_errors(form.lastName) }}
+                    </div>
                     {{ form_widget(form.lastName) }}
                 </div>
             </div>
 
-            <div id="emailContainer">
-                <div class="form-group">
+            <div id="emailContainer field-email">
+                <div class="error">
                     {{ form_errors(form.email) }}
-                    {{ form_widget(form.email) }}
                 </div>
+                    {{ form_widget(form.email) }}
             </div>
 
-            <div id="birthdayContainer">
-                {{ form_errors(form.birthDay) }}
+            <div id="birthdayContainer field-birthDay">
+                <div class="error">
+                    {{ form_errors(form.birthDay) }}
+                </div>
                 <p>{{ form_label(form.birthDay) }}</p>
                 <div id="birthdayInputsContainer">
                     {{ form_widget(form.birthDay.day) }}
@@ -60,7 +66,10 @@
             </div>
 
             <div id="passwordContainer">
-                <div class="form-group">
+                <div class="form-group field-password">
+                    <div class="error">
+                        {{ form_errors(form.password) }}
+                    </div>
                     {{ form_widget(form.password) }}
                 </div>
             </div>

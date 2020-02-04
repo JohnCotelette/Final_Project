@@ -59,23 +59,13 @@ class RecruiterType extends AbstractType
                 "attr" => [
                     "placeholder" => "Prénom",
                 ],
-                "constraints" => [
-                    new Regex([
-                        "pattern" => "/\d+?/",
-                        "message" => "N'utilisez pas de chiffres",
-                    ])
-                ],
+
             ])
             ->add("lastName", TextType::class, [
                 "attr" => [
                     "placeholder" => "Nom",
                 ],
-                "constraints" => [
-                    new Regex([
-                        "pattern" => "/\d+?/",
-                        "message" => "N'utilisez pas de chiffres",
-                    ])
-                ],
+
             ])
             ->add("birthDay", BirthdayType::class, [
                 "label" => "Date de naissance",
