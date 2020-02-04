@@ -61,7 +61,7 @@ class Offer
     private $profilRequired;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=100)
      */
     private $location;
 

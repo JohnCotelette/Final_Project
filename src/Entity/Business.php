@@ -47,6 +47,11 @@ class Business
     private $location;
 
     /**
+     * @ORM\Column(type="string", columnDefinition="enum('Cabinet de recrutement', 'Editeur de logiciel', 'Entreprise', 'ESN / Cabinet de conseil')", nullable=true)
+     */
+    private $kind;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\User", mappedBy="business", cascade={"persist", "remove"})
      */
     private $user;
@@ -55,11 +60,6 @@ class Business
      * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist", "remove"})
      */
     private $avatar;
-
-    /**
-     * @ORM\Column(type="string", columnDefinition="enum('Cabinet de recrutement', 'Editeur de logiciel', 'Entreprise', 'ESN / Cabinet de conseil')")
-     */
-    private $kind;
 
     public function getId(): ?int
     {
@@ -138,6 +138,18 @@ class Business
         return $this;
     }
 
+    public function getKind(): ?string
+    {
+        return $this->kind;
+    }
+
+    public function setKind(string $kind): self
+    {
+        $this->kind = $kind;
+
+        return $this;
+    }
+
     public function getUser(): ?User
     {
         return $this->user;
@@ -167,17 +179,4 @@ class Business
 
         return $this;
     }
-
-    public function getKind(): ?string
-    {
-        return $this->kind;
-    }
-
-    public function setKind(string $kind): self
-    {
-        $this->kind = $kind;
-
-        return $this;
-    }
-
 }
