@@ -68,7 +68,7 @@ class RegisterFormTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
-    public function testFieldRegisterCandidatForm()
+    public function testFieldRegisterRecruiterForm()
     {
         //The createClient() method returns a client
         $client = static::createClient();
@@ -81,12 +81,48 @@ class RegisterFormTest extends WebTestCase
         $buttonCrawlerNode = $crawler->selectButton('submit');
 
         //Get form for override some form values and submit the corresponding form
-        $form = $buttonCrawlerNode->form();
         $form = $buttonCrawlerNode->form([
-            'recruiter[firstName]'    => 12,
+            'recruiter[email]' => 'azerty',
         ]);
 
-        $client->submit($form);
-        $client->getResponse()->getStatusCode();
+        //Submit form
+        $crawler = $client->submit($form);
+
+        //Get errors 
+        $error = $crawler->filter(".field-firstname .error li");
+
+        //Get string
+        $error =  $error->getNode(0)->textContent;
+
+        $this->assertEquals($error, 'Veuillez renseigner votre prénom');
+    }
+
+    public function testFieldRegisterCandidatForm()
+    {
+        //The createClient() method returns a client
+        $client = static::createClient();
+
+        //Crawler object which can be used to select elements in the response,
+        //click on links and submit forms.
+        $crawler = $client->request('GET', '/candidate/register');
+
+        //Select the button with ID name
+        $buttonCrawlerNode = $crawler->selectButton('submit');
+
+        //Get form for override some form values and submit the corresponding form
+        $form = $buttonCrawlerNode->form([
+            'candidat[firstName]' => 1245,
+        ]);
+
+        //Submit form
+        $crawler = $client->submit($form);
+
+        //Get errors 
+        $error = $crawler->filter(".field-firstname .error li");
+
+        //Get string
+        $error =  $error->getNode(0)->textContent;
+        
+        $this->assertEquals($error, "N'utilisez pas de caractères spécial");
     }
 }
