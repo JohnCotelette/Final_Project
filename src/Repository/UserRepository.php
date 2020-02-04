@@ -3,13 +3,13 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use App\Entity\Business;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Query;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,6 +26,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
+     * @param UserInterface $user
+     * @param string $newEncodedPassword
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
     {
@@ -38,5 +42,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    
+    public function getCandidatesWithPublicProfilOrderByDates() {
+        $defaultRole = "ROLE_CANDIDATE";
+        $defaultPublic = true;
+
+        $qb = $this->createQueryBuilder('c');
+
+        return $qb
+            ->andWhere('c.roles LIKE :role')
+            ->andWhere('c.public = :public')
+            ->setParameter(':role', '%"'.$defaultRole.'"%')
+            ->setParameter(':public', $defaultPublic)
+            ->orderBy('c.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

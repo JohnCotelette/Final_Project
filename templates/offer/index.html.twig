@@ -107,20 +107,22 @@
         <section id="rightSection">
             {% if pagination|length > 0 %}
                 {% for offer in pagination %}
-                    <div class="mb-4 container d-flex bg-white">
+                    <div class="mb-4 container d-flex bg-white offersContainers ghost">
                         <div id="businessImgContainer" class="col-md-4 d-flex">
-                            <img class="card-img-top align-self-center" src="http://via.placeholder.com/660x360" alt="Card image cap">
+                            <img class="card-img-top align-self-center"
+                                 src="{{ offer.user.business.avatar ? "public/business_avatars/" ~ offer.user.business.avatar.name : asset("build/images/question_mark.42e63c4a.png") }}"
+                                 alt="Card image cap">
                         </div>
 
-                        <div class="col-md-8">
-                            <div class="card-body">
+                        <div class="col-md-8 d-flex offersInfosContainers">
+                            <div class="card-body my-auto">
                                 <div class=" linkOffer">
                                     <h4 class="card-title"><a href="{{ path('show_offer', {'id':offer.id}) }}">{{ offer.title }}  </a></h4>
 
                                     <h5>Chez <a class="offersLinks" href="#"> {{ offer.user.business.name|upper }}</a> </h5>
 
                                     <div class="offersCategoriesContainers">
-                                        <p><i class="fas fa-user"></i></i> {{ offer.experience }}</p>
+                                        <p><i class="fas fa-user"></i> {{ offer.experience }}</p>
                                         <p><i class="fas fa-suitcase"></i> {{ offer.salary }}</p>
                                         <p><i class="fas fa-file-contract"></i> {{ offer.type }}</p>
                                         <p><i class="fas fa-map-marker-alt"></i> {{ offer.location }}</p>

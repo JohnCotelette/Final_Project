@@ -157,7 +157,7 @@ footer div {
     }
 
     100% {
-        opacity: 1;
+        opacity: 1 !important;
     }
 }
 
@@ -176,6 +176,7 @@ footer div {
         opacity: 0;
         transform: translateX(-50%);
     }
+
     100% {
         opacity: 1;
         transform: translateX(0);
@@ -187,6 +188,7 @@ footer div {
         opacity: 0;
         transform: translateX(50%);
     }
+
     100% {
         opacity: 1;
         transform: translateX(0);

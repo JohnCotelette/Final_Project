@@ -1,0 +1,155 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('candidate_dashboard') }}
+{% endblock %}
+
+{% block title %}{{ parent() }}Profil - {{ user.firstName }}{% endblock %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block content %}
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- section of candidate profil -->
+<div class="container-fluid">
+    <div class="row flex ">
+        <div class="col-4  flex-grow-1  heightmenu ">
+            <div class="list-group list-group-flush " id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#profile"
+                   role="tab" aria-controls="home">Profile</a>
+                <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list"
+                   href="#candidatures" role="tab" aria-controls="profile">Candidatures</a>
+                <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#cv"
+                   role="tab" aria-controls="messages">CV</a>
+                <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
+                   href="#changeprofile" role="tab" aria-controls="settings">changer mon profile</a>
+            </div>
+        </div>
+        <div class="col-8 w-100">
+            <h1 class=" text-center  my-5"> {{ user.lastName }}-{{ user.firstName }}</h1>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="list-home-list">
+                    <table class="table">
+                        <tbody>
+
+                        <tr>
+                            <th>Nom:</th>
+                            <td>{{ user.firstName }}</td>
+                        </tr>
+                        <tr>
+                            <th>Prénom:</th>
+                            <td>{{ user.lastName }}</td>
+                        </tr>
+                        <tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ user.email }}</td>
+                        </tr>
+
+
+                        <th>Date de naissance</th>
+                        <td>{{ user.birthDay ? user.birthDay|date('d-m-y') : '' }}</td>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                <!-- section of change candidate profil -->
+                <div class="tab-pane fade" id="changeprofile" role="tabpanel" aria-labelledby="list-settings-list">
+
+                    <div class="form">
+                        {{ form_start( form ) }}
+
+                        <div class="form-group">
+                            {{ form_label(form.firstName) }}
+                            {{ form_widget(form.firstName) }}
+                            <div class="errors">
+                                {{ form_errors(form.firstName) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.lastName) }}
+                            {{ form_widget(form.lastName) }}
+                            <div class="errors">
+                                {{ form_errors(form.lastName) }}
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.birthDay) }}
+                            <div class="row">
+                                <div class="col">{{ form_widget(form.birthDay.day) }}</div>
+                                <div class="col">{{ form_widget(form.birthDay.month) }}</div>
+                                <div class="col">{{ form_widget(form.birthDay.year) }}</div>
+                            </div>
+                            <div class="errors">
+                                {{ form_errors(form.birthDay) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.email) }}
+                            {{ form_widget(form.email) }}
+                            <div class="errors">
+                                {{ form_errors(form.email) }}
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.password) }}
+                            {{ form_widget(form.password) }}
+                            <div class="errors">
+                                {{ form_errors(form.password) }}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sauvegarder les changements</button>
+                        {{ form_end( form ) }}
+                    </div>
+
+                </div>
+
+                <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                <!-- Display  all Applications of user   -->
+                <div class="tab-pane fade" id="candidatures" role="tabpanel" aria-labelledby="list-profile-list">
+
+                    {% if(user.applications|length > 0) %}
+                        {% for application in user.applications %}
+
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ application.offer.title }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ application.createdAt|date() }}</h6>
+                                    <p class="card-text">{{ application.motivation }}</p>
+                                    <a href="{{ path('show_offer',  {'id': application.offer.id}) }}"
+                                       class="card-link">Détails de l'annonce</a>
+                                    <a href="#" class="card-link"></a>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                    {% endif %}
+
+                </div>
+                <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                <!--  section of CV  -->
+
+                <div class="tab-pane fade flex  d-flex  flex-column  align-items-start" id="cv" role="tabpanel"
+                     aria-labelledby="list-messages-list">
+                    <div class="align-self-center mb-3">
+                        {{ form_start(formCv) }}
+
+                        {{ form_end(formCv) }}
+                    </div>
+
+                    {% if user.cv %}
+                        <iframe src="{{ asset('candidate_cv/' ~ user.cv.name ) }}" frameborder="0"
+                                style="height: 100vh; width: 100%">
+                        </iframe>
+                    {% endif %}
+                </div>
+            </div>
+            {% endblock %}

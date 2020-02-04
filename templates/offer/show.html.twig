@@ -1,5 +1,7 @@
 {% extends 'layout.html.twig' %}
 
+{% block title %}{{ parent() }}Offre {{ offer.reference }}{% endblock %}
+
 {% block stylesheets %}
     {{ encore_entry_link_tags("offer") }}
 {% endblock %}
@@ -80,7 +82,7 @@
                         <i class="fas fa-user-alt"></i>
                         <span>
                             Vous êtes recruteur ?<br>
-                            Postez vous aussi une annonce en cliquant <a id="redirectForRecruiters" href="#">ici</a>.
+                            Postez vous aussi une annonce en cliquant <a id="redirectForRecruiters" href="{{ path('offer_create') }}">ici</a>.
                         </span>
                     </p>
                 {% endif %}
@@ -156,21 +158,19 @@
                 <p id="errorNotAllowedToApply" class="indicationsContainers">
                     <i class="fas fa-info-circle"></i>
                     <span>
-                        Vous n'avez pas encore de compte ?<br>
+                        Je veux postuler ?<br>
                     </span>
                 </p>
 
                 <p class="indicationsContainers specials">
-                    <i class="fas fa-arrow-right"></i>
-                    <span>
-                        Cliquez <a href="{{ path("candidate_register") }}">ici</a> pour en créér un.
+                    <span class="buttonsContainers">
+                        <a target="_blank" class="commonButtons redirectErrorNoUserLinks" href="{{ path("login") }}">Se connecter</a>
                     </span>
                 </p>
 
                 <p id="lastRedirectIndicationContainer" class="indicationsContainers specials">
-                    <i class="fas fa-arrow-right"></i>
-                    <span>
-                        Si vous avez juste oublié de vous connecter, cliquez sur ce <a target="_blank" href="{{ path("login") }}">lien</a> <span id="newWindowLinkInfo">(pratique, ce dernier s'ouvrira dans une nouvelle fenêtre, vous pourrez actualiser cette page ensuite)</span>.
+                    <span class="buttonsContainers">
+                       <a target="_blank" class="commonButtons redirectErrorNoUserLinks" href="{{ path("candidate_register") }}">S'enregistrer</a>
                     </span>
                 </p>
             {% endif %}
