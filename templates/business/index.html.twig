@@ -4,15 +4,15 @@
     {{encore_entry_link_tags("allBusiness")}}
 {% endblock %}
 
-{% block title %}{{ parent() }} Business{% endblock %}
+{% block title %}{{ parent() }}Liste des entreprises{% endblock %}
 
 
 {% block content %}
-    <div class="title">
-        <h1>
-                Ils peuvent vous apprendre a faire du bon cafe
-        </h1>
+    <div id="titleContainer">
+        <h1>Les entreprises de FindLab qui recrutent</h1>
+        <p>Ils peuvent faire exploser votre carrière !</p>
     </div>
+
     <div class="bodyBusinessPage">
         {% for business in pagination %}
             <div class="displayBusiness">
@@ -23,21 +23,21 @@
                 </div>
                 <div class="displayBusinessDetails">
                     <div class="businessName">
-                        <h2> <a href="{{ path ("show_business", {'id': business.id}) }}"> {{business.name}} </a> </h2>
+                        <h2> <a href="{{ path ("show_business", {'id': business.id}) }}"> {{ business.name }} </a> </h2>
                     </div>
                     <ul>
-                        <li>{{business.employeesNumber}}</li>
+                        <li>{{ business.employeesNumber }}</li>
                         <li> &#8226;</li>
-                        <li>{{business.kind}}</li>
+                        <li>{{ business.kind }}</li>
                         <li> &#8226;</li>
-                        <li>{{business.location}}</li>
+                        <li>{{ business.location }}</li>
                     </ul>
                 </div>                
             </div> 
             <hr>
         {% endfor %}
     </div>
-    <div class="container mt-3 d-flex justify-content-center">
+    <div class="container d-flex justify-content-center">
         
         {{ knp_pagination_render(pagination) }}
     </div>

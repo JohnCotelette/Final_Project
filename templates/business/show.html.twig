@@ -8,34 +8,44 @@
 <section class="LeftSection">
     <div class="BusinessDetail">
         <div>
-            <!-- <figure>
-                <img src="{{ business.avatar ? "public/business_avatars/" ~ business.avatar.name : asset("build/images/question_mark.42e63c4a.png") }}" alt="">
-            </!-->
-            <h1> {{business.name}} </h1>
+            <figure>
+                <img src="{{ business.avatar ? "public/business_avatars/" ~ business.avatar.name : asset("build/images/question_mark.42e63c4a.png") }}" alt="Business Avatar">
+            </figure>
+
+            <h1> {{ business.name }} </h1>
         </div>
+
         <div>
             <ul>
-                <li>{{business.employeesNumber}}</li>
+                <li>{{ business.employeesNumber }}</li>
                 <li> &#8226;</li>
-                <li>{{business.kind}}</li>
+                <li>{{ business.kind }}</li>
             </ul>
-        </div>              
-    </div> 
+        </div>
+    </div>
+
     <hr>
+
     <div class="BusinessGlobalDescription ">
         <div class="BusinessDescription ContainersPadding">
             <h2>Pourquoi venir chez nous?</h2>
-            <p>{{business.description}}</p>
+
+            <p>{{ business.description }}</p>
         </div>
+
         <hr>
+
         <div class="BusinessActivity ContainersPadding">
             <h2>Notre métier</h2>
-            <p>{{business.activityArea}}</p>
+
+            <p>{{ business.activityArea }}</p>
         </div>
+
         <hr>
+
         <div class="BusinessLocation ContainersPadding">
             <h2>Ou sommes-nous ?</h2>
-            <p>{{business.location}}</p>
+            <p>{{ business.location }}</p>
         </div>
     </div>
 </section>
@@ -54,10 +64,11 @@
     {% for offer in offers %}
         <div class="OfferContainer">
             <div class="OfferName">
-                {{offer.title}}
+                {{ offer.title }}
             </div>
+
             <div class="OffersCategoriesContainers">
-                <p><i class="far fa-calendar-alt"></i>{{offer.startedAt|date("d/m/Y")}}</p>
+                <p><i class="far fa-calendar-alt"></i>{{ offer.startedAt|date("d/m/Y") }}</p>
                 <p><i class="fas fa-user"></i> {{ offer.experience }}</p>
                 <p><i class="fas fa-suitcase"></i> {{ offer.salary }}</p>
                 <p><i class="fas fa-file-contract"></i> {{ offer.type }}</p>
