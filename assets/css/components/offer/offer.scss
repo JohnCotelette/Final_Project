@@ -287,6 +287,21 @@ h2 {
     margin: 3px 3% 0 0;
 }
 
+.redirectErrorNoUserLinks {
+    color: $blanc !important;
+    padding: 8px 14px;
+    transition: color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.redirectErrorNoUserLinks:hover {
+    color: white !important;
+}
+
+.buttonsContainers {
+    margin-top: 10px;
+}
+
 /* -------------------------- RESPONSIVE -------------------------- */
 
 @media (max-width: 1800px) {

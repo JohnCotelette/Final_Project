@@ -5,13 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-// use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CvRepository")
- * @Vich\Uploadable
+ * @Vich\Uploadable()
  */
-class Cv  implements \Serializable
+class Cv implements \Serializable
 {
     /**
      * @ORM\Id()
@@ -33,7 +32,7 @@ class Cv  implements \Serializable
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\User", mappedBy="cv")
@@ -77,12 +76,12 @@ class Cv  implements \Serializable
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -112,7 +111,7 @@ class Cv  implements \Serializable
         if (null !== $cvFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updated_at = new \DateTimeImmutable();
+            $this->updatedAt = new \DateTimeImmutable();
         }
     }
 
@@ -127,17 +126,16 @@ class Cv  implements \Serializable
     {
         return serialize(array(
             $this->id,
-         
-
         ));
     }
 
-    /** @see \Serializable::unserialize() */
+    /** @param $serialized
+     * @see \Serializable::unserialize()
+     */
     public function unserialize($serialized)
     {
         list (
             $this->id,
-
         ) = unserialize($serialized);
     }
 

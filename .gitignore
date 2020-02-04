@@ -1,6 +1,8 @@
-###> Publics images/cv ###
-/public/cv
-###> Publics images/cv ###
+###> VichUpluoadBundle ###
+/public/candidate_cv
+/public/user_avatar
+/public/business_avatar
+###> VichUpluoadBundle ###
 
 ###> PHP-Storm file ###
 /.idea

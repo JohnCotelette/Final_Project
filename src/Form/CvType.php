@@ -11,50 +11,44 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-
 class CvType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("cvFile",  VichFileType::class, [
-                  "label" => "Cv(PDF file)",
-                  "attr" => [
+            ->add("cvFile", VichFileType::class, [
+                "label" => "Cv (au format PDF)",
+                "attr" => [
                     "class" => "form-group",
-                  ],
-                  "required" => true,
-                  "allow_delete" => true,
-                  "download_label" => true,
-                  "by_reference" => false,
-                  "constraints" => [
-                      new File([
-                          
+                ],
+                "required" => true,
+                "allow_delete" => true,
+                "download_label" => true,
+                "by_reference" => false,
+                "constraints" => [
+                    new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
                             'application/pdf',
                             'application/x-pdf',
                         ],
-                        'mimeTypesMessage' => 'le Cv doit étre en format  PDF document',
-                      ])]
+                        'mimeTypesMessage' => 'Le Cv doit être au format PDF',
+                        'maxSizeMessage' => 'Votre fichier est trop volumineux ({{ limit }} maximum)',
+                    ])],
             ])
-           
-            ->add("save", SubmitType::class , [
+            ->add("save", SubmitType::class, [
                 "label" => "télécharger ",
                 "attr" => [
                     "class" => "btn btn-primary",
                 ]
-            ])
-           
-        ;
+            ]);
     }
-
-
-  
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Cv::class,
+            'csrf_protection' => true,
         ]);
     }
 }
