@@ -2,10 +2,12 @@
 
 namespace App\Repository;
 
-use App\Entity\Category;
 use App\Entity\Offer;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use App\Entity\Business;
+use App\Entity\Category;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Offer|null find($id, $lockMode = null, $lockVersion = null)
@@ -72,6 +74,17 @@ class OfferRepository extends ServiceEntityRepository
 
         return $qb
             ->orderBy('o.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findOffersByBusinessOrderByDate(Business $business) 
+    {
+        $qb = $this->createQueryBuilder('o');
+
+        return $qb
+            ->where('o.user = :user')
+            ->setParameter(':user', $business->getUser())
             ->getQuery()
             ->getResult();
     }

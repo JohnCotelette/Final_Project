@@ -16,6 +16,7 @@ Encore
     .addEntry('candidatesList', './assets/js/components/recruiter/candidatesList.js')
     .addStyleEntry('login', './assets/css/components/security/login.scss')
     .addStyleEntry('register', './assets/css/components/user/register.scss')
+    .addStyleEntry('candidate_dashboard', './assets/css/components/user/candidate_dashboard.scss')
     .addStyleEntry('forgotPassword', './assets/css/components/security/forgotPassword.scss')
     .addStyleEntry('changePassword', './assets/css/components/security/changePassword.scss')
     .addStyleEntry('easyAdmin', './assets/css/components/easyAdmin/easyAdmin.scss')

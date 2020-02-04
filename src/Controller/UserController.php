@@ -2,14 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Cv;
 use App\Entity\Business;
 use App\Entity\User;
 use App\Form\CandidatType;
+use App\Form\CvType;
 use App\Form\RecruiterType;
 use App\Repository\BusinessRepository;
 use App\Service\MailService;
 use App\Service\UserService;
-use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,9 +61,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         if ($user) {
-            {
-                return $this->userService->redirectBasedOnRoles($user);
-            }
+            return $this->userService->redirectBasedOnRoles($user);
         }
 
         $user = new User();
@@ -163,5 +163,63 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/candidate/dashboard", name= "candidate_dashboard")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return RedirectResponse|Response
+     */
+    public function dashbordUser(Request $request, UserPasswordEncoderInterface $encoder)
+    {
+        $user = $this->getUser();
+      
+        if ($user) {
+            $entityManager = $this ->getDoctrine()->getManager();
 
+            $cv = new Cv();
+            $form = $this->createForm(CandidatType::class, $user);
+
+            $form->handleRequest($request);
+            $formCv = $this->createForm(CvType::class, $cv);
+            $formCv->handleRequest($request);
+
+             // Update profile candidate
+            if ($form->isSubmitted() && $form->isValid()) {
+                $password = $encoder->encodePassword( $user, $user->getPassword());
+                $user->setPassword( $password );
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $this->addFlash("success", "Votre profile est bien mis à jour ");
+
+                return $this->redirectToRoute('candidate_dashboard');
+            }
+
+             // candidate change Cv
+            if ($formCv->isSubmitted() && $formCv->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+
+                if ($user->getCv()) {
+                    $em->remove( $user->getCv() );
+                }
+
+                $user->setCv($cv);
+
+                $em->persist($cv);
+                $em->flush();
+
+                return $this->redirectToRoute("candidate_dashboard");
+                // return $downloadHandler->downloadObject($image, $fileField = 'imageFile');
+            }
+
+            return $this->render('/user/dashbordCandidate.html.twig', [
+                "form" => $form->createView(),
+                "formCv" => $formCv->createView(),
+                "user" => $user
+            ]);
+        }
+
+        return $this->redirectToRoute("login");
+    }
 }
