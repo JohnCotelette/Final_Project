@@ -40,11 +40,10 @@ class BusinessController extends AbstractController
     public function showBusiness(Business $business, OfferRepository $offerRepository, ApplicationRepository $applicationRepository)
     {
         $offers = $offerRepository->findOffersByBusinessOrderByDate($business);
+        
         return $this->render('business/show.html.twig', [
             'business' => $business,
             'offers' => $offers,
         ]);
     }
-
-
 }

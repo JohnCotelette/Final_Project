@@ -5,15 +5,12 @@
 {% endblock %}
 
 {% block content %}
-
-<main>
+<section class="LeftSection">
     <div class="BusinessDetail">
         <div>
-            <figure>
-                <!-- <img src="{{ business.avatar ? "public/business_avatars/" ~ business.avatar.name : asset("build/images/question_mark.42e63c4a.png") }}" alt=""> -->
-            </figure>
-        </div>
-        <div>
+            <!-- <figure>
+                <img src="{{ business.avatar ? "public/business_avatars/" ~ business.avatar.name : asset("build/images/question_mark.42e63c4a.png") }}" alt="">
+            </!-->
             <h1> {{business.name}} </h1>
         </div>
         <div>
@@ -25,25 +22,50 @@
         </div>              
     </div> 
     <hr>
-    <div class="BusinessGlobalDescription">
-        <div class="BusinessDescription">
+    <div class="BusinessGlobalDescription ">
+        <div class="BusinessDescription ContainersPadding">
             <h2>Pourquoi venir chez nous?</h2>
             <p>{{business.description}}</p>
         </div>
         <hr>
-        <div class="BusinessActivity">
+        <div class="BusinessActivity ContainersPadding">
             <h2>Notre métier</h2>
             <p>{{business.activityArea}}</p>
         </div>
         <hr>
-        <div class="BusinessLocation">
+        <div class="BusinessLocation ContainersPadding">
             <h2>Ou sommes-nous ?</h2>
             <p>{{business.location}}</p>
         </div>
     </div>
-</main>
+</section>
 
-Voici les dernières offres !
+<section class="RightSection">
+    <h4>
+        {% if offers|length == 1 %}
+        Voici la dernière offre !
+        {% elseif offers|length >= 2 %}
+        Voici les dernières offres !
+        {% else %}
+        Il n'a pas d'autre offres !
+        {% endif %}
+    </h4>
+
+    {% for offer in offers %}
+        <div class="OfferContainer">
+            <div class="OfferName">
+                {{offer.title}}
+            </div>
+            <div class="OffersCategoriesContainers">
+                <p><i class="far fa-calendar-alt"></i>{{offer.startedAt|date("d/m/Y")}}</p>
+                <p><i class="fas fa-user"></i> {{ offer.experience }}</p>
+                <p><i class="fas fa-suitcase"></i> {{ offer.salary }}</p>
+                <p><i class="fas fa-file-contract"></i> {{ offer.type }}</p>
+                <p><i class="fas fa-map-marker-alt"></i> {{ offer.location }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</section>
 
 {% endblock  %}
 

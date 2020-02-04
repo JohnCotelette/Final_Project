@@ -89,6 +89,7 @@ class OfferRepository extends ServiceEntityRepository
         return $qb
             ->where('o.user = :user')
             ->setParameter(':user', $business->getUser())
+            ->orderBy('o.created_at', 'DESC')
             ->getQuery()
             ->getResult();
     }
