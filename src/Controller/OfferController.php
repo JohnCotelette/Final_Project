@@ -6,10 +6,13 @@ use App\Entity\Offer;
 use App\Form\ApplyType;
 use App\Form\CategoriesType;
 use App\Entity\Application;
+use App\Repository\UserRepository;
 use App\Service\OfferService;
 use App\Repository\OfferRepository;
 use App\Service\MailService;
+use App\Service\UserService;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -86,7 +89,7 @@ class OfferController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                if ($user->getRoles() === ["ROLE_CANDIDATE"] && $user->getCv() == null) {
+                if ($user->getRoles() === ["ROLE_CANDIDATE"] && $user->getCv() != null) {
                     $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
 
                     if ($checkApply != true) {
@@ -117,6 +120,30 @@ class OfferController extends AbstractController
             'form' => !empty($form) ? $form->createView() : null,
             'offer' => $offer,
             'checkApply' => $checkApply,
+        ]);
+    }
+
+    /**
+     * @Route("/offer/create", name="offer_create", methods={"GET", "POST"})
+     * @param Request $request
+     * @param UserService $userService
+     * @return RedirectResponse|Response
+     */
+    public function createOffer(Request $request,  UserService $userService)
+    {
+        $user = $this->getUser();
+
+        if ($user) {
+            if ($user->getRoles() === ["ROLE_CANDIDATE"]) {
+                return $userService->redirectBasedOnRoles($user);
+            }
+        }
+        else {
+            return $userService->redirectBasedOnRoles(null);
+        }
+
+        return $this->render("offer/create.html.twig", [
+
         ]);
     }
 }

@@ -53,6 +53,10 @@ class OfferRepository extends ServiceEntityRepository
                 ->setParameter(':experience', $experience)
                 ->setParameter(':defaultExperience', $defaultExperience);
         }
+        else {
+            $qb
+                ->andWhere('o.experience IS NOT NULL');
+        }
 
         if ($salary != null) {
             $qb
