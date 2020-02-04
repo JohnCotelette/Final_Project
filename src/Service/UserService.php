@@ -34,7 +34,7 @@ class UserService
     {
         if ($user) {
             if ($user->getRoles() === ["ROLE_RECRUITER"]) {
-                return new RedirectResponse($this->router->generate("recruiter_index"));
+                return new RedirectResponse($this->router->generate("offer_create"));
             }
             else if ($user->getRoles() === ["ROLE_ADMIN"]) {
                 return new RedirectResponse($this->router->generate("easyadmin"));

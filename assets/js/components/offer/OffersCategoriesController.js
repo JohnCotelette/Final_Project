@@ -15,6 +15,8 @@ class OffersCategoriesController {
         this.categoriesContainerForMobile = document.getElementById("leftSection");
         this.categoriesControllerForMobile = document.getElementById("displayCategoriesForMobiles");
         this.arrowMobile = document.getElementById("arrowMobile");
+
+        this.offersContainers = document.getElementsByClassName("offersContainers");
     };
 
     displayCategoriesContainer(i) {
@@ -63,6 +65,22 @@ class OffersCategoriesController {
         this.loadingCircle.classList.remove("invisible");
     }
 
+    animateOffersContainers() {
+        let index = 0;
+
+        let intervalID = setInterval(() => {
+            this.offersContainers[index].classList.remove("ghost");
+            this.offersContainers[index].classList.add("appear");
+
+            if (index === this.offersContainers.length - 1) {
+                clearInterval(intervalID);
+            }
+            else {
+                index++;
+            }
+        }, 150);
+    }
+
     init() {
         for (let i = 0; i < this.radioButtons.length; i++) {
             if (this.radioButtons[i].checked === true) {
@@ -72,6 +90,8 @@ class OffersCategoriesController {
                 this.allCategoriesLinks[i].classList.remove("linkSelected");
             }
         }
+
+        this.animateOffersContainers();
     }
 
     initControls() {
