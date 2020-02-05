@@ -32,9 +32,14 @@ class Business
     private $employeesNumber;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", length=5000, nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="text", length=5000, nullable=true)
+     */
+    private $whyUs;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -110,6 +115,18 @@ class Business
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getWhyUs(): ?string
+    {
+        return $this->whyUs;
+    }
+
+    public function setWhyUs(?string $whyUs): self
+    {
+        $this->whyUs = $whyUs;
 
         return $this;
     }

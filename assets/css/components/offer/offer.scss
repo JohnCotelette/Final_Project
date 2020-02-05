@@ -40,7 +40,7 @@ main {
     height: 150px;
     min-height: 150px;
     margin: auto;
-    border-radius: 50%;
+    border-radius: 5px;
     border: 1px solid rgba(51, 51, 51, 0.4);
     background-color: $blanc-clair;
 }
@@ -127,7 +127,7 @@ main {
 }
 
 #offerDetailsContainer p {
-    font-size: 1.1em;
+    font-size: 1.05em;
     line-height: 1.6em;
     color: rgb(51, 51, 51);
 }
@@ -152,6 +152,7 @@ h2 {
     padding: 25px;
     background-color: $blanc-clair;
     height: max-content;
+    max-height: 350px;
     position: fixed;
     width: calc(30% - 40px);
     top: 110px;
@@ -164,9 +165,6 @@ h2 {
 
 .indicationsContainers {
     display: flex;
-}
-
-.indicationsContainers {
     margin: 15px 0;
 }
 
@@ -185,11 +183,7 @@ h2 {
     color: $violet-clair;
 }
 
-#connected {
-    color: $vert;
-}
-
-#nonConnected, #needConnectorRegister, #errorNoCV {
+#needConnectorRegister, #errorNoCV {
     color: red;
 }
 
@@ -365,6 +359,10 @@ h2 {
 
     h1 {
         font-size: 1.6em;
+    }
+
+    #offerDetailsContainer, .fixedContent, #offerInfosContainer {
+        padding: 20px;
     }
 }
 

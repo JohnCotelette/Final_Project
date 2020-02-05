@@ -27,25 +27,33 @@ class UserFixture extends BaseFixture
 
     const DEFAULT_RECRUITER = "recruiter";
 
-    const employeesNumber = [
+    const EMPLOYEES_NUMBER = [
             "20 employés et moins",
             "21 à 100 employés",
             "101 à 500 employés",
             "Plus de 500 employés",
         ];
 
-    const kind = [
+    const BUSINESS_KIND = [
         "Cabinet de recrutement",
         "Editeur de logiciel",
         "Entreprise",
         "ESN / Cabinet de conseil",
     ];
 
-    const city = [
+    const BUSINESS_CITY = [
         "Lyon",
         "Lille",
         "Paris",
         "Toulouse",
+    ];
+
+    const BUSINESS_ACTIVITYAREA = [
+        "Industrie & Énergie",
+        "Média & Télécom",
+        "Web & Tech",
+        "Jeux vidéo",
+        "Banque & Assurance",
     ];
 
     /**
@@ -77,13 +85,14 @@ class UserFixture extends BaseFixture
                 $business = new Business();
 
                 $business
-                    ->setEmployeesNumber(self::employeesNumber[rand(0, 3)])
+                    ->setEmployeesNumber(self::EMPLOYEES_NUMBER[rand(0, 3)])
                     ->setName($this->faker->company)
-                    ->setLocation($this->faker->streetAddress . ", " . self::city[rand(0,3)])
+                    ->setLocation($this->faker->streetAddress . ", " . self::BUSINESS_CITY[rand(0,3)])
                     ->setSiretNumber(rand(11111111111111, 99999999999999))
-                    ->setActivityArea($this->faker->text($maxNbChars = 100))
+                    ->setActivityArea(self::BUSINESS_ACTIVITYAREA[rand(0, 4)])
+                    ->setWhyUs($this->faker->text($maxNbChars = 2000))
                     ->setDescription($this->faker->text($maxNbChars = 2000))
-                    ->setKind(self::kind[rand(0,3)])
+                    ->setKind(self::BUSINESS_KIND[rand(0,3)])
                     ;
 
                 $user
