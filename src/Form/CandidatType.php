@@ -50,29 +50,18 @@ class CandidatType extends AbstractType
                     new Regex([
                         "pattern" => "/^\S+$/",
                         "message" => "N'utilisez pas d'espace dans votre mot de passe",
-                    ])
+                        "match" => false,
+                    ]),
                 ],
             ])
             ->add("firstName", TextType::class, [
                 "attr" => [
                     "placeholder" => "Prénom",
                 ],
-                "constraints" => [
-                    new Regex([
-                        "pattern" => "/\d+?/",
-                        "message" => "N'utilisez pas de chiffres",
-                    ])
-                ],
             ])
             ->add("lastName", TextType::class, [
                 "attr" => [
                     "placeholder" => "Nom",
-                ],
-                "constraints" => [
-                    new Regex([
-                        "pattern" => "/\d+?/",
-                        "message" => "N'utilisez pas de chiffres",
-                    ])
                 ],
             ])
             ->add("birthDay", BirthdayType::class, [

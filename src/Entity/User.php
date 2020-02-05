@@ -68,6 +68,12 @@ class User implements UserInterface
      * @Assert\NotBlank(
      *     message="Veuillez renseigner votre prénom"
      * )
+     * 
+     *@Assert\Regex(
+     *     pattern ="/[^A-Za-z\-]/",
+     *     match=false,
+     *     message="N'utilisez pas de caractères spéciaux"
+     * )
      */
     private $firstName;
 
@@ -81,6 +87,11 @@ class User implements UserInterface
      * )
      * @Assert\NotBlank(
      *     message="Veuillez renseigner votre nom"
+     * )
+     * @Assert\Regex(
+     *     pattern ="/[^A-Za-z\-]/",
+     *     match=false,
+     *     message="N'utilisez pas de caractères spéciaux"
      * )
      */
     private $lastName;
