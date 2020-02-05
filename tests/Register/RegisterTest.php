@@ -34,7 +34,7 @@ class RegisterFormTest extends WebTestCase
         ]);
 
         $client->submit($form);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertResponseIsSuccessful();
     }
 
     public function testRegisterRecruiterForm()
@@ -65,7 +65,7 @@ class RegisterFormTest extends WebTestCase
         ]);
 
         $client->submit($form);
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertResponseIsSuccessful();
     }
 
     public function testFieldRegisterRecruiterForm()
@@ -116,10 +116,8 @@ class RegisterFormTest extends WebTestCase
 
         //Submit form
         $crawler = $client->submit($form);
-
         //Get errors 
         $error = $crawler->filter(".field-firstname .error li");
-
         //Get string
         $error =  $error->getNode(0)->textContent;
         
