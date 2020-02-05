@@ -21,6 +21,7 @@ Encore
     .addStyleEntry('changePassword', './assets/css/components/security/changePassword.scss')
     .addStyleEntry('easyAdmin', './assets/css/components/easyAdmin/easyAdmin.scss')
     .addStyleEntry("404", './assets/css/components/error/404.scss')
+    .addStyleEntry("403", './assets/css/components/error/403.scss')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()

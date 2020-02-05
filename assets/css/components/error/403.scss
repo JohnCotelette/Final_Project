@@ -1,0 +1,24 @@
+/* -------------------------- MAIN -------------------------- */
+
+main {
+    display: flex;
+    padding: 30px 0;
+}
+
+#errorMessageContainer {
+    margin: auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.6em;
+    margin-bottom: 20px;
+}
+
+#errorMessageContainer figure img {
+    width: 200px;
+}
+
+#errorMessageContainer p {
+    margin: 0;
+}
