@@ -51,9 +51,12 @@
                 </li>
             {% endif %}
         {% else %}
-            <li>
-                <a class="defaultNavLinks" href="{{ path("candidate_dashboard" ) }}">Mon Compte</a>
-            </li>  
+            {% if app.request.attributes.get("_route") != "candidate_dashboard" and
+                app.request.attributes.get("_route") != "recruiter_dashboard" %}
+                    <li>
+                        <a class="defaultNavLinks" href="{{ path("candidate_dashboard" ) }}">Mon Compte</a>
+                    </li>
+            {% endif %}
             <li>
                 <a class="defaultNavLinks" href="{{ path("logout") }}">Déconnexion</a>
             </li>

@@ -190,7 +190,7 @@ h3 {
 
 #displayCategoriesForMobiles {
     width: max-content;
-    margin: 10px auto 30px;
+    margin: 20px auto;
     color: $violet-clair;
     font-size: 0.9em;
 }
@@ -378,5 +378,13 @@ h5 {
     .card-body {
         padding-left: 0 !important;
         padding-right: 0 !important;
+    }
+
+    #offersPageDescription {
+        position: static;
+    }
+
+    .row {
+        margin-top: 0;
     }
 }
