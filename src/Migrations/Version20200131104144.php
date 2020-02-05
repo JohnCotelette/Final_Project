@@ -21,7 +21,6 @@ final class Version20200131104144 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE business ADD description LONGTEXT DEFAULT NULL, CHANGE avatar_id avatar_id INT DEFAULT NULL, CHANGE name name VARCHAR(100) DEFAULT NULL, CHANGE employees_number employees_number enum(\'20 employés et moins\', \'21 à 100 employés\', \'101 à 500 employés\', \'Plus de 500 employés\'), CHANGE activity_area activity_area VARCHAR(255) DEFAULT NULL, CHANGE location location VARCHAR(100) DEFAULT NULL');
     }
 
@@ -29,7 +28,6 @@ final class Version20200131104144 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE business DROP description, CHANGE avatar_id avatar_id INT DEFAULT NULL, CHANGE name name VARCHAR(100) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`, CHANGE employees_number employees_number VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`, CHANGE activity_area activity_area VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`, CHANGE location location VARCHAR(100) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`');
     }
 }
