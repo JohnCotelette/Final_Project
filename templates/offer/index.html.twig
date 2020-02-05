@@ -117,7 +117,7 @@
                         <div class="col-md-8 d-flex offersInfosContainers">
                             <div class="card-body my-auto">
                                 <div class=" linkOffer">
-                                    <h4 class="card-title"><a href="{{ path('show_offer', {'id':offer.id}) }}">{{ offer.title }}  </a></h4>
+                                    <h4 class="card-title"><a href="{{ path('show_offer', {'reference': offer.reference}) }}">{{ offer.title }}  </a></h4>
 
                                     <h5>Chez <a class="offersLinks" href="{{ path("show_business", {"id" : offer.user.business.id }) }}"> {{ offer.user.business.name|upper }}</a> </h5>
 
@@ -130,7 +130,7 @@
                                 </div>
 
                                 <p class="offersDescriptions card-text">{{ offer.description|truncate(100) }}
-                                    <a class="clickToKnowMoreLinks" href="{{ path('show_offer', {'id':offer.id}) }}">En savoir plus</a>
+                                    <a class="clickToKnowMoreLinks" href="{{ path('show_offer', {'reference': offer.reference}) }}">En savoir plus</a>
                                 </p>
                             </div>
                         </div>

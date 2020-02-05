@@ -63,6 +63,7 @@ class RecruiterType extends AbstractType
                     new Regex([
                         "pattern" => "/\d+?/",
                         "message" => "N'utilisez pas de chiffres",
+                        "match" => false,
                     ])
                 ],
             ])
@@ -74,6 +75,7 @@ class RecruiterType extends AbstractType
                     new Regex([
                         "pattern" => "/\d+?/",
                         "message" => "N'utilisez pas de chiffres",
+                        "match" => false,
                     ])
                 ],
             ])
