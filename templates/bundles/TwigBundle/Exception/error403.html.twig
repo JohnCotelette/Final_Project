@@ -1,0 +1,23 @@
+{% extends "layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags("403") }}
+{% endblock %}
+
+{% block title %}{{ parent() }}Erreur, accès non autorisé{% endblock %}
+
+{% block content %}
+    <div id="errorMessageContainer">
+        <figure>
+            <img src="{{ asset("build/images/error_smile.a794c828.png") }}" alt="Sad head" />
+        </figure>
+
+        <h1>Accès non autorisé</h1>
+
+        <p>
+            Vous ne disposez pas des accès suffisants pour afficher cette page.<br>
+            Peut être vous êtes vous trompé dans l'url ?<br>
+            Pour retourner simplement sur la page d'accueil, cliquez <a id="errorRedirectLink" href="{{ path('home') }}">ici</a>.
+        </p>
+    </div>
+{% endblock %}
