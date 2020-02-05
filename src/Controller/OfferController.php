@@ -66,17 +66,36 @@ class OfferController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/offer/{id}", name="show_offer", methods={"GET", "POST"})
-     * @param OfferService $offerService
-     * @param Offer $offer
+     * @Route("/offer/create", name="offer_create", methods={"GET", "POST"})
      * @param Request $request
-     * @param MailService $mailService
-     * @return Response
+     * @param UserService $userService
+     * @return RedirectResponse|Response
      */
-    public function showOffer(OfferService $offerService, Offer $offer, Request $request, MailService $mailService)
+    public function createOffer(Request $request,  UserService $userService)
     {
         $user = $this->getUser();
+
+        return $this->render("offer/create.html.twig", [
+
+        ]);
+    }
+
+    /**
+     * @Route("/offer/{reference}", name="show_offer", methods={"GET", "POST"})
+     * @param OfferService $offerService
+     * @param Request $request
+     * @param MailService $mailService
+     * @param OfferRepository $offerRepository
+     * @param string $reference
+     * @return Response
+     */
+    public function showOffer(OfferService $offerService, Request $request, MailService $mailService, OfferRepository $offerRepository, string $reference)
+    {
+        $user = $this->getUser();
+
+        $offer = $offerRepository->findOneBy(["reference" => $reference]);
 
         $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
     
@@ -120,30 +139,6 @@ class OfferController extends AbstractController
             'form' => !empty($form) ? $form->createView() : null,
             'offer' => $offer,
             'checkApply' => $checkApply,
-        ]);
-    }
-
-    /**
-     * @Route("/offer/create", name="offer_create", methods={"GET", "POST"})
-     * @param Request $request
-     * @param UserService $userService
-     * @return RedirectResponse|Response
-     */
-    public function createOffer(Request $request,  UserService $userService)
-    {
-        $user = $this->getUser();
-
-        if ($user) {
-            if ($user->getRoles() === ["ROLE_CANDIDATE"]) {
-                return $userService->redirectBasedOnRoles($user);
-            }
-        }
-        else {
-            return $userService->redirectBasedOnRoles(null);
-        }
-
-        return $this->render("offer/create.html.twig", [
-
         ]);
     }
 }

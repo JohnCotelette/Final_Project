@@ -59,13 +59,11 @@ class RecruiterType extends AbstractType
                 "attr" => [
                     "placeholder" => "Prénom",
                 ],
-
             ])
             ->add("lastName", TextType::class, [
                 "attr" => [
                     "placeholder" => "Nom",
                 ],
-
             ])
             ->add("birthDay", BirthdayType::class, [
                 "label" => "Date de naissance",

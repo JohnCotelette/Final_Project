@@ -2,7 +2,7 @@
 
 namespace App\Validator\Constraints;
 
-use App\Repository\BusinessRepository;
+use App\Service\BusinessService;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -15,17 +15,13 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 class UniqueSiretValidator extends ConstraintValidator
 {
     /**
-     * @var BusinessRepository
+     * @var BusinessService
      */
-    private $businessRepository;
+    private $businessService;
 
-    /**
-     * UniqueSiretValidatorValidator constructor.
-     * @param BusinessRepository $businessRepository
-     */
-    public function __construct(BusinessRepository $businessRepository)
+    public function __construct(BusinessService $businessService)
     {
-        $this->businessRepository = $businessRepository;
+        $this->businessService = $businessService;
     }
 
     /**
@@ -46,9 +42,9 @@ class UniqueSiretValidator extends ConstraintValidator
             throw new UnexpectedValueException($value, 'string');
         }
 
-        $isTheDatabaseHasAlreadyThisBusiness = $this->businessRepository->findOneBy(["siretNumber" => $value]);
+        $businessAlreadyExist = $this->businessService->isBusinessAlreadyExistInTheDatabase($value);
 
-        if ($isTheDatabaseHasAlreadyThisBusiness != null) {
+        if ($businessAlreadyExist === true) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->setParameter('{{ string }}', $value)
