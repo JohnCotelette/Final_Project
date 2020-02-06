@@ -155,7 +155,7 @@ form label {
     flex-direction: column;
 }
 
-.field-legalError, .field-legal {
+.field-legalError, .field-legal, .field-businessError {
     width: 100% !important;
 }
 
@@ -273,7 +273,7 @@ section ul {
         font-size: 1.5em;
     }
 
-    section ul {
+    #secondSection ul {
         font-size: 1.1em;
         line-height: 1.6em;
         padding-left: 10px;

@@ -19,32 +19,13 @@ class BusinessRepository extends ServiceEntityRepository
         parent::__construct($registry, Business::class);
     }
 
-    // /**
-    //  * @return Business[] Returns an array of Business objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getAllBusinessWhereDescAndWhyUsNotNullOrderByName()
     {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
+        return $qb = $this->createQueryBuilder('b')
+            ->andWhere('b.description IS NOT NULL')
+            ->andWhere('b.whyUs IS NOT NULL')
+            ->orderBy('b.name', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Business
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

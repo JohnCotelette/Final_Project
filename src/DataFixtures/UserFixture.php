@@ -28,10 +28,10 @@ class UserFixture extends BaseFixture
     const DEFAULT_RECRUITER = "recruiter";
 
     const EMPLOYEES_NUMBER = [
-            "20 employés et moins",
-            "21 à 100 employés",
-            "101 à 500 employés",
-            "Plus de 500 employés",
+            "19 employés et moins",
+            "20 à 99 employés",
+            "100 à 499 employés",
+            "500 employés et plus",
         ];
 
     const BUSINESS_KIND = [
