@@ -4,7 +4,7 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class RoutesTest extends WebTestCase {
+class RoutesLoginTest extends WebTestCase {
     
     function testRouteLogin()
     {
@@ -22,15 +22,6 @@ class RoutesTest extends WebTestCase {
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
 
-    }
-
-    function testRouteLogout()
-    {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/logout');
-        ($this->assertResponseRedirects(""));
-        $client->followRedirect();
-        $this->assertResponseIsSuccessful();
     }
 
     public function testFieldLoginForm()
