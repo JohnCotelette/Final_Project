@@ -70,14 +70,14 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
             $chanceToSetASalary = rand(0, 5);
 
             $offer
-                ->setTitle($this->faker->text($maxNbChars = 40))
-                ->setDescription($this->faker->text($maxNbChars = 2000))
+                ->setTitle($this->faker->text($minNbChars = 30, $maxNbChars = 50))
+                ->setDescription($this->faker->text($minNbChars = 1500, $maxNbChars = 2000))
                 ->setExperience(self::OFFERS_EXPERIENCES[rand(0, 3)])
                 ->setType(self::OFFERS_TYPE[rand(0, 2)])
                 ->setLocation($this->faker->city)
                 ->setCreatedAt($this->faker->dateTimeBetween($startDate = "-1 month", $endDate = "now", $timezone = "Europe/Paris"))
                 ->setStartedAt($this->faker->dateTimeBetween($startDate = "now", $endDate = "+ 1 year", $timezone = "Europe/Paris"))
-                ->setProfilRequired($this->faker->text($maxNbChars = 250));
+                ->setProfilRequired($this->faker->text($minNbChars = 500, $maxNbChars = 800));
 
             if ($chanceToSetASalary > 0) {
                 $offer->setSalary(self::OFFERS_SALARY[rand(0, count(self::OFFERS_SALARY) - 1)]);
