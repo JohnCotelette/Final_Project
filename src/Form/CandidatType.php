@@ -50,7 +50,6 @@ class CandidatType extends AbstractType
                     new Regex([
                         "pattern" => "/^\S+$/",
                         "message" => "N'utilisez pas d'espace dans votre mot de passe",
-                        "match" => false,
                     ]),
                 ],
             ])

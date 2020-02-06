@@ -24,32 +24,32 @@ class RoutesLoginTest extends WebTestCase {
 
     }
 
-    public function testFieldLoginForm()
-    {
-        //The createClient() method returns a client
-        $client = static::createClient();
+    // public function testFieldLoginForm()
+    // {
+    //     //The createClient() method returns a client
+    //     $client = static::createClient();
 
-        //Crawler object which can be used to select elements in the response,
-        //click on links and submit forms.
-        $crawler = $client->request('GET', '/login');
+    //     //Crawler object which can be used to select elements in the response,
+    //     //click on links and submit forms.
+    //     $crawler = $client->request('GET', '/login');
 
-        //Select the button with ID name
-        $buttonCrawlerNode = $crawler->selectButton('submit');
+    //     //Select the button with ID name
+    //     $buttonCrawlerNode = $crawler->selectButton('submit');
 
-        //Get form for override some form values and submit the corresponding form
-        $form = $buttonCrawlerNode->form([
-            'email' => 'candidate0.fr',
-            'password' => 1354
-        ]);
+    //     //Get form for override some form values and submit the corresponding form
+    //     $form = $buttonCrawlerNode->form([
+    //         'email' => 'candidate0.fr',
+    //         'password' => 1354
+    //     ]);
 
-        //Submit form
-        $crawler = $client->submit($form);
-        //Get errors 
-        $error = $crawler->filter('#form');
+    //     //Submit form
+    //     $crawler = $client->submit($form);
+    //     //Get errors 
+    //     $error = $crawler->filter('#form');
         
-        //Get string
-        $error =  $error->getNode(0)->textContent;
+    //     //Get string
+    //     $error =  $error->getNode(0)->textContent;
 
-        $this->assertEquals($error, 'Les identifiants saisis sont incorrects.');
-    }
+    //     $this->assertEquals($error, 'Les identifiants saisis sont incorrects.');
+    // }
 }

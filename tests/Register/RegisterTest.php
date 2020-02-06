@@ -58,12 +58,12 @@ class RegisterFormTest extends WebTestCase
             'recruiter[birthDay][year]' => 1984,
             'recruiter[birthDay][month]'=> 2,
             'recruiter[birthDay][day]'=> 1,
-            'recruiter[password][first]' => 'Azerty',
-            'recruiter[password][second]' => 'Azerty',
-            'recruiter[business]' => 'WebForce3',
+            'recruiter[password][first]' => 'Azerty123',
+            'recruiter[password][second]' => 'Azerty123',
+            'recruiter[business]' => '01234567891011',
             'recruiter[legalConditions]' => 1,
         ]);
-
+        
         $client->submit($form);
         $this->assertResponseIsSuccessful();
     }
@@ -83,18 +83,22 @@ class RegisterFormTest extends WebTestCase
         //Get form for override some form values and submit the corresponding form
         $form = $buttonCrawlerNode->form([
             'recruiter[email]' => 'azerty',
+            'recruiter[password][first]' => 'Azerty',
+            'recruiter[password][second]' => 'Azerty',
+
         ]);
 
         //Submit form
         $crawler = $client->submit($form);
 
         //Get errors 
-        $error = $crawler->filter(".field-firstname .error li");
+        $error = $crawler->filter("#emailErrorsContainer .field-emailError");
+        
 
         //Get string
         $error =  $error->getNode(0)->textContent;
-
-        $this->assertEquals($error, 'Veuillez renseigner votre prénom');
+        dd($this->assertEquals($error, 'Veuillez renseigner une adresse e-mail valide') );
+        $this->assertEquals($error, 'Veuillez renseigner une adresse e-mail valide');
     }
 
     public function testFieldRegisterCandidatForm()
@@ -117,10 +121,10 @@ class RegisterFormTest extends WebTestCase
         //Submit form
         $crawler = $client->submit($form);
         //Get errors 
-        $error = $crawler->filter(".field-firstname .error li");
+        $error = $crawler->filter("#identityErrorsContainer .field-firstNameError");
         //Get string
         $error =  $error->getNode(0)->textContent;
         
-        $this->assertEquals($error, "N'utilisez pas de caractères spécial");
+        $this->assertEquals($error, "N'utilisez pas de caractères spéciaux");
     }
 }
