@@ -1,4 +1,6 @@
 parameters:
+    api_siren_token: '%env(API_SIREN_TOKEN)%'
+    api_siren_url_siret: '%env(API_SIREN_URL_SIRET)%'
 
 services:
     _defaults:

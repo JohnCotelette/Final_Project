@@ -9,10 +9,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 /**
- * Class UniqueSiretValidatorValidator
+ * Class UniqueAndExistSiretValidatorValidator
  * @package App\Validator\Constraints
  */
-class UniqueSiretValidator extends ConstraintValidator
+class ExistAndUniqueSiretValidator extends ConstraintValidator
 {
     /**
      * @var BusinessService
@@ -30,8 +30,8 @@ class UniqueSiretValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof UniqueSiret) {
-            throw new UnexpectedTypeException($constraint, UniqueSiret::class);
+        if (!$constraint instanceof ExistAndUniqueSiret) {
+            throw new UnexpectedTypeException($constraint, ExistAndUniqueSiret::class);
         }
 
         if (null === $value || '' === $value) {
@@ -46,7 +46,16 @@ class UniqueSiretValidator extends ConstraintValidator
 
         if ($businessAlreadyExist === true) {
             $this->context
-                ->buildViolation($constraint->message)
+                ->buildViolation($constraint->alreadyExistInDatabaseMessage)
+                ->setParameter('{{ string }}', $value)
+                ->addViolation();
+        }
+
+        $businessExist = $this->businessService->isBusinessExist($value);
+
+        if ($businessExist === false) {
+            $this->context
+                ->buildViolation($constraint->dontExistMessage)
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();
         }

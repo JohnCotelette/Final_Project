@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
-use App\Validator\Constraints\UniqueSiret;
+use App\Validator\Constraints\ExistAndUniqueSiret;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -88,7 +88,7 @@ class RecruiterType extends AbstractType
                     new NotBlank([
                         "message" => "Veuillez renseigner le numéro de Siret de votre entreprise",
                     ]),
-                    new UniqueSiret(),
+                    new ExistAndUniqueSiret(),
                 ],
             ])
             ->add("legalConditions", CheckboxType::class, [
