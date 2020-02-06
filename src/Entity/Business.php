@@ -27,7 +27,7 @@ class Business
     private $name;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="enum('20 employés et moins', '21 à 100 employés', '101 à 500 employés', 'Plus de 500 employés')", nullable=true)
+     * @ORM\Column(type="string", columnDefinition="enum('19 employés et moins', '20 à 99 employés', '100 à 499 employés', '500 employés et plus')", nullable=true)
      */
     private $employeesNumber;
 
@@ -52,7 +52,7 @@ class Business
     private $location;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="enum('Cabinet de recrutement', 'Editeur de logiciel', 'Entreprise', 'ESN / Cabinet de conseil')", nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $kind;
 
@@ -160,7 +160,7 @@ class Business
         return $this->kind;
     }
 
-    public function setKind(string $kind): self
+    public function setKind(?string $kind): self
     {
         $this->kind = $kind;
 

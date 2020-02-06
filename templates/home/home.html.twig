@@ -43,7 +43,7 @@
                     <p class="card-text">{{ offer.description | truncate(200) }}</p>
 
                     <div class="moreInfosContainer">
-                        <a href="{{ path("show_offer", {"id" : offer.id}) }}">Plus d'infos</a>
+                        <a href="{{ path("show_offer", {"reference" : offer.reference}) }}">Plus d'infos</a>
                     </div>
                 </div>
             </div>

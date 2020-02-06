@@ -52,7 +52,7 @@
                 <h2 id="specialH2">Dernieres offres</h2>
                 {% for offer in business.user.offers %}
                     <div class="offersContainers">
-                        <h3><a href="{{ path("show_offer", {"id" : offer.id}) }}">{{ offer.title }}</a></h3>
+                        <h3><a href="{{ path("show_offer", {"reference" : offer.reference}) }}">{{ offer.title }}</a></h3>
 
                         <ul>
                             <li><i class="fas fa-file-contract"></i> {{ offer.type }}</li>
@@ -83,7 +83,7 @@
 
                 {% for offer in lastOffersInWebsite %}
                     <div class="offersContainers">
-                        <h3><a href="{{ path("show_offer", {"id" : offer.id}) }}">{{ offer.title }}</a></h3>
+                        <h3><a href="{{ path("show_offer", {"reference" : offer.reference}) }}">{{ offer.title }}</a></h3>
 
                         <p>Chez <a href="{{ path("show_business", {"id" : offer.user.business.id}) }}">{{ offer.user.business.name }}</a></p>
 

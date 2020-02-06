@@ -72,7 +72,7 @@ class User implements UserInterface
      *@Assert\Regex(
      *     pattern ="/[^A-Za-z\-]/",
      *     match=false,
-     *     message="N'utilisez pas de caractères spécial"
+     *     message="N'utilisez pas de caractères spéciaux"
      * )
      */
     private $firstName;
@@ -91,7 +91,7 @@ class User implements UserInterface
      * @Assert\Regex(
      *     pattern ="/[^A-Za-z\-]/",
      *     match=false,
-     *     message="N'utilisez pas de caractères spécial"
+     *     message="N'utilisez pas de caractères spéciaux"
      * )
      */
     private $lastName;
