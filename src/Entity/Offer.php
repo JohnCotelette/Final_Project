@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Faker\Provider\DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OfferRepository")
@@ -47,36 +47,102 @@ class Offer
 
     /**
      * @ORM\Column(type="string", length=90)
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner un titre"
+     * )
+     * @Assert\NotNull(
+     *     message="Veuillez renseigner un titre"
+     * )
+     * @Assert\Length(
+     *     min=8,
+     *     max=90,
+     *     minMessage="Le titre de l'offre doit faire au minimum {{ limit }} caractères",
+     *     maxMessage="Le titre de l'offre ne peut dépasser {{ limit }} caractères",
+     * )
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner une description"
+     * )
+     * @Assert\NotNull(
+     *     message="Veuillez renseigner un description"
+     * )
+     * @Assert\Length(
+     *     min=100,
+     *     max=2000,
+     *     minMessage="La description de l'offre doit faire au minimum {{ limit }} caractères",
+     *     maxMessage="La description de l'offre ne peut dépasser {{ limit }} caractères",
+     * )
      */
     private $description;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(
+     *     message="Veuillez décrire le profil requis"
+     * )
+     * @Assert\NotNull(
+     *     message="Veuillez décrire le profil requis"
+     * )
+     * @Assert\Length(
+     *     min=80,
+     *     max=2000,
+     *     minMessage="La description de l'offre doit faire au minimum {{ limit }} caractères",
+     *     maxMessage="La description de l'offre ne peut dépasser {{ limit }} caractères",
+     * )
      */
     private $profilRequired;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner une adresse (complète ou non)"
+     * )
+     * @Assert\NotNull(
+     *     message="Veuillez renseigner une adresse (complète ou non)"
+     * )
+     * @Assert\Length(
+     *     min=4,
+     *     max=100,
+     *     minMessage="L'adresse de l'offre doit faire au minimum {{ limit }} caractères",
+     *     maxMessage="L'adresse de l'offre ne peut dépasser {{ limit }} caractères",
+     * )
      */
     private $location;
 
     /**
      * @ORM\Column(type="string", columnDefinition="enum('Tous', 'Junior (0 à 2 ans)', 'Confirmé (3 à 6 ans)', 'Senior (7 ans et plus)')")
+     * @Assert\NotNull(
+     *     message="Veuillez renseigner l'experience requise"
+     * )
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner l'experience requise"
+     * )
      */
     private $experience;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(
+     *     min="0",
+     *     max="1000000",
+     *     minMessage="Le salaire de l'offre ne peut être un chiffre négatif",
+     *     maxMessage="Le salaire de l'offre ne peut dépasser {{ limit }} brut annuel",
+     * )
      */
     private $salary;
 
     /**
      * @ORM\Column(type="string", columnDefinition="enum('CDI', 'CDD', 'Stage')")
+     * @Assert\NotNull(
+     *     message="Veuillez renseigner le type de contrat"
+     * )
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner le type de contrat"
+     * )
      */
     private $type;
 

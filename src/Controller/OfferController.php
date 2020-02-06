@@ -6,6 +6,7 @@ use App\Entity\Offer;
 use App\Form\ApplyType;
 use App\Form\CategoriesType;
 use App\Entity\Application;
+use App\Form\OfferType;
 use App\Repository\UserRepository;
 use App\Service\OfferService;
 use App\Repository\OfferRepository;
@@ -73,12 +74,15 @@ class OfferController extends AbstractController
      * @param UserService $userService
      * @return RedirectResponse|Response
      */
-    public function createOffer(Request $request,  UserService $userService)
+    public function createOffer(Request $request, UserService $userService)
     {
         $user = $this->getUser();
+        $offer = new Offer();
+
+        $form = $this->createForm(OfferType::class, $offer);
 
         return $this->render("offer/create.html.twig", [
-
+            "form" => $form->createView(),
         ]);
     }
 
