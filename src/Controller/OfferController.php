@@ -6,10 +6,14 @@ use App\Entity\Offer;
 use App\Form\ApplyType;
 use App\Form\CategoriesType;
 use App\Entity\Application;
+use App\Form\OfferType;
+use App\Repository\UserRepository;
 use App\Service\OfferService;
 use App\Repository\OfferRepository;
 use App\Service\MailService;
+use App\Service\UserService;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,17 +67,39 @@ class OfferController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/offer/{id}", name="show_offer", methods={"GET", "POST"})
-     * @param OfferService $offerService
-     * @param Offer $offer
+     * @Route("/offer/create", name="offer_create", methods={"GET", "POST"})
      * @param Request $request
-     * @param MailService $mailService
-     * @return Response
+     * @param UserService $userService
+     * @return RedirectResponse|Response
      */
-    public function showOffer(OfferService $offerService, Offer $offer, Request $request, MailService $mailService)
+    public function createOffer(Request $request, UserService $userService)
     {
         $user = $this->getUser();
+        $offer = new Offer();
+
+        $form = $this->createForm(OfferType::class, $offer);
+
+        return $this->render("offer/create.html.twig", [
+            "form" => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/offer/{reference}", name="show_offer", methods={"GET", "POST"})
+     * @param OfferService $offerService
+     * @param Request $request
+     * @param MailService $mailService
+     * @param OfferRepository $offerRepository
+     * @param string $reference
+     * @return Response
+     */
+    public function showOffer(OfferService $offerService, Request $request, MailService $mailService, OfferRepository $offerRepository, string $reference)
+    {
+        $user = $this->getUser();
+
+        $offer = $offerRepository->findOneBy(["reference" => $reference]);
 
         $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
     

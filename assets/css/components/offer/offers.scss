@@ -190,7 +190,7 @@ h3 {
 
 #displayCategoriesForMobiles {
     width: max-content;
-    margin: 10px auto 30px;
+    margin: 20px auto;
     color: $violet-clair;
     font-size: 0.9em;
 }
@@ -290,14 +290,14 @@ h5 {
 
 #businessImgContainer {
     background-color: inherit;
-    width: 200px;
-    height: 200px;
+    width: 140px;
+    height: 140px;
     margin: auto;
 }
 
 #businessImgContainer img {
-    width: 100%;
-    max-width: 100%;
+    width: 80%;
+    max-width: 80%;
     height: auto;
     max-height: 100%;
     margin: auto;
@@ -305,6 +305,10 @@ h5 {
 
 .offersInfosContainers {
     background-color: inherit !important;
+}
+
+.ghost {
+    opacity: 0;
 }
 
 /* -------------------------- RESPONSIVE -------------------------- */
@@ -374,5 +378,13 @@ h5 {
     .card-body {
         padding-left: 0 !important;
         padding-right: 0 !important;
+    }
+
+    #offersPageDescription {
+        position: static;
+    }
+
+    .row {
+        margin-top: 0;
     }
 }

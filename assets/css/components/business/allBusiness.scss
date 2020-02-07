@@ -1,36 +1,53 @@
 @import "../../core.scss";
 
+/* -------------------------- MAIN -------------------------- */
+
+main {
+    padding: 25px 0;
+    width: 65%;
+    margin: auto;
+}
+
+/* -------------------------- CONTENT -------------------------- */
+
+#titleContainer {
+    text-align: center;
+}
+
 h1 {
-    font-size: 2rem;
-    font-family: buenos_aires_trialblack;
+    font-size: 2.2em;
+    font-family: buenos_aires_trialblack, Arial, sans-serif;
+    color: $violet-clair;
+    margin-bottom: 3px;
+    margin-top: 10px;
+}
+
+#titleContainer p {
+    margin-bottom: 35px;
+}
+
+figure {
+    margin: 10px auto;
 }
 
 h2 {
     font-size: 2rem;
     margin-left: 5px;
     margin-top: 10px;
+    color: $violet-clair;
 }
 
 h2 a {
-    color: #3a3a3a;
+    color: $violet-clair;
     text-decoration: none;
 }
 
 p {
-    margin-bottom: 0em;
+    margin-bottom: 0;
 }
 
 hr {
-    margin: 0rem;
-}
-
-figure {
-    margin-top: 1rem;
-}
-
-.title {
-    text-align: center;
-    margin-top: 3rem;
+    margin: 0;
 }
 
 .displayBusinessDetails {
@@ -38,17 +55,15 @@ figure {
 }
  
 .businessImgContainer {
-    width: max-content;
-    margin-left: 2rem;
-    margin-top: 1rem;
+    width: 30%;
 }
 
 .businessImgContainer figure {
-    width: 150px;
-    min-width: 150px;
-    height: 150px;
-    min-height: 150px;
-    border-radius: 50%;
+    width: 120px;
+    min-width: 120px;
+    height: 120px;
+    min-height: 120px;
+    border-radius: 5px;
     border: 1px solid rgba(51, 51, 51, 0.4);
     display: flex;
 }
@@ -60,16 +75,19 @@ figure {
 }
 
 .bodyBusinessPage {
-    font-size: 0.8rem;
-    width: 60%;
-    margin: auto;
     background-color: $blanc-clair;
-    margin-top: 100px;
+}
+
+.bodyBusinessPage ul {
+    font-size: 0.85em;
+    color: rgba(51, 51, 51, 0.8);
+    list-style: none;
+    padding: 0;
 }
 
 .displayBusiness {
     display: flex;
-    margin-bottom: 1rem;
+    padding: 12px;
     height: 50%;
 }
 
@@ -77,18 +95,44 @@ figure {
     display: table-cell;
 }
 
-.displayBusiness ul {
-    padding: 0;
-    list-style: none;
-}
-
-.displayBusiness ul > li{
+.displayBusiness ul > li {
     display: inline-block;
     padding-right: 5px;
     padding-left: 5px;
 }
 
-@media (max-width: 1200px) {
+.container.pagination {
+    margin-top: 20px !important;
+}
+
+.page-link {
+    border-color: $violet-fonce !important;
+    color: $violet-clair !important;
+}
+
+.page-item.active .page-link {
+    background-color: rgba(51, 51, 51, 0.7) !important;
+    color: white !important;
+}
+
+.paginationContainer {
+    margin-top: 35px;
+}
+
+/* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-width: 1500px) {
+    main {
+        width: 90%;
+    }
+
+    .businessImgContainer, .displayBusinessDetails {
+        margin: 0 !important;
+    }
+
+    .businessName {
+        text-align: left !important;
+    }
 
     .businessImgContainer {
         width: max-content;
@@ -99,6 +143,7 @@ figure {
         height: 50%;
         display: flex;
         flex-direction: column;
+        padding-left: 40px;
     }
 
     .businessImg {
@@ -107,18 +152,31 @@ figure {
     
     .displayUlBusinessDetails {
         display: inline;
-        margin: 0em;
+        margin: 0;
     }
 
-    .displayUlBusinessDetails li{
+    .displayUlBusinessDetails li {
         width: max-content;
     }
 
     .businessName {
         text-align: center;
-        margin: 0rem;
+        margin: 0;
+    }
+}
+
+@media (max-width: 680px) {
+    .displayBusiness {
+        padding: 20px;
     }
 
+    h1 {
+        font-size: 1.6em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
 }
 
 

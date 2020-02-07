@@ -7,11 +7,7 @@
 {% block title %}
     {{ parent() }}
     Inscription
-    {% if app.request.attributes.get("_route") == "candidate_register" %}
-        candidat
-    {% else %}
-        recruteur
-    {% endif %}
+    {{ app.request.attributes.get("_route") == "candidate_register" ? "candidat" : "recruteur" }}
 {% endblock %}
 
 {% block content %}
@@ -30,57 +26,86 @@
             </div>
 
             {{ form_start(form) }}
-            <div id="identityContainer">
-                <div class="form-group">
-                    {{ form_errors(form.firstName) }}
-                    {{ form_widget(form.firstName) }}
-                </div>
+                <div id="identityErrorsContainer" class="superContainers">
+                    <div class="field-firstNameError errorsContainer">
+                        {{ form_errors(form.firstName) }}
+                    </div>
 
-                <div class="form-group">
-                    {{ form_errors(form.lastName) }}
-                    {{ form_widget(form.lastName) }}
-                </div>
-            </div>
-
-            <div id="emailContainer">
-                <div class="form-group">
-                    {{ form_errors(form.email) }}
-                    {{ form_widget(form.email) }}
-                </div>
-            </div>
-
-            <div id="birthdayContainer">
-                {{ form_errors(form.birthDay) }}
-                <p>{{ form_label(form.birthDay) }}</p>
-                <div id="birthdayInputsContainer">
-                    {{ form_widget(form.birthDay.day) }}
-                    {{ form_widget(form.birthDay.month) }}
-                    {{ form_widget(form.birthDay.year) }}
-                </div>
-            </div>
-
-            <div id="passwordContainer">
-                <div class="form-group">
-                    {{ form_widget(form.password) }}
-                </div>
-            </div>
-
-            {% if app.request.attributes.get("_route") == "recruiter_register" %}
-                <div id="businessContainer">
-                    <div class="form-group">
-                        {{ form_errors(form.business) }}
-                        {{ form_widget(form.business) }}
+                    <div class="field-lastNameError errorsContainer">
+                        {{ form_errors(form.lastName) }}
                     </div>
                 </div>
-            {% endif %}
 
-            <div id="checkboxContainer">
-                <div class="form-group">
-                    {{ form_widget(form.legalConditions) }}
-                    <p>{{ form_label(form.legalConditions) }}</p>
-                    {{ form_errors(form.legalConditions) }}
+                <div id="identityContainer" class="superContainers">
+                    <div class="field-firstName">
+                        {{ form_widget(form.firstName) }}
+                    </div>
+
+                    <div class="field-lastName">
+                        {{ form_widget(form.lastName) }}
+                    </div>
                 </div>
-            </div>
+
+                <div id="emailErrorsContainer" class="superContainers">
+                    <div class="field-emailError errorsContainer">
+                        {{ form_errors(form.email) }}
+                    </div>
+                </div>
+
+                <div id="field-email" class="superContainers">
+                    {{ form_widget(form.email) }}
+                </div>
+
+                <div id="birthDayErrorsContainer" class="superContainers">
+                    <div class="field-birthDayError errorsContainer">
+                        {{ form_errors(form.birthDay) }}
+                    </div>
+                </div>
+
+                <div id="field-birthday" class="superContainers">
+                    <div id="birthDayLabelContainer">
+                        {{ form_label(form.birthDay) }}
+                    </div>
+
+                    <div id="birthdaySelectContainer">
+                        {{ form_widget(form.birthDay) }}
+                    </div>
+                </div>
+
+                <div id="passwordErrorsContainer" class="superContainers">
+                    <div class="field-passwordError errorsContainer">
+                        {{ form_errors(form.password) }}
+                    </div>
+                </div>
+
+                <div id="passwordContainer" class="superContainers">
+                    <div class="field-password">
+                        {{ form_widget(form.password) }}
+                    </div>
+                </div>
+
+                {% if app.request.attributes.get("_route") == "recruiter_register" %}
+                    <div id="businessErrorsContainer" class="superContainers">
+                        <div class="field-businessError errorsContainer">
+                            {{ form_errors(form.business) }}
+                        </div>
+                    </div>
+
+                    <div id="field-business" class="superContainers">
+                        {{ form_widget(form.business) }}
+                    </div>
+                {% endif %}
+
+                <div id="legalErrorsContainer" class="superContainers">
+                    <div class="field-legalError">
+                        {{ form_errors(form.legalConditions) }}
+                    </div>
+
+                    <div class="field-legal">
+                        {{ form_widget(form.legalConditions) }}
+                        <p>{{ form_label(form.legalConditions) }}</p>
+                    </div>
+                </div>
 
                 <p id="submitContainer">
                     <button type="submit" id="submit" class="commonButtons">Inscription</button>

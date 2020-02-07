@@ -27,14 +27,19 @@ class Business
     private $name;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="enum('20 employés et moins', '21 à 100 employés', '101 à 500 employés', 'Plus de 500 employés')", nullable=true)
+     * @ORM\Column(type="string", columnDefinition="enum('19 employés et moins', '20 à 99 employés', '100 à 499 employés', '500 employés et plus')", nullable=true)
      */
     private $employeesNumber;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", length=5000, nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="text", length=5000, nullable=true)
+     */
+    private $whyUs;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -47,6 +52,11 @@ class Business
     private $location;
 
     /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $kind;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\User", mappedBy="business", cascade={"persist", "remove"})
      */
     private $user;
@@ -55,11 +65,6 @@ class Business
      * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist", "remove"})
      */
     private $avatar;
-
-    /**
-     * @ORM\Column(type="string", columnDefinition="enum('Cabinet de recrutement', 'Editeur de logiciel', 'Entreprise', 'ESN / Cabinet de conseil')")
-     */
-    private $kind;
 
     public function getId(): ?int
     {
@@ -114,6 +119,18 @@ class Business
         return $this;
     }
 
+    public function getWhyUs(): ?string
+    {
+        return $this->whyUs;
+    }
+
+    public function setWhyUs(?string $whyUs): self
+    {
+        $this->whyUs = $whyUs;
+
+        return $this;
+    }
+
     public function getActivityArea(): ?string
     {
         return $this->activityArea;
@@ -134,6 +151,18 @@ class Business
     public function setLocation(?string $location): self
     {
         $this->location = $location;
+
+        return $this;
+    }
+
+    public function getKind(): ?string
+    {
+        return $this->kind;
+    }
+
+    public function setKind(?string $kind): self
+    {
+        $this->kind = $kind;
 
         return $this;
     }
@@ -167,17 +196,4 @@ class Business
 
         return $this;
     }
-
-    public function getKind(): ?string
-    {
-        return $this->kind;
-    }
-
-    public function setKind(string $kind): self
-    {
-        $this->kind = $kind;
-
-        return $this;
-    }
-
 }

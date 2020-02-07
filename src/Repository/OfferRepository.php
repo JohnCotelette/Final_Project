@@ -53,6 +53,10 @@ class OfferRepository extends ServiceEntityRepository
                 ->setParameter(':experience', $experience)
                 ->setParameter(':defaultExperience', $defaultExperience);
         }
+        else {
+            $qb
+                ->andWhere('o.experience IS NOT NULL');
+        }
 
         if ($salary != null) {
             $qb
@@ -85,6 +89,7 @@ class OfferRepository extends ServiceEntityRepository
         return $qb
             ->where('o.user = :user')
             ->setParameter(':user', $business->getUser())
+            ->orderBy('o.created_at', 'DESC')
             ->getQuery()
             ->getResult();
     }

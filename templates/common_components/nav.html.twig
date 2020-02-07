@@ -9,6 +9,11 @@
                 <a class="defaultNavLinks" href="{{ path("home") }}">Accueil</a>
             </li>
         {% endif %}
+            {% if app.request.attributes.get("_route") != "all_business" %}
+                <li>
+                    <a class="defaultNavLinks" href="{{ path("all_business") }}">Entreprises</a>
+                </li>
+            {% endif %}
             {% if app.request.attributes.get("_route") != "offers_index" %}
                 <li>
                     <a class="defaultNavLinks" href="{{ path("offers_index") }}">Offres</a>
@@ -46,9 +51,12 @@
                 </li>
             {% endif %}
         {% else %}
-            <li>
-                <a class="defaultNavLinks" href="{{ path("candidate_profile" ) }}">Mon Compte</a>
-            </li>  
+            {% if app.request.attributes.get("_route") != "candidate_dashboard" and
+                app.request.attributes.get("_route") != "recruiter_dashboard" %}
+                    <li>
+                        <a class="defaultNavLinks" href="{{ path("candidate_profile" ) }}">Mon Compte</a>
+                    </li>
+            {% endif %}
             <li>
                 <a class="defaultNavLinks" href="{{ path("logout") }}">Déconnexion</a>
             </li>

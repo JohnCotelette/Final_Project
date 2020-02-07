@@ -128,13 +128,9 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form["legalConditions"]->getData() === true) {
-                $siret = $form["business"]->getData();
-
-                $business = new Business();
-
-                $business->setSiretNumber($siret);
-
                 $password = $this->encoder->encodePassword($user, $user->getPassword());
+
+                $business = $request->attributes->get("businessItem");
 
                 $user
                     ->setPassword($password)

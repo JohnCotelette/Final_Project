@@ -97,7 +97,7 @@ main {
 }
 
 .defaultNavLinks {
-    font-size: 1em !important;
+    font-size: 0.96em !important;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -157,7 +157,7 @@ footer div {
     }
 
     100% {
-        opacity: 1;
+        opacity: 1 !important;
     }
 }
 
@@ -176,6 +176,7 @@ footer div {
         opacity: 0;
         transform: translateX(-50%);
     }
+
     100% {
         opacity: 1;
         transform: translateX(0);
@@ -187,9 +188,28 @@ footer div {
         opacity: 0;
         transform: translateX(50%);
     }
+
     100% {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
     }
 }
 

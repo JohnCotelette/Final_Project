@@ -72,106 +72,121 @@ h1 {
     background-color: $blanc-clair;
 }
 
-#identityContainer, #emailContainer, #birthdayContainer, #birthdayContainer > div, #birthdayInputsContainer,
-#passwordContainer, #passwordContainer .form-group > div, #submitContainer, #checkboxContainer .form-group {
-    display: flex;
-    position: relative;
-}
-
-#identityContainer, #birthdayContainer, #passwordContainer .form-group > div {
-    justify-content: space-between;
-}
-
-#identityContainer .form-group, #passwordContainer .form-group > div > div {
-    width: 48%;
-}
-
-#emailContainer .form-group, #passwordContainer .form-group > div > div input, #submitContainer {
-    width: 100%;
-}
-
-#identityContainer input, #emailContainer input, #birthdayContainer, #passwordContainer input, #businessContainer input {
-    width: 100%;
+form input, #field-birthday {
     padding: 11px;
-    background-color: $blanc;
     border: none;
+    background-color: rgb(245, 245, 245);
+    margin-bottom: 20px;
 }
 
-#birthdayContainer {
-    position: relative;
-    margin-bottom: 30px;
-}
-
-#birthdayInputsContainer {
-    width: 60%;
-    justify-content: space-between;
-}
-
-#birthdayContainer p, #birthdayContainer label {
+form ul {
+    padding: 0;
     margin: 0;
 }
 
-#birthdayInputsContainer select {
-    width: 32%;
+.errorsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
-#passwordContainer .form-group {
+.errorsContainer ul li, #candidat_password li, #recruiter_password li, #legalErrorsContainer li {
+    font-size: 0.65em;
+    color: red;
+    line-height: 1.2em;
+    animation: shake 0.4s linear;
+    margin-bottom: 2px;
+}
+
+.superContainers > div {
+    width: 48%;
+}
+
+.field-password {
+    width: 100% !important;
+}
+
+#candidat_password, #recruiter_password {
     width: 100%;
 }
 
-::placeholder, #birthdayContainer label, #birthdayContainer select {
-    opacity: 0.7;
-    color: grey;
+#candidat_password_first, #candidat_password_second, #recruiter_password_first, #recruiter_password_second {
+    width: 48%;
 }
 
-#birthdayContainer select {
-    color: rgb(51, 51, 51);
+.superContainers, .field-password {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.superContainers input {
+    width: 100%;
+}
+
+::placeholder, form label, #field-birthday select {
+    font-size: 0.9em;
+    color: rgba(51, 51, 51, 0.7);
+}
+
+form label {
+    margin: 0;
+}
+
+#field-birthday select {
+    padding: 3px 10px;
+    margin-left: 10px;
+}
+
+#field-birthday div {
+    width: max-content;
+}
+
+#candidat_password_second, #recruiter_password_second {
+    float: right;
+}
+
+#candidat_password_first, #recruiter_password_first {
+    float: left;
+}
+
+#legalErrorsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-legalError, .field-legal, .field-businessError {
+    width: 100% !important;
+}
+
+.field-legal {
+    display: flex;
+}
+
+.field-legal p, .field-legal input {
+    width: max-content !important;
+    margin: auto 5px auto;
+}
+
+.field-legal p {
+    font-size: 0.9em;
+}
+
+#submitContainer {
+    display: flex;
+    margin: 30px 0 0 0;
 }
 
 form button {
     letter-spacing: 2px;
     padding: 8px 20px;
-    transition: color 0.3s ease;
     border: none;
     margin: auto;
+    transition: color 0.3s ease;
 }
 
-#submitContainer {
-    margin-top: 20px;
-}
-
-#checkboxContainer {
-    margin-top: -12px;
-}
-
-#checkboxContainer label {
-    font-size: 0.85em;
-}
-
-#checkboxContainer input {
-    margin: 5px 8px 0 0;
-}
-
-form ul {
-    margin: 0;
-    padding: 0;
-}
-
-form ul li {
-    position: absolute;
-    top: -28px;
-    left: 0;
-    font-size: 0.7em;
-    color: red;
-}
-
-.form-group {
-    position: relative !important;
-    margin-bottom: 30px;
-}
-
-#checkboxContainer li {
-    top: 15px;
+form button:hover {
+    color: white;
 }
 
 /* -------------------------- RIGHT-SECTION -------------------------- */
@@ -258,7 +273,7 @@ section ul {
         font-size: 1.5em;
     }
 
-    section ul {
+    #secondSection ul {
         font-size: 1.1em;
         line-height: 1.6em;
         padding-left: 10px;
@@ -266,14 +281,6 @@ section ul {
 
     .citation {
         margin-top: 35px;
-    }
-
-    #birthdayInputsContainer select {
-        font-size: 0.8em;
-    }
-
-    #submitContainer {
-        margin-top: 0;
     }
 }
 
@@ -295,10 +302,22 @@ section ul {
     }
 
     #firstSection form {
-        padding: 15px;
+        padding: 25px 15px 15px 15px;
     }
 
     #youWill {
         font-size: 1.3em;
+    }
+
+    #field-birthday {
+        display: block !important;
+    }
+
+    #birthDayLabelContainer label {
+        margin-bottom: 5px;
+    }
+
+    .errorsContainer {
+        width: 100% !important;
     }
 }
