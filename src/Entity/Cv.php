@@ -138,6 +138,4 @@ class Cv implements \Serializable
             $this->id,
         ) = unserialize($serialized);
     }
-
-    
 }

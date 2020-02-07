@@ -86,7 +86,7 @@ class OfferController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                if ($user->getRoles() === ["ROLE_CANDIDATE"] && $user->getCv() == null) {
+                if ($user->getRoles() === ["ROLE_CANDIDATE"] && $user->getCv() != null) {
                     $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
 
                     if ($checkApply != true) {

@@ -18,8 +18,9 @@ class CvType extends AbstractType
         $builder
             ->add("cvFile", VichFileType::class, [
                 "label" => "Cv (au format PDF)",
+
                 "attr" => [
-                    "class" => "form-group",
+                    "class" => " btn btn-default btn-file",
                 ],
                 "required" => true,
                 "allow_delete" => true,

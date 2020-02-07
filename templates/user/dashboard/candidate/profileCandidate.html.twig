@@ -1,0 +1,72 @@
+{% extends 'layout.html.twig' %}
+
+{% form_theme formAvatar 'bootstrap_4_layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('candidate_dashboard') }}
+{% endblock %}
+
+{% block title %}{{ parent() }}Profil - {{ user.firstName }}{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row flex ">
+            <div class="container-fluid">
+                <div class="row flex ">
+                    <div class="col-4  flex-grow-1  heightmenu ">
+                       {% include 'user/dashboard/candidate/navcandidate.html.twig' %}
+                    </div>    
+                    <div class="col-8 w-100">
+                        <h1 class=" text-center  my-5"> {{ user.lastName }}-{{ user.firstName }}</h1>
+                        <div class="tab-content">
+                            <!-- section of avatar and formavatar -->
+                            <div class="d-flex  justify-content-center text-align-right ">
+                                {% if user.avatar != null %}
+                                    <div class="">
+                                        <img src="{{ asset('user_avatars/' ~ user.avatar.name ) }}" class="img-thumbnail" alt="avatar de candidat">
+                                    </div >
+                                {% else %} 
+                                    <div class="">
+                                        <img src="{{ asset('user_avatars/' ~ avatar.jpg ) }}"   class="img-thumbnail" alt="avatar par défaut">
+                                    </div>
+                                {%  endif %} 
+                            </div>
+                        </div>   
+                            {#  add all file dashboard user  #}
+                        <div class="tab-pane fade show active">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>Nom:</th>
+                                        <td>{{ user.firstName }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Prénom:</th>
+                                        <td>{{ user.lastName }}</td>
+                                    </tr>
+                                    <tr>
+                                    <tr>
+                                        <th>Email</th>
+                                        <td>{{ user.email }}</td>
+                                    </tr>
+                                    <th>Date de naissance</th>
+                                    <td>{{ user.birthDay ? user.birthDay|date('d-m-y') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- formulaire du avatar  -->
+                        <div>
+                            {{ form_start(formAvatar) }}
+                            {{ form_end(formAvatar) }}
+                        </div>
+
+
+                    </div>    
+                </div>   
+            </div>   
+           
+        </div>
+    </div>  
+{% endblock %}
