@@ -26,6 +26,7 @@ class CandidatType extends AbstractType
                 ],
             ])
             ->add("password", RepeatedType::class, [
+                "label" => "mot de passe ",
                 "type" => PasswordType::class,
                 "invalid_message" => "Les mots de passe ne correspondent pas",
                 "options" => [
@@ -54,11 +55,13 @@ class CandidatType extends AbstractType
                 ],
             ])
             ->add("firstName", TextType::class, [
+                "label" => 'Prénom',
                 "attr" => [
                     "placeholder" => "Prénom",
                 ],
             ])
             ->add("lastName", TextType::class, [
+                "label" => "Nom",
                 "attr" => [
                     "placeholder" => "Nom",
                 ],
@@ -84,7 +87,7 @@ class CandidatType extends AbstractType
             ])
         ;
     }
-
+   
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -94,5 +97,6 @@ class CandidatType extends AbstractType
                 'novalidate' => 'novalidate',
             ],
         ]);
+        $resolver->setAllowedTypes('lagalConditions', 'bool');
     }
 }
