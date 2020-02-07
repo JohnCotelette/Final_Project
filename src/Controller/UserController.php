@@ -170,11 +170,10 @@ class UserController extends AbstractController
     */
     public function candidateApplications()
     {
-        $user =$this->getUser();
+        $user = $this->getUser();
         $applications = $user->getApplications();
 
         return $this->render('/user/dashboard/candidate/applicationCandidate.html.twig', [
-
              "applications" => $applications,
              "user" => $user
         ]);
@@ -192,12 +191,13 @@ class UserController extends AbstractController
 
         if($user)
         {
-         
             $formAvatar = $this->createForm(AvatarType::class, $avatar);
             $formAvatar->handleRequest($request);
+
             if($formAvatar->isSubmitted() && $formAvatar->isValid())
             {
-                $entityManager =$this->getDoctrine()->getManager();
+                $entityManager = $this->getDoctrine()->getManager();
+
                 if($user->getAvatar())
                 {
                    $entityManager->remove($user->getAvatar());
@@ -206,15 +206,14 @@ class UserController extends AbstractController
                  $user->setAvatar($avatar);
                  $entityManager->persist($avatar);
                  $entityManager->flush();
+
                  $this->addFlash("success", "l'avatar est bien ajoutée");
                  $this->redirectToRoute("candidate_profile");
             }
    
             return $this->render('/user/dashboard/candidate/profileCandidate.html.twig', [
-    
                  "user" => $user,
                  "formAvatar" => $formAvatar->createView()
-    
             ]);
         }
 
@@ -236,7 +235,6 @@ class UserController extends AbstractController
 
             $form = $this->createForm(CandidatType::class, $user);
             $form->handleRequest($request);
-
            
              // Update profile candidate
             if ($form->isSubmitted() && $form->isValid())
@@ -251,8 +249,6 @@ class UserController extends AbstractController
 
                 return $this->redirectToRoute('candidate_profile');
             }
-
-             
 
             return $this->render('/user/dashboard/candidate/profileUpdateCandidate.html.twig', [
                 "form" => $form->createView(),
@@ -275,7 +271,6 @@ class UserController extends AbstractController
       
         if ($user) 
         {
-            
             $cv = new Cv();
             $formCv = $this->createForm(CvType::class, $cv);
             $formCv->handleRequest($request);
@@ -298,7 +293,6 @@ class UserController extends AbstractController
                 $this->addFlash("success", "Votre CV  est bien mis à jour ");
 
                 return $this->redirectToRoute("candidate_cv");
-                
             }
 
             return $this->render('/user/dashboard/candidate/CvupdateCandidate.html.twig', [

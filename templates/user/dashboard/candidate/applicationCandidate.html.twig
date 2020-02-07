@@ -18,9 +18,7 @@
                 <div class="col-8 w-100">
                     <h1 class=" text-center  my-5"> {{ user.lastName }}-{{ user.firstName }}</h1>
                     <div class="tab-content" id="nav-tabContent">
-
                         <div class="row  justify-content-around" >
-
                             {% if(user.applications|length > 0) %}
                                 {% for application in user.applications %}
                                     <div class="card col-sm-12 col-md-2 col-lg-3 " style="width: 18rem;">
@@ -28,7 +26,6 @@
                                             <h5 class="card-title">{{ application.offer.title }}</h5>
                                             <h6 class="card-subtitle mb-2 text-muted">{{ application.createdAt|date('d/m/y') }}</h6>
                                             <p class="card-text">{{ application.motivation }}</p>
-                                            
                                         </div>
                                         <div class="card-footer ">
                                             <a  href="{{ path('show_offer',  {'id': application.offer.id}) }}"  style="width: 100%" class="btn btn-primary">Annonce</a>
@@ -36,9 +33,7 @@
                                     </div>
                                 {% endfor %}
                             {% endif %}
-        
                         </div>
-
                     </div>    
                 </div>   
             </div>   
