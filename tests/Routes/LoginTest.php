@@ -21,7 +21,6 @@ class RoutesLoginTest extends WebTestCase {
         $this->assertResponseRedirects('/offers');
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
-
     }
 
     public function testFieldLoginForm()
