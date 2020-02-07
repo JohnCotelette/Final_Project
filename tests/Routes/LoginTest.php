@@ -21,35 +21,36 @@ class RoutesLoginTest extends WebTestCase {
         $this->assertResponseRedirects('/offers');
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
-
     }
 
-    // public function testFieldLoginForm()
-    // {
-    //     //The createClient() method returns a client
-    //     $client = static::createClient();
+    public function testFieldLoginForm()
+    {
+        //The createClient() method returns a client
+        $client = static::createClient();
 
-    //     //Crawler object which can be used to select elements in the response,
-    //     //click on links and submit forms.
-    //     $crawler = $client->request('GET', '/login');
+        //Crawler object which can be used to select elements in the response,
+        //click on links and submit forms.
+        $crawler = $client->request('GET', '/login');
 
-    //     //Select the button with ID name
-    //     $buttonCrawlerNode = $crawler->selectButton('submit');
+        //Select the button with ID name
+        $buttonCrawlerNode = $crawler->selectButton('submit');
 
-    //     //Get form for override some form values and submit the corresponding form
-    //     $form = $buttonCrawlerNode->form([
-    //         'email' => 'candidate0.fr',
-    //         'password' => 1354
-    //     ]);
-
-    //     //Submit form
-    //     $crawler = $client->submit($form);
-    //     //Get errors 
-    //     $error = $crawler->filter('#form');
+        $form = $buttonCrawlerNode->form();
+        $form = $buttonCrawlerNode->form([
+            'email' => 'candidate0@hotmail.fr',
+            'password' => '',
+        ]);
         
-    //     //Get string
-    //     $error =  $error->getNode(0)->textContent;
+        //Submit form
+        $client->submit($form);
+        $crawler = $client->followRedirect();
 
-    //     $this->assertEquals($error, 'Les identifiants saisis sont incorrects.');
-    // }
+        //Get errors 
+        $error = $crawler->filter('#error');
+   
+        //Get string
+        $error =  $error->getNode(0)->textContent;
+
+        $this->assertEquals($error, 'Les identifiants saisis sont incorrects.');
+    }
 }

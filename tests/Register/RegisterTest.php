@@ -82,9 +82,7 @@ class RegisterFormTest extends WebTestCase
 
         //Get form for override some form values and submit the corresponding form
         $form = $buttonCrawlerNode->form([
-            'recruiter[email]' => 'azerty',
-            'recruiter[password][first]' => 'Azerty',
-            'recruiter[password][second]' => 'Azerty',
+            'recruiter[firstName]'    => 'Azerty',
 
         ]);
 
@@ -92,13 +90,13 @@ class RegisterFormTest extends WebTestCase
         $crawler = $client->submit($form);
 
         //Get errors 
-        $error = $crawler->filter("#emailErrorsContainer .field-emailError");
+        $error = $crawler->filter("#identityErrorsContainer ul > li");
         
-
         //Get string
         $error =  $error->getNode(0)->textContent;
-        dd($this->assertEquals($error, 'Veuillez renseigner une adresse e-mail valide') );
-        $this->assertEquals($error, 'Veuillez renseigner une adresse e-mail valide');
+        $msgError = 'Veuillez renseigner votre nom';
+        $this->assertEquals($error,$msgError);
+
     }
 
     public function testFieldRegisterCandidatForm()
@@ -115,16 +113,18 @@ class RegisterFormTest extends WebTestCase
 
         //Get form for override some form values and submit the corresponding form
         $form = $buttonCrawlerNode->form([
-            'candidat[firstName]' => 1245,
+            'candidat[firstName]' => 'Azerty',
         ]);
 
         //Submit form
         $crawler = $client->submit($form);
+        
         //Get errors 
-        $error = $crawler->filter("#identityErrorsContainer .field-firstNameError");
+        $error = $crawler->filter("#identityErrorsContainer ul > li");
+        
         //Get string
         $error =  $error->getNode(0)->textContent;
-        
-        $this->assertEquals($error, "N'utilisez pas de caractères spéciaux");
+        $msgError = 'Veuillez renseigner votre nom';
+        $this->assertEquals($error,$msgError);
     }
 }
