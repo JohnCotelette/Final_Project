@@ -1,0 +1,115 @@
+@import "./../../core.scss";
+
+/* -------------------------- MAIN -------------------------- */
+
+main {
+    width: 80%;
+    margin: auto;
+    padding: 20px 0;
+}
+
+#contentContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+/* -------------------------- LEFT-SECTION -------------------------- */
+
+header {
+    font-size: 0.9em;
+}
+
+header h1 {
+    font-family: buenos_aires_trialblack, Arial, sans-serif;
+    color: $violet-clair;
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+section {
+    margin-top: 25px;
+    padding: 25px;
+    background-color: $blanc-clair;
+}
+
+#leftSection {
+    width: 65%;
+}
+
+.superContainers {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 6px;
+    font-size: 0.85em;
+    color: rgb(51, 51, 51);
+}
+
+form input, form select, form textarea, #sliderValue {
+    margin-bottom: 20px;
+    font-size: 0.8em;
+}
+
+form input {
+    padding: 5px 10px;
+}
+
+form select {
+    padding: 8px 14px;
+}
+
+form textarea {
+    min-height: 300px;
+    height: 300px;
+    max-height: 500px;
+    padding: 12px;
+}
+
+#sliderValue {
+    margin-top: 5px;
+    text-align: right;
+}
+
+#offer_salary {
+    display: none;
+}
+
+.flexContainers {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flexContainers > div {
+    width: 48%;
+}
+
+#offerFormSubmitButton {
+    margin-top: 15px;
+    font-size: 1.05em;
+    padding: 6px 12px;
+    color: $blanc;
+    transition: color 0.3s ease;
+    border: none;
+}
+
+#offerFormSubmitButton:hover {
+    color: $blanc-clair;
+}
+
+.noUi-touch-area {
+    background-color: $violet-clair;
+}
+
+.noUi-handle {
+    cursor: pointer;
+}
+
+/* -------------------------- RIGHT-SECTION -------------------------- */
+
+#rightSection {
+    width: 30%;
+}

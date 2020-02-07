@@ -15,11 +15,21 @@ class OfferType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("title", TextType::class)
-            ->add("description", TextareaType::class)
-            ->add("profilRequired", TextareaType::class)
-            ->add("location", TextType::class)
+            ->add("title", TextType::class, [
+                "label" => "Intitulé du poste*",
+            ])
+            ->add("description", TextareaType::class, [
+                "label" => "Description*",
+            ])
+            ->add("profilRequired", TextareaType::class, [
+                "label" => "Profil requis*",
+            ])
+            ->add("location", TextType::class, [
+                "label" => "Localisation",
+            ])
             ->add("experience", ChoiceType::class, [
+                "label" => "Experience requise*",
+                "placeholder" => "Choisissez une valeur",
                 "choices" => [
                     "Tous" => "Tous",
                     "Junior (0 à 2 ans)" => "Junior (0 à 2 ans)",
@@ -27,8 +37,13 @@ class OfferType extends AbstractType
                     "Senior (7 ans et plus)" => "Senior (7 ans et plus)",
                 ],
             ])
-            ->add("salary", TextType::class)
+            ->add("salary", TextType::class, [
+                "label" => "Rémunération",
+                "data" => 0,
+            ])
             ->add("type", ChoiceType::class, [
+                "label" => "Type de contrat*",
+                "placeholder" => "Choisissez une valeur",
                 "choices" => [
                     "CDI" => "CDI",
                     "CDD" => "CDD",

@@ -7,7 +7,98 @@
 {% endblock %}
 
 {% block content %}
-    {{ form(form) }}
+    <header>
+        <h1>Creation d'une nouvelle offre</h1>
+
+        <p>
+            Vous pouvez créer une nouvelle annonce sur cette page.<br>
+            Elle sera automatiquement publiée et disponible à la recherche pour les candidats du site.
+        </p>
+    </header>
+
+    <div id="contentContainer">
+        <section id="leftSection">
+            {{ form_start(form) }}
+            <div id="formTitleErrorsContainer" class="superContainers">
+                {{ form_errors(form.title) }}
+            </div>
+
+            <div id="formTitleContainer" class="superContainers">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title) }}
+            </div>
+
+            <div id="formLocalisationErrorsContainer" class="superContainers">
+                {{ form_errors(form.location) }}
+            </div>
+
+            <div id="formLocalisationContainer" class="superContainers">
+                {{ form_label(form.location) }}
+                {{ form_widget(form.location) }}
+            </div>
+
+            <div class="flexContainers">
+                <div>
+                    <div id="formExperienceErrorsContainer" class="superContainers">
+                        {{ form_errors(form.experience) }}
+                    </div>
+
+                    <div id="formExperienceContainer" class="superContainers">
+                        {{ form_label(form.experience) }}
+                        {{ form_widget(form.experience) }}
+                    </div>
+                </div>
+
+                <div>
+                    <div id="formTypeErrorsContainer" class="superContainers">
+                        {{ form_errors(form.type) }}
+                    </div>
+
+                    <div id="formTypeContainer" class="superContainers">
+                        {{ form_label(form.type) }}
+                        {{ form_widget(form.type) }}
+                    </div>
+                </div>
+            </div>
+
+            <div id="formSalaryErrorsContainer" class="superContainers">
+                {{ form_errors(form.salary) }}
+            </div>
+
+            <div id="formSalaryContainer" class="superContainers">
+                {{ form_label(form.salary) }}
+                {{ form_widget(form.salary) }}
+
+                <div id="slider"></div>
+                <span id="sliderValue"></span>
+            </div>
+
+            <div id="formDescriptionErrorsContainer" class="superContainers">
+                {{ form_errors(form.description) }}
+            </div>
+
+            <div id="formDescriptionContainer" class="superContainers">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+
+            <div id="formProfilRequiredErrorsContainer" class="superContainers">
+                {{ form_errors(form.profilRequired) }}
+            </div>
+
+            <div id="formProfilRequiredContainer" class="superContainers">
+                {{ form_label(form.profilRequired) }}
+                {{ form_widget(form.profilRequired) }}
+            </div>
+
+            <button id="offerFormSubmitButton" type="submit" class="commonButtons">Valider</button>
+            {{ form_end(form) }}
+        </section>
+
+        <section id="rightSection">
+            lol
+        </section>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
