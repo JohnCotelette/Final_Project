@@ -10,8 +10,8 @@ class RoutesLogoutTest extends WebTestCase {
     function testRouteLogout()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/logout');
-        ($this->assertResponseRedirects(""));
+        $client->request('GET', '/logout');
+        $this->assertResponseRedirects("");
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
     }
