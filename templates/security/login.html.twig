@@ -10,7 +10,6 @@
     <section id="firstSection">
         <form method="post" novalidate="novalidate">
             <div>
-                test
                 {% if error %}
                 <div id="error" class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}

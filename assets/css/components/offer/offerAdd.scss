@@ -113,3 +113,41 @@ form textarea {
 #rightSection {
     width: 30%;
 }
+
+/* -------------------------- UNIQUE-SECTION (ERROR) -------------------------- */
+
+#uniqueSection {
+    width: 100%;
+    color: $blanc-clair;
+    background-color: $violet-clair;
+    padding: 25px;
+}
+
+#uniqueSection p {
+    margin: 0;
+    font-size: 1.05em;
+}
+
+.indicationsContainers {
+    display: flex;
+}
+
+.indicationsContainers > span, .indicationsContainers svg {
+    display: block;
+    align-self: auto;
+}
+
+#uniqueSection .indicationsContainers svg {
+    font-size: 2em;
+    margin: auto 25px auto 0;
+}
+
+#uniqueSection p span a {
+    color: $blanc;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+#uniqueSection p span a:hover {
+    color: $blanc-clair;
+}

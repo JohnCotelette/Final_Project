@@ -16,89 +16,104 @@
         </p>
     </header>
 
-    <div id="contentContainer">
-        <section id="leftSection">
-            {{ form_start(form) }}
-            <div id="formTitleErrorsContainer" class="superContainers">
-                {{ form_errors(form.title) }}
-            </div>
+    {% if app.user.business.description != null
+        and app.user.business.whyUs != null
+        and app.user.business.activityArea != null %}
+        <div id="contentContainer">
+            <section id="leftSection">
+                {{ form_start(form) }}
+                <div id="formTitleErrorsContainer" class="superContainers">
+                    {{ form_errors(form.title) }}
+                </div>
 
-            <div id="formTitleContainer" class="superContainers">
-                {{ form_label(form.title) }}
-                {{ form_widget(form.title) }}
-            </div>
+                <div id="formTitleContainer" class="superContainers">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title) }}
+                </div>
 
-            <div id="formLocalisationErrorsContainer" class="superContainers">
-                {{ form_errors(form.location) }}
-            </div>
+                <div id="formLocalisationErrorsContainer" class="superContainers">
+                    {{ form_errors(form.location) }}
+                </div>
 
-            <div id="formLocalisationContainer" class="superContainers">
-                {{ form_label(form.location) }}
-                {{ form_widget(form.location) }}
-            </div>
+                <div id="formLocalisationContainer" class="superContainers">
+                    {{ form_label(form.location) }}
+                    {{ form_widget(form.location) }}
+                </div>
 
-            <div class="flexContainers">
-                <div>
-                    <div id="formExperienceErrorsContainer" class="superContainers">
-                        {{ form_errors(form.experience) }}
+                <div class="flexContainers">
+                    <div>
+                        <div id="formExperienceErrorsContainer" class="superContainers">
+                            {{ form_errors(form.experience) }}
+                        </div>
+
+                        <div id="formExperienceContainer" class="superContainers">
+                            {{ form_label(form.experience) }}
+                            {{ form_widget(form.experience) }}
+                        </div>
                     </div>
 
-                    <div id="formExperienceContainer" class="superContainers">
-                        {{ form_label(form.experience) }}
-                        {{ form_widget(form.experience) }}
+                    <div>
+                        <div id="formTypeErrorsContainer" class="superContainers">
+                            {{ form_errors(form.type) }}
+                        </div>
+
+                        <div id="formTypeContainer" class="superContainers">
+                            {{ form_label(form.type) }}
+                            {{ form_widget(form.type) }}
+                        </div>
                     </div>
                 </div>
 
-                <div>
-                    <div id="formTypeErrorsContainer" class="superContainers">
-                        {{ form_errors(form.type) }}
-                    </div>
-
-                    <div id="formTypeContainer" class="superContainers">
-                        {{ form_label(form.type) }}
-                        {{ form_widget(form.type) }}
-                    </div>
+                <div id="formSalaryErrorsContainer" class="superContainers">
+                    {{ form_errors(form.salary) }}
                 </div>
-            </div>
 
-            <div id="formSalaryErrorsContainer" class="superContainers">
-                {{ form_errors(form.salary) }}
-            </div>
+                <div id="formSalaryContainer" class="superContainers">
+                    {{ form_label(form.salary) }}
+                    {{ form_widget(form.salary) }}
 
-            <div id="formSalaryContainer" class="superContainers">
-                {{ form_label(form.salary) }}
-                {{ form_widget(form.salary) }}
+                    <div id="slider"></div>
+                    <span id="sliderValue"></span>
+                </div>
 
-                <div id="slider"></div>
-                <span id="sliderValue"></span>
-            </div>
+                <div id="formDescriptionErrorsContainer" class="superContainers">
+                    {{ form_errors(form.description) }}
+                </div>
 
-            <div id="formDescriptionErrorsContainer" class="superContainers">
-                {{ form_errors(form.description) }}
-            </div>
+                <div id="formDescriptionContainer" class="superContainers">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description) }}
+                </div>
 
-            <div id="formDescriptionContainer" class="superContainers">
-                {{ form_label(form.description) }}
-                {{ form_widget(form.description) }}
-            </div>
+                <div id="formProfilRequiredErrorsContainer" class="superContainers">
+                    {{ form_errors(form.profilRequired) }}
+                </div>
 
-            <div id="formProfilRequiredErrorsContainer" class="superContainers">
-                {{ form_errors(form.profilRequired) }}
-            </div>
+                <div id="formProfilRequiredContainer" class="superContainers">
+                    {{ form_label(form.profilRequired) }}
+                    {{ form_widget(form.profilRequired) }}
+                </div>
 
-            <div id="formProfilRequiredContainer" class="superContainers">
-                {{ form_label(form.profilRequired) }}
-                {{ form_widget(form.profilRequired) }}
-            </div>
+                <button id="offerFormSubmitButton" type="submit" class="commonButtons">Valider</button>
+                {{ form_end(form) }}
+            </section>
 
-            <button id="offerFormSubmitButton" type="submit" class="commonButtons">Valider</button>
-            {{ form_end(form) }}
+            <section id="rightSection">
+                lol
+            </section>
+        </div>
+    {% else %}
+        <section id="uniqueSection">
+            <p id="errorBusinessInfosNoCompleted" class="indicationsContainers">
+                <i id="errorCvIcon" class="fas fa-times"></i>
+                <span>
+                    Oups !<br>
+                    Il semble que votre entreprise ne dispose pas des informations suffisantes pour vous permettre d'ajouter une offre.<br>
+                    Complétez au préalable les informations dans votre profil <a href="#">ici</a>.
+                </span>
+            </p>
         </section>
-
-        <section id="rightSection">
-            lol
-        </section>
-    </div>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
