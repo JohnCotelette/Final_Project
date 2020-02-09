@@ -7,7 +7,6 @@ use App\Form\ApplyType;
 use App\Form\CategoriesType;
 use App\Entity\Application;
 use App\Form\OfferType;
-use App\Repository\UserRepository;
 use App\Service\OfferService;
 use App\Repository\OfferRepository;
 use App\Service\MailService;
@@ -18,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class OfferController extends AbstractController
 {
@@ -84,6 +84,22 @@ class OfferController extends AbstractController
         return $this->render("offer/create.html.twig", [
             "form" => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/offer/edit/{reference}", name="edit_offer", methods={"GET", "POST"})
+     * @isGranted("OFFER_EDIT", subject="offer")
+     * @param OfferRepository $offerRepository
+     * @param string $reference
+     * @param Offer $offer
+     */
+    public function editOffer(OfferRepository $offerRepository, string $reference, Offer $offer)
+    {
+        $user = $this->getUser();
+
+        $offer = $offerRepository->findOneBy(["reference" => $reference]);
+
+        dd($offer);
     }
 
     /**
