@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Offer;
+use App\Repository\CategoryRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,14 +21,24 @@ class OfferType extends AbstractType
             ->add("title", TextType::class, [
                 "label" => "Intitulé du poste*",
             ])
+            ->add("location", TextType::class, [
+                "label" => "Localisation",
+            ])
+            ->add("salary", TextType::class, [
+                "label" => "Rémunération",
+                "data" => 0,
+            ])
             ->add("description", TextareaType::class, [
                 "label" => "Description*",
+                "attr" => [
+                    "maxlength" => 2000,
+                ]
             ])
             ->add("profilRequired", TextareaType::class, [
                 "label" => "Profil requis*",
-            ])
-            ->add("location", TextType::class, [
-                "label" => "Localisation",
+                "attr" => [
+                    "maxlength" => 2000,
+                ]
             ])
             ->add("experience", ChoiceType::class, [
                 "label" => "Experience requise*",
@@ -37,10 +50,6 @@ class OfferType extends AbstractType
                     "Senior (7 ans et plus)" => "Senior (7 ans et plus)",
                 ],
             ])
-            ->add("salary", TextType::class, [
-                "label" => "Rémunération",
-                "data" => 0,
-            ])
             ->add("type", ChoiceType::class, [
                 "label" => "Type de contrat*",
                 "placeholder" => "Choisissez une valeur",
@@ -49,6 +58,17 @@ class OfferType extends AbstractType
                     "CDD" => "CDD",
                     "Stage" => "Stage",
                 ],
+            ])
+            ->add("categories", EntityType::class, [
+                "class" => Category::class,
+                "label" => "Catégories",
+                "query_builder" => function (CategoryRepository $categoryRepository) {
+                    return $categoryRepository->createQueryBuilder("c")
+                        ->orderBy("c.name", "ASC");
+                },
+                "choice_label" => "name",
+                "multiple" => true,
+                "expanded" => true,
             ])
         ;
     }

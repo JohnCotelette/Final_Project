@@ -83,6 +83,7 @@
                 <div id="formDescriptionContainer" class="superContainers">
                     {{ form_label(form.description) }}
                     {{ form_widget(form.description) }}
+                    <span class="textareaCount" id="descriptionCount">Minimum : 100 caractères</span>
                 </div>
 
                 <div id="formProfilRequiredErrorsContainer" class="superContainers">
@@ -92,14 +93,33 @@
                 <div id="formProfilRequiredContainer" class="superContainers">
                     {{ form_label(form.profilRequired) }}
                     {{ form_widget(form.profilRequired) }}
+                    <span class="textareaCount" id="profilRequiredCount">Minimum : 80 caractères</span>
                 </div>
 
                 <button id="offerFormSubmitButton" type="submit" class="commonButtons">Valider</button>
-                {{ form_end(form) }}
             </section>
 
-            <section id="rightSection">
-                lol
+            <div id="displayCategoriesForMobilesContainer">
+                <a href="#" id="displayCategoriesForMobiles">Categories</a>
+            </div>
+
+            <section id="rightSection" class="mobileReduced">
+                <div id="formCategoriesErrorsContainer" class="superContainers">
+                    {{ form_errors(form.categories) }}
+                </div>
+
+                <div id="formCategoriesContainer" class="superContainers">
+                    {{ form_label(form.categories) }}
+                    <span id="categoriesSelectorsError" class="invisible">Vous ne pouvez pas séléctionner plus de deux catégories</span>
+
+                    {% for category in form.categories %}
+                        <span class="categoriesSelectors">
+                            {{ form_widget(category) }}
+                            {{ form_label(category) }}
+                        </span>
+                    {% endfor %}
+                </div>
+                {{ form_end(form) }}
             </section>
         </div>
     {% else %}

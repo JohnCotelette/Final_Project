@@ -81,6 +81,10 @@ class OfferController extends AbstractController
 
         $form = $this->createForm(OfferType::class, $offer);
 
+        if ($form->isSubmitted() and $form->isValid()) {
+            dd($form);
+        }
+
         return $this->render("offer/create.html.twig", [
             "form" => $form->createView(),
         ]);

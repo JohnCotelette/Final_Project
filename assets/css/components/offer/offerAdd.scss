@@ -29,7 +29,7 @@ header h1 {
 }
 
 section {
-    margin-top: 25px;
+    margin-top: 10px;
     padding: 25px;
     background-color: $blanc-clair;
 }
@@ -112,6 +112,61 @@ form textarea {
 
 #rightSection {
     width: 30%;
+    height: 100%;
+}
+
+#formCategoriesContainer {
+    font-size: 0.85em;
+}
+
+#formCategoriesContainer input[type=checkbox] {
+    display: none;
+}
+
+.categoriesSelectors label {
+    display: inline-block;
+    color: rgba(51, 51, 51, 0.5);
+    font-size: 0.8em;
+    padding: 3px 6px;
+    border: 1px solid rgba(51, 51, 51, 0.5);
+    white-space: nowrap;
+    margin: 3px 2px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#categoriesSelectorsError {
+    color: red;
+    font-size: 0.78em;
+    margin-bottom: .5rem;
+    animation: shake 0.4s linear;
+}
+
+.textareaCount {
+    text-align: right;
+    margin-top: -17px;
+    font-size: 0.8em;
+    color: red;
+}
+
+#displayCategoriesForMobilesContainer {
+    color: $violet-clair;
+    display: none;
+    margin-top: 18px;
+}
+
+#displayCategoriesForMobilesContainer a {
+    display: block;
+    margin: auto;
+    width: max-content;
+    color: $violet-clair;
+    font-size: 0.9em;
+}
+
+#displayCategoriesForMobilesContainer a:hover {
+    color: $violet-clair;
+    text-decoration: none;
+    text-transform: none;
 }
 
 /* -------------------------- UNIQUE-SECTION (ERROR) -------------------------- */
@@ -150,4 +205,48 @@ form textarea {
 
 #uniqueSection p span a:hover {
     color: $blanc-clair;
+}
+
+/* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-width: 1500px) {
+    main {
+        width: 90%;
+    }
+}
+
+@media (max-width: 1000px) {
+    #contentContainer {
+        flex-direction: column-reverse;
+    }
+
+    #leftSection, #rightSection {
+        width: 100%;
+    }
+
+    #leftSection {
+        margin-top: 18px;
+    }
+
+    .mobileReduced {
+        display: none;
+    }
+
+    #displayCategoriesForMobilesContainer {
+        display: flex;
+    }
+}
+
+@media (max-width: 740px) {
+    section {
+        padding: 20px;
+    }
+
+    .flexContainers {
+        display: block;
+    }
+
+    .flexContainers > div {
+        width: 100%;
+    }
 }
