@@ -3,14 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Business;
-use App\Repository\ApplicationRepository;
-use App\Repository\BusinessRepository;
 use App\Repository\OfferRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\BusinessRepository;
+use App\Repository\ApplicationRepository;
+use App\Service\MapService;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BusinessController extends AbstractController
 {
@@ -40,18 +42,20 @@ class BusinessController extends AbstractController
      * @Route("/business/{id}", name="show_business", methods={"GET", "POST"})
      * @param Business $business
      * @param OfferRepository $offerRepository
-     * @param ApplicationRepository $applicationRepository
      * @return Response
      */
-    public function showBusiness(Business $business, OfferRepository $offerRepository, ApplicationRepository $applicationRepository)
+    public function showBusiness(Business $business, OfferRepository $offerRepository, MapService $mapService)
     {
         $offers = $offerRepository->findOffersByBusinessOrderByDate($business);
         $lastOffersInWebsite = $offerRepository->findBy([], ['created_at'=>'DESC'], 3 ,0);
-        
+        $location = $mapService->getMap($business);
+
+
         return $this->render('business/show.html.twig', [
             'business' => $business,
             'offers' => $offers,
             'lastOffersInWebsite' => $lastOffersInWebsite,
+            'location' => $location,
         ]);
     }
 }

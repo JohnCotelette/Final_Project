@@ -11,6 +11,7 @@ use App\Repository\UserRepository;
 use App\Service\OfferService;
 use App\Repository\OfferRepository;
 use App\Service\MailService;
+use App\Service\MapService;
 use App\Service\UserService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -95,13 +96,15 @@ class OfferController extends AbstractController
      * @param string $reference
      * @return Response
      */
-    public function showOffer(OfferService $offerService, Request $request, MailService $mailService, OfferRepository $offerRepository, string $reference)
+    public function showOffer(OfferService $offerService, Request $request, MailService $mailService, OfferRepository $offerRepository, string $reference, MapService $mapService)
     {
         $user = $this->getUser();
 
         $offer = $offerRepository->findOneBy(["reference" => $reference]);
 
         $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
+        $location = $mapService->getMap($offer);
+
     
         if ($user && $user->getRoles() === ["ROLE_CANDIDATE"]) {
             $application = new Application;
@@ -143,6 +146,7 @@ class OfferController extends AbstractController
             'form' => !empty($form) ? $form->createView() : null,
             'offer' => $offer,
             'checkApply' => $checkApply,
+            'location' => $location,
         ]);
     }
 }
