@@ -12,6 +12,7 @@
 <!-- section of candidate profil -->
 <div class="container-fluid">
     <div class="row flex ">
+        {#  nav zone #}
         <div class="col-4  flex-grow-1  heightmenu ">
             <div class="list-group list-group-flush " id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#profile"
@@ -24,6 +25,7 @@
                    href="#changeprofile" role="tab" aria-controls="settings">changer mon profile</a>
             </div>
         </div>
+        {# nav zone #}
         <div class="col-8 w-100">
             <h1 class=" text-center  my-5"> {{ user.lastName }}-{{ user.firstName }}</h1>
             <div class="tab-content" id="nav-tabContent">
@@ -47,7 +49,7 @@
 
 
                         <th>Date de naissance</th>
-                        <td>{{ user.birthDay ? user.birthDay|date('d-m-y') : '' }}</td>
+                        <td>{{ user.birthDay ? user.birthDay|date('d-m-y') }}</td>
                         </tr>
 
 
@@ -114,19 +116,19 @@
 
                 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
                 <!-- Display  all Applications of user   -->
-                <div class="tab-pane fade" id="candidatures" role="tabpanel" aria-labelledby="list-profile-list">
+                <div class="tab-pane fade d-flex justify-content-around " id="candidatures" role="tabpanel" aria-labelledby="list-profile-list">
 
                     {% if(user.applications|length > 0) %}
                         {% for application in user.applications %}
 
-                            <div class="card" style="width: 18rem;">
+                            <div class="card  " style="width: 18rem;">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ application.offer.title }}</h5>
-                                    <h6 class="card-subtitle mb-2 text-muted">{{ application.createdAt|date() }}</h6>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ application.createdAt|date('d/m/y') }}</h6>
                                     <p class="card-text">{{ application.motivation }}</p>
                                     <a href="{{ path('show_offer',  {'id': application.offer.id}) }}"
-                                       class="card-link">Détails de l'annonce</a>
-                                    <a href="#" class="card-link"></a>
+                                       class=" btn btn-primary card-link">Détails de l'annonce</a>
+                                   
                                 </div>
                             </div>
 
@@ -137,7 +139,7 @@
                 <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
                 <!--  section of CV  -->
 
-                <div class="tab-pane fade flex  d-flex  flex-column  align-items-start" id="cv" role="tabpanel"
+                <div class="tab-pane fade flex  d-flex  flex-column  align-items-start mt-0" id="cv" role="tabpanel"
                      aria-labelledby="list-messages-list">
                     <div class="align-self-center mb-3">
                         {{ form_start(formCv) }}

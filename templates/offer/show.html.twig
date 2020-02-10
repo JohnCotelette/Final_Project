@@ -170,6 +170,7 @@
             <hr class="offerDetailsSeparators">
 
             <h2>Localisation</h2>
+            <div id="map"></div>
 
             <p>{{ offer.location }}</p>
         </div>
@@ -178,4 +179,17 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags("offer") }}
+    <script>
+        function initMap() {
+        var city = {lat: {{ location["lat"] }}, lng: {{ location["lng"] }}};
+        var map = new google.maps.Map(
+            document.getElementById('map'), {zoom: 4, center: city});
+        var marker = new google.maps.Marker({position: city, map: map});
+        }
+    </script>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANN6M55mHSraaq-rgOxtCuTVmvx3zKIRs&callback=initMap">
+    </script>
+
 {% endblock %}
