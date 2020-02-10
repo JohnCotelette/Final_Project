@@ -51,6 +51,16 @@
                 </li>
             {% endif %}
         {% else %}
+            {% if is_granted("ROLE_RECRUITER") %}
+                {% if app.request.attributes.get("_route") != "offer_create" %}
+                    <li>
+                        <a class="defaultNavLinks" href="{{ path("offer_create" ) }}">Créer offre</a>
+                    </li>
+
+                    <hr class="defaultNavLinksSeparators">
+
+                {% endif %}
+            {% endif %}
             {% if app.request.attributes.get("_route") != "candidate_dashboard" and
                 app.request.attributes.get("_route") != "recruiter_dashboard" %}
                     <li>

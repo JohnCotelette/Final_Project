@@ -28,6 +28,10 @@
                 <div class="alert alert-success">{{ success }}</div>
             {% endfor %}
 
+            {% for success in app.flashes("successOfferCreated") %}
+                <div class="alert alert-success">{{ success }}</div>
+            {% endfor %}
+
             {{ form_start(form, {'attr': {'id': 'categoriesForm'}}) }}
             <div id="fieldsContainer" class="categoryContainers">
                 <h3>Domaines</h3>
@@ -90,7 +94,7 @@
             <hr class="categoriesSeparators">
 
             <div id="locationContainer" class="categoryContainers">
-                <h3>Recherche par localisaton</h3>
+                <h3>Recherche par localisation</h3>
 
                 <div>
                     {{ form_widget(form.city) }}
@@ -101,7 +105,7 @@
         </section>
 
         <div id="displayCategoriesForMobilesContainer">
-            <a href="#" id="displayCategoriesForMobiles">Recherche avancée <i class="arrowsStates fas fa-angle-up"></i></a>
+            <a href="#" id="displayCategoriesForMobiles">Recherche avancée</a>
         </div>
 
         <section id="rightSection">
@@ -117,8 +121,8 @@
                         <div class="col-md-8 d-flex offersInfosContainers">
                             <div class="card-body my-auto">
                                 <div class=" linkOffer">
-                                    <h4 class="card-title"><a href="{{ path('show_offer', {'reference': offer.reference}) }}">{{ offer.title }}  </a></h4>
-
+                                    <h4 class="card-title"><a id="offerReference" href="{{ path('show_offer', {'reference': offer.reference}) }}">{{ offer.title }}  </a></h4
+                                    
                                     <h5>Chez <a class="offersLinks" href="{{ path("show_business", {"id" : offer.user.business.id }) }}"> {{ offer.user.business.name|upper }}</a> </h5>
 
                                     <div class="offersCategoriesContainers">
@@ -130,7 +134,7 @@
                                 </div>
 
                                 <p class="offersDescriptions card-text">{{ offer.description|truncate(100) }}
-                                    <a class="clickToKnowMoreLinks" href="{{ path('show_offer', {'reference': offer.reference}) }}">En savoir plus</a>
+                                    <a id="linkToSeeOffer" class="clickToKnowMoreLinks" href="{{ path('show_offer', {'reference': offer.reference}) }}">En savoir plus</a>
                                 </p>
                             </div>
                         </div>

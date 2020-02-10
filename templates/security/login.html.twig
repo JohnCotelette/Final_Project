@@ -9,10 +9,12 @@
 {% block content %}
     <section id="firstSection">
         <form method="post" novalidate="novalidate">
-            {% if error %}
+            <div>
+                {% if error %}
                 <div id="error" class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
-
+                {% endif %}
+            </div>
+            
             {% for error in app.flashes("errorNeedActivated") %}
                 <div class="alert alert-danger">{{ error }}</div>
             {% endfor %}

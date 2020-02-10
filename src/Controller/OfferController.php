@@ -7,7 +7,6 @@ use App\Form\ApplyType;
 use App\Form\CategoriesType;
 use App\Entity\Application;
 use App\Form\OfferType;
-use App\Repository\UserRepository;
 use App\Service\OfferService;
 use App\Repository\OfferRepository;
 use App\Service\MailService;
@@ -18,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class OfferController extends AbstractController
 {
@@ -71,19 +71,64 @@ class OfferController extends AbstractController
     /**
      * @Route("/offer/create", name="offer_create", methods={"GET", "POST"})
      * @param Request $request
-     * @param UserService $userService
+     * @param OfferService $offerService
      * @return RedirectResponse|Response
      */
-    public function createOffer(Request $request, UserService $userService)
+    public function createOffer(Request $request, OfferService $offerService)
     {
         $user = $this->getUser();
         $offer = new Offer();
 
         $form = $this->createForm(OfferType::class, $offer);
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $offer = $form->getData();
+
+            $hasAldreadyCreatedAnOfferWithSameName = $offerService->checkIfOfferAlreadyExistForThisUser($user, $offer);
+
+            if ($hasAldreadyCreatedAnOfferWithSameName == true) {
+                $this->addFlash("errorSameOffer", "Vous avez déjà créé une annonce avec le même intitulé de poste");
+
+                return $this->redirectToRoute("offer_create");
+            }
+
+            $offerService->generateReference($offer);
+
+            $offer->setUser($user);
+
+            $entityManager = $this
+                ->getDoctrine()
+                ->getManager();
+
+            $entityManager->persist($offer);
+            $entityManager->flush();
+
+            $this->addFlash("successOfferCreated", "Votre annonce a bien ajoutée !");
+
+            return $this->redirectToRoute("offers_index");
+        }
+
         return $this->render("offer/create.html.twig", [
             "form" => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/offer/edit/{reference}", name="edit_offer", methods={"GET", "POST"})
+     * @isGranted("OFFER_EDIT", subject="offer")
+     * @param OfferRepository $offerRepository
+     * @param string $reference
+     * @param Offer $offer
+     */
+    public function editOffer(OfferRepository $offerRepository, string $reference, Offer $offer)
+    {
+        $user = $this->getUser();
+
+        $offer = $offerRepository->findOneBy(["reference" => $reference]);
+
+        dd($offer);
     }
 
     /**

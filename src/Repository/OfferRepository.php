@@ -42,8 +42,8 @@ class OfferRepository extends ServiceEntityRepository
 
         if ($category != null) {
             $qb
-                ->andWhere(':categoryId MEMBER OF o.categories')
-                ->setParameter(':categoryId', $category->getId());
+                ->andWhere(':category MEMBER OF o.categories')
+                ->setParameter(':category', $category);
         }
 
         if ($experience != null) {
