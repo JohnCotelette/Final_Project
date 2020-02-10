@@ -47,4 +47,22 @@ class OfferService
 
         return false;
     }
+
+    /**
+     * @param User $user
+     * @param Offer $offer
+     * @return bool
+     */
+    public function checkIfOfferAlreadyExistForThisUser(User $user, Offer $offer) :bool
+    {
+        $offers = $user->getOffers();
+
+        foreach ($offers as $lastOffer) {
+            if ($lastOffer->getTitle() === $offer->getTitle()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

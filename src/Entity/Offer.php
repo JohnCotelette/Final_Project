@@ -32,6 +32,9 @@ class Offer
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime(
+     *     message="Le format de la date de prise de poste est invalide"
+     * )
      */
     private $started_at;
 
@@ -50,9 +53,6 @@ class Offer
      * @Assert\NotBlank(
      *     message="Veuillez renseigner un titre"
      * )
-     * @Assert\NotNull(
-     *     message="Veuillez renseigner un titre"
-     * )
      * @Assert\Length(
      *     min=8,
      *     max=90,
@@ -67,9 +67,6 @@ class Offer
      * @Assert\NotBlank(
      *     message="Veuillez renseigner une description"
      * )
-     * @Assert\NotNull(
-     *     message="Veuillez renseigner un description"
-     * )
      * @Assert\Length(
      *     min=100,
      *     max=2000,
@@ -82,9 +79,6 @@ class Offer
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(
-     *     message="Veuillez décrire le profil requis"
-     * )
-     * @Assert\NotNull(
      *     message="Veuillez décrire le profil requis"
      * )
      * @Assert\Length(
@@ -101,9 +95,6 @@ class Offer
      * @Assert\NotBlank(
      *     message="Veuillez renseigner une adresse (complète ou non)"
      * )
-     * @Assert\NotNull(
-     *     message="Veuillez renseigner une adresse (complète ou non)"
-     * )
      * @Assert\Length(
      *     min=4,
      *     max=100,
@@ -115,9 +106,6 @@ class Offer
 
     /**
      * @ORM\Column(type="string", columnDefinition="enum('Tous', 'Junior (0 à 2 ans)', 'Confirmé (3 à 6 ans)', 'Senior (7 ans et plus)')")
-     * @Assert\NotNull(
-     *     message="Veuillez renseigner l'experience requise"
-     * )
      * @Assert\NotBlank(
      *     message="Veuillez renseigner l'experience requise"
      * )
@@ -137,9 +125,6 @@ class Offer
 
     /**
      * @ORM\Column(type="string", columnDefinition="enum('CDI', 'CDD', 'Stage')")
-     * @Assert\NotNull(
-     *     message="Veuillez renseigner le type de contrat"
-     * )
      * @Assert\NotBlank(
      *     message="Veuillez renseigner le type de contrat"
      * )
@@ -160,6 +145,12 @@ class Offer
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="offers")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Count(
+     *     min=1,
+     *     max=3,
+     *     minMessage="Vous devez renseigner au moins {{ limit }} catégorie",
+     *     maxMessage="Vous ne pouvez selectionner plus de {{ limit }} catégories"
+     * )
      */
     private $categories;
 
