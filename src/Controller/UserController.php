@@ -229,8 +229,10 @@ class UserController extends AbstractController
         if ($user) 
         {
             $entityManager = $this ->getDoctrine()->getManager();
+
             $form = $this->createForm(CandidatType::class, $user);
-            $form->get('legalConditions')->setData(true);
+            $form->remove("legalConditions");
+
             $form->handleRequest($request);
   
              // Update profile candidate

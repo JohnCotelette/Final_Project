@@ -84,8 +84,7 @@ class CandidatType extends AbstractType
                         "message" => "Vous devez accepter nos conditions générales d'utilisation si vous souhaitez poursuivre",
                     ]),
                 ],
-            ])
-        ;
+            ]);
     }
    
     public function configureOptions(OptionsResolver $resolver)
@@ -97,7 +96,5 @@ class CandidatType extends AbstractType
                 'novalidate' => 'novalidate',
             ],
         ]);
-        
-        
     }
 }

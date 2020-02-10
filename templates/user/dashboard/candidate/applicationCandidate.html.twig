@@ -31,7 +31,7 @@
                     <h1 class=" text-center  my-5"> {{ user.lastName }}-{{ user.firstName }}</h1>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="row  justify-content-around" >
-                            {% if(user.applications|length > 0) %}
+                            {% if user.applications|length > 0 %}
                                 {% for application in user.applications %}
                                     <div class="card col-sm-12 col-md-6 col-lg-4 " style="max-width: 18rem;">
                                         <div class="card-body">
