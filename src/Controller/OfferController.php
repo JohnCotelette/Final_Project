@@ -71,18 +71,43 @@ class OfferController extends AbstractController
     /**
      * @Route("/offer/create", name="offer_create", methods={"GET", "POST"})
      * @param Request $request
-     * @param UserService $userService
+     * @param OfferService $offerService
      * @return RedirectResponse|Response
      */
-    public function createOffer(Request $request, UserService $userService)
+    public function createOffer(Request $request, OfferService $offerService)
     {
         $user = $this->getUser();
         $offer = new Offer();
 
         $form = $this->createForm(OfferType::class, $offer);
 
-        if ($form->isSubmitted() and $form->isValid()) {
-            dd($form);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $offer = $form->getData();
+
+            $hasAldreadyCreatedAnOfferWithSameName = $offerService->checkIfOfferAlreadyExistForThisUser($user, $offer);
+
+            if ($hasAldreadyCreatedAnOfferWithSameName == true) {
+                $this->addFlash("errorSameOffer", "Vous avez déjà créé une annonce avec le même intitulé de poste");
+
+                return $this->redirectToRoute("offer_create");
+            }
+
+            $offerService->generateReference($offer);
+
+            $offer->setUser($user);
+
+            $entityManager = $this
+                ->getDoctrine()
+                ->getManager();
+
+            $entityManager->persist($offer);
+            $entityManager->flush();
+
+            $this->addFlash("successOfferCreated", "Votre annonce a bien ajoutée !");
+
+            return $this->redirectToRoute("offers_index");
         }
 
         return $this->render("offer/create.html.twig", [

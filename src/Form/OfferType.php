@@ -5,13 +5,18 @@ namespace App\Form;
 use App\Entity\Category;
 use App\Entity\Offer;
 use App\Repository\CategoryRepository;
+use SebastianBergmann\CodeCoverage\Report\Text;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 
 class OfferType extends AbstractType
 {
@@ -23,6 +28,17 @@ class OfferType extends AbstractType
             ])
             ->add("location", TextType::class, [
                 "label" => "Localisation",
+                "empty_data" => "lol",
+            ])
+            ->add("startedAt", DateTimeType::class, [
+                "label" => "Date de prise de poste",
+                "years" => range(date("Y"), date("Y") + 1),
+                "constraints" => [
+                    new GreaterThan([
+                        "value" => "today",
+                        "message" => "La date de prise de poste doit au moins être égale à la date de demain",
+                    ])
+                ]
             ])
             ->add("salary", TextType::class, [
                 "label" => "Rémunération",
@@ -61,7 +77,7 @@ class OfferType extends AbstractType
             ])
             ->add("categories", EntityType::class, [
                 "class" => Category::class,
-                "label" => "Catégories",
+                "label" => "Catégories*",
                 "query_builder" => function (CategoryRepository $categoryRepository) {
                     return $categoryRepository->createQueryBuilder("c")
                         ->orderBy("c.name", "ASC");

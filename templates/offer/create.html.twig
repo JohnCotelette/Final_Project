@@ -7,6 +7,10 @@
 {% endblock %}
 
 {% block content %}
+    {% for error in app.flashes("errorSameOffer") %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+
     <header>
         <h1>Creation d'une nouvelle offre</h1>
 
@@ -37,24 +41,33 @@
 
                 <div id="formLocalisationContainer" class="superContainers">
                     {{ form_label(form.location) }}
-                    {{ form_widget(form.location) }}
+                    {{ form_widget(form.location, { 'value': app.user.business.location }) }}
                 </div>
 
-                <div class="flexContainers">
-                    <div>
+                <div id="formStartedAtErrorsContainer" class="superContainers">
+                    {{ form_errors(form.startedAt) }}
+                </div>
+
+                <div id="formStartedAtContainer" class="superContainers">
+                    {{ form_label(form.startedAt) }}
+                    {{ form_widget(form.startedAt) }}
+                </div>
+
+                <div>
+                    <div class="flexContainers">
                         <div id="formExperienceErrorsContainer" class="superContainers">
                             {{ form_errors(form.experience) }}
                         </div>
 
-                        <div id="formExperienceContainer" class="superContainers">
-                            {{ form_label(form.experience) }}
-                            {{ form_widget(form.experience) }}
+                        <div id="formTypeErrorsContainer" class="superContainers">
+                            {{ form_errors(form.type) }}
                         </div>
                     </div>
 
-                    <div>
-                        <div id="formTypeErrorsContainer" class="superContainers">
-                            {{ form_errors(form.type) }}
+                    <div class="flexContainers">
+                        <div id="formExperienceContainer" class="superContainers">
+                            {{ form_label(form.experience) }}
+                            {{ form_widget(form.experience) }}
                         </div>
 
                         <div id="formTypeContainer" class="superContainers">
@@ -106,11 +119,11 @@
             <section id="rightSection" class="mobileReduced">
                 <div id="formCategoriesErrorsContainer" class="superContainers">
                     {{ form_errors(form.categories) }}
+                    <span id="categoriesSelectorsError" class="invisible">Vous ne pouvez pas séléctionner plus de trois catégories</span>
                 </div>
 
                 <div id="formCategoriesContainer" class="superContainers">
                     {{ form_label(form.categories) }}
-                    <span id="categoriesSelectorsError" class="invisible">Vous ne pouvez pas séléctionner plus de deux catégories</span>
 
                     {% for category in form.categories %}
                         <span class="categoriesSelectors">

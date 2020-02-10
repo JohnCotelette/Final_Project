@@ -108,6 +108,10 @@ form textarea {
     cursor: pointer;
 }
 
+#offer_startedAt_time {
+    display: none !important;
+}
+
 /* -------------------------- RIGHT-SECTION -------------------------- */
 
 #rightSection {
@@ -138,7 +142,7 @@ form textarea {
 #categoriesSelectorsError {
     color: red;
     font-size: 0.78em;
-    margin-bottom: .5rem;
+    margin-bottom: 0;
     animation: shake 0.4s linear;
 }
 
@@ -167,6 +171,23 @@ form textarea {
     color: $violet-clair;
     text-decoration: none;
     text-transform: none;
+}
+
+.superContainers ul {
+    list-style: none;
+    padding: 0;
+    font-size: 0.78em;
+    color: red;
+    margin-bottom: 0;
+    animation: shake 0.4s linear;
+}
+
+#offer_startedAt {
+    display: flex;
+}
+
+#offer_startedAt select {
+    margin: 0 20px 20px 0;
 }
 
 /* -------------------------- UNIQUE-SECTION (ERROR) -------------------------- */

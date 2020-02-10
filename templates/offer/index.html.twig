@@ -28,6 +28,10 @@
                 <div class="alert alert-success">{{ success }}</div>
             {% endfor %}
 
+            {% for success in app.flashes("successOfferCreated") %}
+                <div class="alert alert-success">{{ success }}</div>
+            {% endfor %}
+
             {{ form_start(form, {'attr': {'id': 'categoriesForm'}}) }}
             <div id="fieldsContainer" class="categoryContainers">
                 <h3>Domaines</h3>

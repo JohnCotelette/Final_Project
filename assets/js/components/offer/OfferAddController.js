@@ -13,6 +13,7 @@ class OfferAddController {
         this.categoriesControllerForMobile = document.getElementById("displayCategoriesForMobiles");
         this.categoriesContainerForMobile = document.getElementById("rightSection");
 
+        this.maxCategories = 3;
         this.count = 0;
         this.maxLength = 2000;
         this.state = true;
@@ -53,7 +54,7 @@ class OfferAddController {
             this.count = checkedBoxs;
         }
 
-        if (this.count > 2) {
+        if (this.count > this.maxCategories) {
             this.state = false;
             this.displayError();
         }
@@ -108,6 +109,14 @@ class OfferAddController {
                     this.allCategoriesLinks[i].classList.remove("linkSelected");
                 }
             }
+        }
+
+        if (this.offerDescriptionMessage) {
+            this.countCharactersOfMessage(this.offerDescriptionMessage);
+        }
+
+        if (this.offerProfilRequiredMessage) {
+            this.countCharactersOfMessage(this.offerProfilRequiredMessage);
         }
     };
 

@@ -65,7 +65,7 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
         $this->createMany(Offer::class, 80, function(Offer $offer) {
             $randomRecruiter = $this->getRandomRecruiter();
 
-            $randomNumberOfCategories = rand(1, 4);
+            $randomNumberOfCategories = rand(1, 3);
 
             $chanceToSetASalary = rand(0, 5);
 
