@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Avatar;
 use App\Entity\Cv;
 use App\Entity\Business;
 use App\Entity\User;
+use App\Form\AvatarType;
 use App\Form\CandidatType;
 use App\Form\CvType;
 use App\Form\RecruiterType;
@@ -160,43 +162,124 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/candidate/dashboard", name= "candidate_dashboard")
+     * @Route("/dashboard/candidate/applications", name="candidate_applications")
+    */
+    public function candidateApplications()
+    {
+        $user = $this->getUser();
+        $applications = $user->getApplications();
+
+        return $this->render('/user/dashboard/candidate/applicationCandidate.html.twig', [
+             "applications" => $applications,
+             "user" => $user
+        ]);
+    } 
+    
+    /**
+     * @Route("/dashboard/candidate/profile", name="candidate_profile")
+     * @param Request $request
+     * @return RedirectResponse|response
+    */
+    public function candidateProfile(Request $request )
+    {
+        $user =$this->getUser();
+        $avatar = new Avatar();
+
+        if($user)
+        {
+            $formAvatar = $this->createForm(AvatarType::class, $avatar);
+            $formAvatar->handleRequest($request);
+
+            if($formAvatar->isSubmitted() && $formAvatar->isValid())
+            {
+                $entityManager = $this->getDoctrine()->getManager();
+
+                if($user->getAvatar())
+                {
+                   $entityManager->remove($user->getAvatar());
+                }
+               
+                 $user->setAvatar($avatar);
+                 $entityManager->persist($avatar);
+                 $entityManager->flush();
+
+                 $this->addFlash("successcandidate", "l'avatar est bien ajoutée");
+                 $this->redirectToRoute("candidate_profile");
+            }
+   
+            return $this->render('/user/dashboard/candidate/profileCandidate.html.twig', [
+                 "user" => $user,
+                 "formAvatar" => $formAvatar->createView()
+            ]);
+        }
+
+       return $this->redirectToRoute("login");
+    }   
+
+    /**
+     * @Route("/dashboard/candidate/updateprofile", name="candidate_update_profile")
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @return RedirectResponse|Response
      */
-    public function dashbordUser(Request $request, UserPasswordEncoderInterface $encoder)
+    public function candidateUpdateProfile(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $user = $this->getUser();
       
-        if ($user) {
+        if ($user) 
+        {
             $entityManager = $this ->getDoctrine()->getManager();
 
-            $cv = new Cv();
             $form = $this->createForm(CandidatType::class, $user);
+            $form->remove("legalConditions");
 
             $form->handleRequest($request);
-            $formCv = $this->createForm(CvType::class, $cv);
-            $formCv->handleRequest($request);
-
+  
              // Update profile candidate
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid())
+            {
                 $password = $encoder->encodePassword( $user, $user->getPassword());
                 $user->setPassword( $password );
 
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                $this->addFlash("success", "Votre profile est bien mis à jour ");
-
-                return $this->redirectToRoute('candidate_dashboard');
+                $this->addFlash("successcandidate", "Votre profile est bien mis à jour ");
+                return $this->redirectToRoute('candidate_profile');
             }
 
-             // candidate change Cv
-            if ($formCv->isSubmitted() && $formCv->isValid()) {
+            return $this->render('/user/dashboard/candidate/profileUpdateCandidate.html.twig', [
+                "form" => $form->createView(),
+                "user" => $user
+            ]);
+        }
+
+        return $this->redirectToRoute("login");
+    }
+
+    /**
+     * @Route("/dashboard/candidate/Cv", name= "candidate_cv")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return RedirectResponse|Response
+     */
+    public function candidateCV(Request $request, UserPasswordEncoderInterface $encoder)
+    {
+        $user = $this->getUser();
+      
+        if ($user) 
+        {
+            $cv = new Cv();
+            $formCv = $this->createForm(CvType::class, $cv);
+            $formCv->handleRequest($request);
+
+            // candidate change Cv
+            if ($formCv->isSubmitted() && $formCv->isValid()) 
+            {
                 $em = $this->getDoctrine()->getManager();
 
-                if ($user->getCv()) {
+                if ($user->getCv()) 
+                {
                     $em->remove( $user->getCv() );
                 }
 
@@ -205,12 +288,11 @@ class UserController extends AbstractController
                 $em->persist($cv);
                 $em->flush();
 
-                return $this->redirectToRoute("candidate_dashboard");
-                // return $downloadHandler->downloadObject($image, $fileField = 'imageFile');
+                $this->addFlash("successcandidate", "Votre CV  est bien mis à jour ");
+                return $this->redirectToRoute("candidate_cv");
             }
 
-            return $this->render('/user/dashbordCandidate.html.twig', [
-                "form" => $form->createView(),
+            return $this->render('/user/dashboard/candidate/CvupdateCandidate.html.twig', [
                 "formCv" => $formCv->createView(),
                 "user" => $user
             ]);
@@ -219,3 +301,4 @@ class UserController extends AbstractController
         return $this->redirectToRoute("login");
     }
 }
+
