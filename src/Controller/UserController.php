@@ -203,7 +203,7 @@ class UserController extends AbstractController
                  $entityManager->persist($avatar);
                  $entityManager->flush();
 
-                 $this->addFlash("success", "l'avatar est bien ajoutée");
+                 $this->addFlash("successcandidate", "l'avatar est bien ajoutée");
                  $this->redirectToRoute("candidate_profile");
             }
    
@@ -226,12 +226,13 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
       
-        if ($user) {
+        if ($user) 
+        {
             $entityManager = $this ->getDoctrine()->getManager();
-
             $form = $this->createForm(CandidatType::class, $user);
+            $form->get('legalConditions')->setData(true);
             $form->handleRequest($request);
-           
+  
              // Update profile candidate
             if ($form->isSubmitted() && $form->isValid())
             {
@@ -241,8 +242,7 @@ class UserController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                $this->addFlash("success", "Votre profile est bien mis à jour ");
-
+                $this->addFlash("successcandidate", "Votre profile est bien mis à jour ");
                 return $this->redirectToRoute('candidate_profile');
             }
 
@@ -286,8 +286,7 @@ class UserController extends AbstractController
                 $em->persist($cv);
                 $em->flush();
 
-                $this->addFlash("success", "Votre CV  est bien mis à jour ");
-
+                $this->addFlash("successcandidate", "Votre CV  est bien mis à jour ");
                 return $this->redirectToRoute("candidate_cv");
             }
 

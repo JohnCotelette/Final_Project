@@ -9,6 +9,18 @@
 {% block content %}
 
 <div class="container-fluid">
+    {% for label, messages in  app.flashes  %}
+    <div class="container">
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}" role="alert">
+                {{ message | raw }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
     <div class="row flex ">
         <div class="container-fluid">
             <div class="row flex ">

@@ -77,7 +77,7 @@ class CandidatType extends AbstractType
             ])
             ->add("legalConditions", CheckboxType::class, [
                 "mapped" => false,
-                "required" => true,
+                "required" =>true,
                 "label" => "En cochant ceci, vous acceptez les conditions générales d'utilisation et vous certifiez être majeur.",
                 "constraints" => [
                     new IsTrue([
@@ -97,6 +97,7 @@ class CandidatType extends AbstractType
                 'novalidate' => 'novalidate',
             ],
         ]);
-        $resolver->setAllowedTypes('lagalConditions', 'bool');
+        
+        
     }
 }
