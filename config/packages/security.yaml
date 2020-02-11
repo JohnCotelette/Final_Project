@@ -24,7 +24,7 @@ security:
             logout:
                 path: logout
             remember_me:
-                secret:   '%kernel.secret%'
+                secret: '%kernel.secret%'
                 lifetime: 2592000
 
     access_control:

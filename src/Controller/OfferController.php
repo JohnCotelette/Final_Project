@@ -108,7 +108,7 @@ class OfferController extends AbstractController
 
             $this->addFlash("successOfferCreated", "Votre annonce a bien ajoutée !");
 
-            return $this->redirectToRoute("offers_index");
+            return $this->redirectToRoute("show_offer", ["reference" => $offer->getReference()]);
         }
 
         return $this->render("offer/create.html.twig", [
@@ -122,14 +122,31 @@ class OfferController extends AbstractController
      * @param OfferRepository $offerRepository
      * @param string $reference
      * @param Offer $offer
+     * @param Request $request
+     * @return Response
      */
-    public function editOffer(OfferRepository $offerRepository, string $reference, Offer $offer)
+    public function editOffer(OfferRepository $offerRepository, string $reference, Offer $offer, Request $request)
     {
-        $user = $this->getUser();
+        $form = $this->createForm(OfferType::class, $offer);
 
-        $offer = $offerRepository->findOneBy(["reference" => $reference]);
+        $form->handleRequest($request);
 
-        dd($offer);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this
+                ->getDoctrine()
+                ->getManager();
+
+            $entityManager->flush();
+
+            $this->addFlash("successOfferUpdated", "Votre annonce a bien modifiée !");
+
+            return $this->redirectToRoute("show_offer", ["reference" => $offer->getReference()]);
+        }
+
+        return $this->render("offer/edit.html.twig", [
+            "form" => $form->createView(),
+            "offer" => $offer,
+        ]);
     }
 
     /**
@@ -148,9 +165,9 @@ class OfferController extends AbstractController
         $offer = $offerRepository->findOneBy(["reference" => $reference]);
 
         $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
+
         $location = $mapService->getMap($offer);
 
-    
         if ($user && $user->getRoles() === ["ROLE_CANDIDATE"]) {
             $application = new Application;
 
@@ -176,7 +193,10 @@ class OfferController extends AbstractController
 
                         $mailService->sendMailToConfirmApply($user, "confirmApply", $offer);
 
-                        $this->addFlash("success", "Votre candidature a bien été enregistrée, vous recevrez prochainement une réponse de la part de l'auteur de cette offre.");
+                        $this->addFlash(
+                            "success",
+                            "Votre candidature a bien été enregistrée, vous recevrez prochainement une réponse de la part de " . $offer->getUser()->getBusiness()->getName() . "."
+                        );
 
                         $checkApply = true;
                     }

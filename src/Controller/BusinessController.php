@@ -25,7 +25,7 @@ class BusinessController extends AbstractController
      */
     public function index(BusinessRepository $businessRepository, Request $request, PaginatorInterface $paginator)
     {
-        $allBusiness = $businessRepository->getAllBusinessWhereDescAndWhyUsNotNullOrderByName();
+        $allBusiness = $businessRepository->getAllBusinessWhichHaveOffers();
 
         $pagination = $paginator->paginate(
             $allBusiness,
@@ -48,8 +48,8 @@ class BusinessController extends AbstractController
     {
         $offers = $offerRepository->findOffersByBusinessOrderByDate($business);
         $lastOffersInWebsite = $offerRepository->findBy([], ['created_at'=>'DESC'], 3 ,0);
-        $location = $mapService->getMap($business);
 
+        $location = $mapService->getMap($business);
 
         return $this->render('business/show.html.twig', [
             'business' => $business,

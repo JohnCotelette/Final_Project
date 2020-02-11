@@ -2,8 +2,17 @@ import noUiSlider from "nouislider";
 
 let slider = document.getElementById('slider');
 
+let defaultValue = 0;
+
+if (document.getElementById("offer_salary").value !== "A négocier") {
+    let string = document.getElementById("offer_salary").value;
+    defaultValue = string.match(/\d+/);
+}
+
+console.log(defaultValue);
+
 noUiSlider.create(slider, {
-    start: [0],
+    start: [defaultValue],
     step: 500,
     range: {
         'min': [0],
