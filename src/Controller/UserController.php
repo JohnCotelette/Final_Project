@@ -183,37 +183,9 @@ class UserController extends AbstractController
     public function candidateProfile(Request $request )
     {
         $user =$this->getUser();
-        $avatar = new Avatar();
-
-        if($user)
-        {
-            $formAvatar = $this->createForm(AvatarType::class, $avatar);
-            $formAvatar->handleRequest($request);
-
-            if($formAvatar->isSubmitted() && $formAvatar->isValid())
-            {
-                $entityManager = $this->getDoctrine()->getManager();
-
-                if($user->getAvatar())
-                {
-                   $entityManager->remove($user->getAvatar());
-                }
-               
-                 $user->setAvatar($avatar);
-                 $entityManager->persist($avatar);
-                 $entityManager->flush();
-
-                 $this->addFlash("successcandidate", "l'avatar est bien ajoutée");
-                 $this->redirectToRoute("candidate_profile");
-            }
-   
-            return $this->render('/user/dashboard/candidate/profileCandidate.html.twig', [
-                 "user" => $user,
-                 "formAvatar" => $formAvatar->createView()
-            ]);
-        }
-
-       return $this->redirectToRoute("login");
+        return $this->render('/user/dashboard/candidate/profileCandidate.html.twig', [
+                 "user" => $user
+            ]);          
     }   
 
     /**
@@ -224,38 +196,33 @@ class UserController extends AbstractController
      */
     public function candidateUpdateProfile(Request $request, UserPasswordEncoderInterface $encoder)
     {
+                
         $user = $this->getUser();
-      
-        if ($user) 
+        $entityManager = $this ->getDoctrine()->getManager();
+
+        $form = $this->createForm(CandidatType::class, $user);
+        $form->remove("legalConditions");
+
+        $form->handleRequest($request);
+
+            // Update profile candidate
+        if ($form->isSubmitted() && $form->isValid())
         {
-            $entityManager = $this ->getDoctrine()->getManager();
+            $password = $encoder->encodePassword( $user, $user->getPassword());
+            $user->setPassword( $password );
 
-            $form = $this->createForm(CandidatType::class, $user);
-            $form->remove("legalConditions");
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-            $form->handleRequest($request);
-  
-             // Update profile candidate
-            if ($form->isSubmitted() && $form->isValid())
-            {
-                $password = $encoder->encodePassword( $user, $user->getPassword());
-                $user->setPassword( $password );
-
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                $this->addFlash("success", "Votre profile est bien mis à jour ");
-                return $this->redirectToRoute('candidate_profile');
-            }
-
-            return $this->render('/user/dashboard/candidate/profileUpdateCandidate.html.twig', [
-                "form" => $form->createView(),
-                "user" => $user
-            ]);
+            $this->addFlash("success", "Votre profile est bien mis à jour ");
+            return $this->redirectToRoute('candidate_profile');
         }
 
-        return $this->redirectToRoute("login");
-    }
+        return $this->render('/user/dashboard/candidate/profileUpdateCandidate.html.twig', [
+            "form" => $form->createView(),
+            "user" => $user
+        ]);
+    }    
 
     /**
      * @Route("/dashboard/candidate/Cv", name= "candidate_cv")
@@ -267,8 +234,7 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
       
-        if ($user) 
-        {
+        
             $cv = new Cv();
             $formCv = $this->createForm(CvType::class, $cv);
             $formCv->handleRequest($request);
@@ -296,9 +262,6 @@ class UserController extends AbstractController
                 "formCv" => $formCv->createView(),
                 "user" => $user
             ]);
-        }
-
-        return $this->redirectToRoute("login");
     }
 }
 
