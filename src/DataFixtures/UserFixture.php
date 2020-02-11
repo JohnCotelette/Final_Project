@@ -41,11 +41,11 @@ class UserFixture extends BaseFixture
         "ESN / Cabinet de conseil",
     ];
 
-    const BUSINESS_CITY = [
-        "Lyon",
-        "Lille",
-        "Paris",
-        "Toulouse",
+    const BUSINESS_ADDRESS = [
+        "19 rue du Président Édouard Herriot, 69001 Lyon",
+        "40 Avenue de Clichy, 75018 Paris",
+        "34, boulevard Charles-Livon, Marseille",
+        "51 rue Basse, 59800 Lille",
     ];
 
     const BUSINESS_ACTIVITYAREA = [
@@ -87,7 +87,7 @@ class UserFixture extends BaseFixture
                 $business
                     ->setEmployeesNumber(self::EMPLOYEES_NUMBER[rand(0, 3)])
                     ->setName($this->faker->company)
-                    ->setLocation($this->faker->streetAddress . ", " . self::BUSINESS_CITY[rand(0,3)])
+                    ->setLocation(self::BUSINESS_ADDRESS[rand(0,3)])
                     ->setSiretNumber(rand(11111111111111, 99999999999999))
                     ->setActivityArea(self::BUSINESS_ACTIVITYAREA[rand(0, 4)])
                     ->setWhyUs($this->faker->text($maxNbChars = 2000))

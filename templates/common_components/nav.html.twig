@@ -39,22 +39,22 @@
             {% if app.request.attributes.get("_route") != "candidate_register" and
                 app.request.attributes.get("_route") != "recruiter_register" %}
                 <li>
-                    <a class="defaultNavLinks" href="{{ path("candidate_register") }}">S'inscrire</a>
+                    <a class="defaultNavLinks importantLinks" href="{{ path("candidate_register") }}">S'inscrire</a>
                 </li>
             {% elseif app.request.attributes.get("_route") == "candidate_register" %}
                 <li>
-                    <a class="defaultNavLinks" href="{{ path("recruiter_register") }}">Je suis recruteur</a>
+                    <a class="defaultNavLinks importantLinks" href="{{ path("recruiter_register") }}">Je suis recruteur</a>
                 </li>
             {% elseif app.request.attributes.get("_route") == "recruiter_register" %}
                 <li>
-                    <a class="defaultNavLinks" href="{{ path("candidate_register") }}">Je suis candidat</a>
+                    <a class="defaultNavLinks importantLinks" href="{{ path("candidate_register") }}">Je suis candidat</a>
                 </li>
             {% endif %}
         {% else %}
             {% if is_granted("ROLE_RECRUITER") %}
                 {% if app.request.attributes.get("_route") != "offer_create" %}
                     <li>
-                        <a class="defaultNavLinks" href="{{ path("offer_create" ) }}">Créer offre</a>
+                        <a class="defaultNavLinks" href="{{ path("offer_create" ) }}">Créer une offre</a>
                     </li>
 
                     <hr class="defaultNavLinksSeparators">

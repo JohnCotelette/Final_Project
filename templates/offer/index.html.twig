@@ -18,17 +18,23 @@
 
     <div id="offersPageDescription">
         <h1>Toutes nos offres</h1>
-        Retrouvez sur cette page toutes les offres d'emploi du site.<br>
-        Vous avez la possibilité de postuler directement à ces dernières et ainsi démarrer une nouvelle carrière !
+
+        <p>
+            Retrouvez sur cette page toutes les offres d'emploi du site.<br>
+            Vous avez la possibilité de postuler directement à ces dernières et ainsi démarrer une nouvelle carrière !
+        </p>
+
+
+        {% if app.user != null %}
+            {% if app.user.roles == ["ROLE_RECRUITER"] %}
+                <a id="createOfferLinkForRecruiter" href="{{ path("offer_create") }}">Ajouter une annonce</a>
+            {% endif %}
+        {% endif %}
     </div>
 
     <div class="row">
         <section id="leftSection" class="mobileReduced">
             {% for success in app.flashes("notice") %}
-                <div class="alert alert-success">{{ success }}</div>
-            {% endfor %}
-
-            {% for success in app.flashes("successOfferCreated") %}
                 <div class="alert alert-success">{{ success }}</div>
             {% endfor %}
 
@@ -59,8 +65,8 @@
 
                 <div>
                     {% for name, choice in form.experience.vars.choices %}
-                            {{ form_widget(form.experience[name]) }}
-                            <span class="categoriesLinks">{{ form_label(form.experience[name]) }}</span>
+                        {{ form_widget(form.experience[name]) }}
+                        <span class="categoriesLinks">{{ form_label(form.experience[name]) }}</span>
                     {% endfor %}
                 </div>
             </div>
@@ -114,8 +120,8 @@
                     <div class="mb-4 container d-flex bg-white offersContainers ghost">
                         <div id="businessImgContainer" class="col-md-4 d-flex">
                             <img class="card-img-top align-self-center"
-                                 src="{{ offer.user.business.avatar ? "public/business_avatars/" ~ offer.user.business.avatar.name : asset("build/images/question_mark.42e63c4a.png") }}"
-                                 alt="Card image cap">
+                                 src="{{ offer.user.business.avatar ? asset('business_avatars/' ~ offer.user.business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
+                                 alt="Business Avatar" />
                         </div>
 
                         <div class="col-md-8 d-flex offersInfosContainers">

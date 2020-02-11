@@ -21,7 +21,15 @@
     <div id="headerConnectContainer">
         <p>We need you</p>
         <p>
-            <a class="commonButtons" id="headerRegisterLink" href ="{{ path("candidate_register") }}">Je m'inscris</a>
+            {% if app.user == null %}
+                <a class="commonButtons" id="headerRegisterLink" href ="{{ path("candidate_register") }}">Je m'inscris</a>
+            {% else %}
+                {% if app.user.roles == ["ROLE_CANDIDATE"] %}
+                    <a class="commonButtons" id="allOffersLink" href ="{{ path("offers_index") }}">Toutes nos offres</a>
+                {% else %}
+                    <a class="commonButtons" id="postOfferLink" href ="{{ path("offer_create") }}">Poster une annonce</a>
+                {% endif %}
+            {% endif %}
         </p>
     </div>
 </header>
@@ -33,7 +41,8 @@
        {% for offer in offers %}
             <div class="card mx-3 mb-4 align-items-center" style="width: 25rem;">
                 <figure class="businessAvatarsImgsContainers">
-               
+                    <img src="{{ offer.user.business.avatar ? asset('business_avatars/' ~ offer.user.business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
+                         alt="Business Avatar" />
                 </figure>
                 <div class="card-body">
                     <h4 class="card-title">{{ offer.title }}</h4>
