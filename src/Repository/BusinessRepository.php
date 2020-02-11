@@ -28,4 +28,14 @@ class BusinessRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getAllBusinessWhichHaveOffers()
+    {
+        return $qb = $this->createQueryBuilder('b')
+            ->leftJoin('b.user', 'bu')
+            ->where('bu.offers IS NOT EMPTY')
+            ->orderBy('b.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

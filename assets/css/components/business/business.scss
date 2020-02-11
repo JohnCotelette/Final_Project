@@ -214,6 +214,19 @@ h3 a:hover, .offersContainers p a:hover {
     font-size: 0.9em;
 }
 
+/* -------------------------- MAP -------------------------------- */
+
+#map {
+    height: 400px;  /* The height is 400 pixels */
+    width: 100%;  /* The width is the width of the web page */
+   }
+
+#mapAddress {
+    font-size: 0.9em;
+    color: rgb(51, 51, 51);
+}
+
+
 /* -------------------------- RESPONSIVE -------------------------- */
 
 @media (max-width: 1500px) {

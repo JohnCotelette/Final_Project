@@ -48,6 +48,13 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
         53000,
     ];
 
+    const OFFER_ADDRESS = [
+        "19 rue du Président Édouard Herriot, 69001 Lyon",
+        "40 Avenue de Clichy, 75018 Paris",
+        "34, boulevard Charles-Livon, Marseille",
+        "51 rue Basse, 59800 Lille",
+    ];
+
     /**
      * OfferFixture constructor.
      * @param OfferService $offerService
@@ -74,7 +81,7 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
                 ->setDescription($this->faker->text($minNbChars = 1500, $maxNbChars = 2000))
                 ->setExperience(self::OFFERS_EXPERIENCES[rand(0, 3)])
                 ->setType(self::OFFERS_TYPE[rand(0, 2)])
-                ->setLocation($this->faker->city)
+                ->setLocation(self::OFFER_ADDRESS[rand(0, 3)])
                 ->setCreatedAt($this->faker->dateTimeBetween($startDate = "-1 month", $endDate = "now", $timezone = "Europe/Paris"))
                 ->setStartedAt($this->faker->dateTimeBetween($startDate = "now", $endDate = "+ 1 year", $timezone = "Europe/Paris"))
                 ->setProfilRequired($this->faker->text($minNbChars = 500, $maxNbChars = 800));

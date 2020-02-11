@@ -15,14 +15,19 @@
         <div class="alert alert-dark">{{ error }}</div>
     {% endfor %}
 
+    {% for success in app.flashes("successOfferCreated") %}
+        <div class="alert alert-success">{{ success }}</div>
+    {% endfor %}
+
+    {% for error in app.flashes("successOfferUpdated") %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+
     <div id="offerInfosContainer">
         <div id="businessImgContainer">
             <figure>
-                {% if offer.user.business.avatar is not null %}
-                    <img src="{{ "public/avatars/" ~ offer.user.business.avatar.name }}" />
-                {% else %}
-                    <img src="{{ asset('build/images/question_mark.42e63c4a.png') }}" />
-                {% endif %}
+                <img src="{{ offer.user.business.avatar ? asset('business_avatars/' ~ offer.user.business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
+                     alt="Business Avatar"/>
             </figure>
         </div>
 
@@ -57,8 +62,7 @@
             <p id="applyStatutText" class="indicationsContainers">
                 <i class="fas fa-info-circle"></i>
                 <span>
-                    Les candidatures pour cette annonce sont ouvertes.<br>
-                    Vous pouvez candidater en cliquant sur le bouton <strong>"POSTULER"</strong> présent en haut de page.<br>
+                    Les candidatures pour cette annonce sont ouvertes.
                 </span>
             </p>
 
@@ -68,6 +72,10 @@
                     Cette annonce a déjà recueilli <span id="numberOfApplys">{{ offer.applications|length }}</span> candidature{{ offer.applications|length > 1 ? "s" : "" }}.
                 </span>
             </p>
+
+            {% if app.user == null %}
+                <a class="commonButtons redirectErrorNoUserLinks" id="redirectCandidateFirstLink" href="{{ path("login") }}">Se connecter</a>
+            {% endif %}
         </div>
 
         <div id="applyContainer" class="fixedContent invisible">
@@ -94,7 +102,7 @@
                             <p id="noCVRedirect" class="indicationsContainers specials">
                                 <i class="fas fa-arrow-right"></i>
                                 <span>
-                                    Vous pouvez cliquer directement <span id="noCvRedirect"><a href="#">ici</a></span> pour ajouter un CV à votre compte.
+                                    Vous pouvez cliquer directement <span id="noCvRedirect"><a href="{{ path("candidate_cv") }}">ici</a></span> pour ajouter un CV à votre compte.
                                  </span>
                             </p>
                         {% else %}
@@ -136,17 +144,19 @@
                     </span>
                 </p>
 
-                <p class="indicationsContainers specials">
-                    <span class="buttonsContainers">
-                        <a target="_blank" class="commonButtons redirectErrorNoUserLinks" href="{{ path("login") }}">Se connecter</a>
-                    </span>
-                </p>
+                <div id="specialFlex">
+                    <p class="indicationsContainers specials">
+                        <span class="buttonsContainers">
+                            <a target="_blank" class="commonButtons redirectErrorNoUserLinks" href="{{ path("login") }}">Se connecter</a>
+                        </span>
+                    </p>
 
-                <p id="lastRedirectIndicationContainer" class="indicationsContainers specials">
-                    <span class="buttonsContainers">
-                       <a target="_blank" class="commonButtons redirectErrorNoUserLinks" href="{{ path("candidate_register") }}">S'enregistrer</a>
-                    </span>
-                </p>
+                    <p id="lastRedirectIndicationContainer" class="indicationsContainers specials">
+                        <span class="buttonsContainers">
+                           <a target="_blank" class="commonButtons redirectErrorNoUserLinks" href="{{ path("candidate_register") }}">S'enregistrer</a>
+                        </span>
+                    </p>
+                </div>
             {% endif %}
         </div>
 
@@ -171,11 +181,28 @@
 
             <h2>Localisation</h2>
 
-            <p>{{ offer.location }}</p>
+            <p id="mapAddress">{{ offer.location }}</p>
+
+            <div id="map"></div>
         </div>
     </section>
 {% endblock  %}
 
 {% block javascripts %}
     {{ encore_entry_script_tags("offer") }}
+
+    <script>
+        function initMap() {
+            var city = {lat: {{ location["lat"] }}, lng: {{ location["lng"] }}};
+
+            var map = new google.maps.Map(
+                document.getElementById('map'), {zoom: 14, center: city});
+
+            var marker = new google.maps.Marker({position: city, map: map});
+        }
+    </script>
+
+    <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf1dzDnfcwTCdmP0nTjBNzdaX64Wf87z8&callback=initMap">
+    </script>
 {% endblock %}

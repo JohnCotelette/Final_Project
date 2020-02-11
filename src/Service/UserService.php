@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use App\Entity\User;
 
@@ -18,12 +19,19 @@ class UserService
     private $router;
 
     /**
+     * @var RequestStack
+     */
+    private $request;
+
+    /**
      * UserService constructor.
      * @param RouterInterface $router
+     * @param RequestStack $request
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(RouterInterface $router, RequestStack $request)
     {
         $this->router = $router;
+        $this->request = $request;
     }
 
     /**
