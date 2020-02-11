@@ -7,35 +7,35 @@
 {% block title %}{{ parent() }}Profil - {{ user.firstName }}{% endblock %}
 {% form_theme formCv 'bootstrap_4_layout.html.twig' %}
 
-
-
 {% block content %}
-    {% for label, messages in  app.flashes  %}
-    <div class="container">
-        {% for message in messages %}
-            <div class="alert alert-{{ label }}" role="alert">
-                {{ message | raw }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        {% endfor %}
-    </div>
-    {% endfor %}
     <div class="container-fluid">
         <div class="row flex ">
             <div class="container-fluid">
                 <div class="row flex ">
-                    <div class="col-lg-4 col-md-4 col-sm-12 flex-grow-1  heightmenu ">
+                    <div class="col-lg-3 col-md-3 col-sm-12 flex-grow-1  heightmenu ">
                         {% include 'user/dashboard/candidate/navcandidate.html.twig' %}
                     </div>    
-                    <div class="col-lg-8 col-md-8 col-sm-12 w-100">
+                    <div class="col-lg-9 col-md-9 col-sm-12 w-100">
+                        {% for label, messages in  app.flashes  %}
+                        <div class="container px-5">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ label }}" role="alert">
+                                    {{ message | raw }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
                         <h1 class=" text-center  my-5"> {{ user.lastName }}-{{ user.firstName }}</h1>
                                                    
-                        <div class="align-self-center mb-3">
-                            {{ form_start(formCv) }}
-    
-                            {{ form_end(formCv) }}
+                        <div class="align-self-center  mb-3">
+                            <div class="mx-5" style="max-width: 350px;">
+                                {{ form_start(formCv) }}
+        
+                                {{ form_end(formCv) }}
+                            </div>    
                            
                             {% if user.cv %}
                                 <iframe src="{{ asset('candidate_cv/' ~ user.cv.name ) }}" frameborder="0"
@@ -48,4 +48,7 @@
             </div>
         </div>
     </div>  
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags("candidatedashboard") }}
 {% endblock %}

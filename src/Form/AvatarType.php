@@ -6,7 +6,6 @@ use App\Entity\Avatar;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Constraints\File;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
@@ -17,13 +16,13 @@ class AvatarType extends AbstractType
     {
         $builder
         ->add("avataruser", VichFileType::class, [
-            "label" => " choisir un avatar",
+            "label" => "choisir un avatar",
 
             "attr" => [
                 "class" => " ",
             ],
             "required" => true,
-            "allow_delete" => true,
+            "allow_delete" => false,
             "download_label" => true,
             "by_reference" => false,
             "constraints" => [
@@ -36,14 +35,7 @@ class AvatarType extends AbstractType
                     'mimeTypesMessage' => "l'avatar doit étre  au format jpeg ou png",
                     'maxSizeMessage' => 'Votre fichier est trop volumineux ({{ limit }} maximum)',
                 ])],
-        ])
-        ->add("save", SubmitType::class, [
-            "label" => "ajouter/modifier avatar",
-            "attr" => [
-                "class" => "btn btn-primary",
-            ]
         ]);
-        
     }
 
     public function configureOptions(OptionsResolver $resolver)

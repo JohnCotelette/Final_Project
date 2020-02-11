@@ -1,12 +1,11 @@
 @import "../../core.scss";
 
-
- 
 @media only screen and (max-width:800px)
  {
     .heightmenu {
         min-height: 20%;
     }
+
  }
  @media only screen and (min-width:800px)
  {
@@ -18,50 +17,68 @@
 
 .heightmenu
 {
-  
+ 
     background-color: $violet-clair;
     color: $vert;
-    
+   
 }
 
 .rightblock
 {
     background-color: $violet-fonce;
 }
-.group-item-action:hover
+
+.list-group-item:hover
 {
-   
-    color:  #8bf5ec !important;
+
+   color:$blanc !important;
+   border-color: #dedede !important;
+} 
+
+.list-group-flush:last-child .list-group-item:last-child
+{
+    border-bottom-width: 1px !important ;
 }
+
 .list-group-item
 {
     background-color: $violet-clair !important;
+    padding: 2rem 1.25rem !important;
     color: white;
-    padding-bottom: 80px;
+    padding-bottom: 40px;
+    vertical-align: center !important;
 }
 
-.img-thumbnail
-{
-   
-    width: 300px  !important;;
-    height: 300px !important;;
-    border-radius: 50% !important;
-}
-.avatar
-{
-  margin-left: 100px;
-}
-.formavatar
-{
-    text-align: right !important;
-}
 
-.positionmodal
-{
-    position: relative !important;
-}
 .btn-primary
 {
     background-color: $vert !important;
-    border-color: $noir !important;
+    border-color: $vert !important;
 }
+
+#avatarContainer figure {
+    width: 150px;
+    min-width: 150px;
+    height: 150px;
+    min-height: 150px;
+    border-radius: 50%;
+    border: 1px solid rgba(51, 51, 51, 0.4);
+    display: flex;
+}
+
+#avatarContainer figure img {
+    width: 100%;
+    height: auto;
+    margin: right;
+}
+.custom-file-label::after
+{
+    content: "Parcourir" !important;
+}
+.formulaire
+{
+//   background-color: red;
+// text-align: center;
+  margin: auto;
+}
+

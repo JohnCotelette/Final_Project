@@ -244,7 +244,7 @@ class UserController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                $this->addFlash("successcandidate", "Votre profile est bien mis à jour ");
+                $this->addFlash("success", "Votre profile est bien mis à jour ");
                 return $this->redirectToRoute('candidate_profile');
             }
 
@@ -288,7 +288,7 @@ class UserController extends AbstractController
                 $em->persist($cv);
                 $em->flush();
 
-                $this->addFlash("successcandidate", "Votre CV  est bien mis à jour ");
+                $this->addFlash("success", "Votre CV  est bien mis à jour ");
                 return $this->redirectToRoute("candidate_cv");
             }
 

@@ -38,7 +38,7 @@ class CvType extends AbstractType
                     ])],
             ])
             ->add("save", SubmitType::class, [
-                "label" => "télécharger ",
+                "label" => "Télécharger ",
                 "attr" => [
                     "class" => "btn btn-primary",
                 ]

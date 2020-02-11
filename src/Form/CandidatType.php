@@ -75,6 +75,8 @@ class CandidatType extends AbstractType
                 ],
                 "years" => range(date('Y') - 65, date('Y') - 17)
             ])
+            ->add("avatar", AvatarType::class)
+         
             ->add("legalConditions", CheckboxType::class, [
                 "mapped" => false,
                 "required" =>true,

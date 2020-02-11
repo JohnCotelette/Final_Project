@@ -9,40 +9,33 @@
 {% block title %}{{ parent() }}Profil - {{ user.firstName }}{% endblock %}
 
 {% block content %}
-    {% for label, messages in  app.flashes  %}
-    <div class="container">
-        {% for message in messages %}
-            <div class="alert alert-{{ label }}" role="alert">
-                {{ message | raw }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        {% endfor %}
-    </div>
-    {% endfor %}
-
     <div class="container-fluid">
         <div class="row flex ">
             <div class="container-fluid">
-                <div class="row flex ">
-                    <div class="col-lg-4 col-md-4 col-sm-12 flex-grow-1  heightmenu ">
+                <div class="row  text-align-center flex ">
+                    <div class="col-lg-3 col-md-3 col-sm-12 flex-grow-1  heightmenu ">
                        {% include 'user/dashboard/candidate/navcandidate.html.twig' %}
                     </div>    
-                    <div class="col-lg-8  col-md-8 col-sm-12 w-100">
+                    <div class="px-5 col-lg-9  col-md-9 col-sm-12 w-100">
+                        {% for label, messages in  app.flashes  %}
+                            <div class="container">
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ label }}" role="alert">
+                                        {{ message | raw }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% endfor %} 
+                            </div>
+                        {% endfor %}
                         <h1 class=" text-center  my-5"> {{ user.lastName }}-{{ user.firstName }}</h1>
                         <div class="tab-content">
                             <!-- section of avatar and formavatar -->
-                            <div class="d-flex  justify-content-center text-align-right ">
-                                {% if user.avatar != null %}
-                                    <div class="">
-                                        <img src="{{ asset('user_avatars/' ~ user.avatar.name ) }}" class="img-thumbnail" alt="avatar de candidat">
-                                    </div >
-                                {% else %} 
-                                    <div class="">
-                                        <img src="{{ asset('user_avatars/avatar.jpg') }}"   class="img-thumbnail" alt="avatar par défaut">
-                                    </div>
-                                {%  endif %} 
+                            <div id="avatarContainer" class="justify-content-left">
+                                <figure >
+                                    <img class="img-thumbnail" src="{{ user.avatar ? asset('user_avatars/' ~ user.avatar.name) : asset('build/images/question_mark.42e63c4a.png') }}" />
+                                </figure>
                             </div>
                         </div>   
                             {#  add all file dashboard user  #}
@@ -59,19 +52,14 @@
                                     </tr>
                                     <tr>
                                     <tr>
-                                        <th>Email</th>
+                                        <th>Email:</th>
                                         <td>{{ user.email }}</td>
                                     </tr>
-                                    <th>Date de naissance</th>
+                                    <th>Date de naissance:</th>
                                     <td>{{ user.birthDay ? user.birthDay|date('d-m-Y') }}</td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                        <!-- formulaire du avatar  -->
-                        <div>
-                            {{ form_start(formAvatar) }}
-                            {{ form_end(formAvatar) }}
                         </div>
                     </div>    
                 </div>   
