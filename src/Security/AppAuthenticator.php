@@ -64,6 +64,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
+
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
@@ -92,7 +93,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+        if ($targetPath = $request->request->get('_target_path')) {
             return new RedirectResponse($targetPath);
         }
 

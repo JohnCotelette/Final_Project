@@ -10,6 +10,7 @@ use App\Form\OfferType;
 use App\Service\OfferService;
 use App\Repository\OfferRepository;
 use App\Service\MailService;
+use App\Service\MapService;
 use App\Service\UserService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -107,7 +108,7 @@ class OfferController extends AbstractController
 
             $this->addFlash("successOfferCreated", "Votre annonce a bien ajoutée !");
 
-            return $this->redirectToRoute("offers_index");
+            return $this->redirectToRoute("show_offer", ["reference" => $offer->getReference()]);
         }
 
         return $this->render("offer/create.html.twig", [
@@ -121,14 +122,31 @@ class OfferController extends AbstractController
      * @param OfferRepository $offerRepository
      * @param string $reference
      * @param Offer $offer
+     * @param Request $request
+     * @return Response
      */
-    public function editOffer(OfferRepository $offerRepository, string $reference, Offer $offer)
+    public function editOffer(OfferRepository $offerRepository, string $reference, Offer $offer, Request $request)
     {
-        $user = $this->getUser();
+        $form = $this->createForm(OfferType::class, $offer);
 
-        $offer = $offerRepository->findOneBy(["reference" => $reference]);
+        $form->handleRequest($request);
 
-        dd($offer);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this
+                ->getDoctrine()
+                ->getManager();
+
+            $entityManager->flush();
+
+            $this->addFlash("successOfferUpdated", "Votre annonce a bien modifiée !");
+
+            return $this->redirectToRoute("show_offer", ["reference" => $offer->getReference()]);
+        }
+
+        return $this->render("offer/edit.html.twig", [
+            "form" => $form->createView(),
+            "offer" => $offer,
+        ]);
     }
 
     /**
@@ -140,14 +158,16 @@ class OfferController extends AbstractController
      * @param string $reference
      * @return Response
      */
-    public function showOffer(OfferService $offerService, Request $request, MailService $mailService, OfferRepository $offerRepository, string $reference)
+    public function showOffer(OfferService $offerService, Request $request, MailService $mailService, OfferRepository $offerRepository, string $reference, MapService $mapService)
     {
         $user = $this->getUser();
 
         $offer = $offerRepository->findOneBy(["reference" => $reference]);
 
         $checkApply = $offerService->checkIfCandidateAlreadyApply($user ,$offer);
-    
+
+        $location = $mapService->getMap($offer);
+
         if ($user && $user->getRoles() === ["ROLE_CANDIDATE"]) {
             $application = new Application;
 
@@ -173,7 +193,10 @@ class OfferController extends AbstractController
 
                         $mailService->sendMailToConfirmApply($user, "confirmApply", $offer);
 
-                        $this->addFlash("success", "Votre candidature a bien été enregistrée, vous recevrez prochainement une réponse de la part de l'auteur de cette offre.");
+                        $this->addFlash(
+                            "success",
+                            "Votre candidature a bien été enregistrée, vous recevrez prochainement une réponse de la part de " . $offer->getUser()->getBusiness()->getName() . "."
+                        );
 
                         $checkApply = true;
                     }
@@ -188,6 +211,7 @@ class OfferController extends AbstractController
             'form' => !empty($form) ? $form->createView() : null,
             'offer' => $offer,
             'checkApply' => $checkApply,
+            'location' => $location,
         ]);
     }
 }

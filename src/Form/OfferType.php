@@ -5,17 +5,15 @@ namespace App\Form;
 use App\Entity\Category;
 use App\Entity\Offer;
 use App\Repository\CategoryRepository;
-use SebastianBergmann\CodeCoverage\Report\Text;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 
 class OfferType extends AbstractType
@@ -36,13 +34,12 @@ class OfferType extends AbstractType
                 "constraints" => [
                     new GreaterThan([
                         "value" => "today",
-                        "message" => "La date de prise de poste doit au moins être égale à la date de demain",
+                        "message" => "Date minimale : " . date("d/m/Y", strtotime(' +1 days')),
                     ])
                 ]
             ])
             ->add("salary", TextType::class, [
                 "label" => "Rémunération",
-                "data" => 0,
             ])
             ->add("description", TextareaType::class, [
                 "label" => "Description*",

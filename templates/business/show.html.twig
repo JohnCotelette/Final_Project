@@ -4,11 +4,14 @@
     {{encore_entry_link_tags("business")}}
 {% endblock %}
 
+{% block title %}{{ parent() }}{{ business.name }}{% endblock %}
+
 {% block content %}
     <header>
         <div id="imgContainer">
             <figure>
-                <img src="{{ business.avatar ? "public/business_avatars/" ~ business.avatar.name : asset("build/images/question_mark.42e63c4a.png") }}" alt="Business Avatar">
+                <img src="{{ business.avatar ? asset('business_avatars/' ~ business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
+                     alt="Business Avatar" />
             </figure>
         </div>
 
@@ -42,11 +45,14 @@
 
                 <div>
                     <h2>Ou sommes-nous ?</h2>
-                    <p>{{ business.location }}</p>
+
+                    <p id="mapAddress">{{ business.location }}</p>
+
+                    <div id="map"></div>
                 </div>
             </div>
         </div>
-
+        
         <div id="rightPart">
             {% if business.user.offers|length > 0 %}
                 <h2 id="specialH2">Dernieres offres</h2>
@@ -110,4 +116,19 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags("business") }}
+
+    <script>
+        function initMap() {
+            var city = {lat: {{ location["lat"] }}, lng: {{ location["lng"] }}};
+
+            var map = new google.maps.Map(
+                document.getElementById('map'), {zoom: 14, center: city});
+
+            var marker = new google.maps.Marker({position: city, map: map});
+        }
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf1dzDnfcwTCdmP0nTjBNzdaX64Wf87z8&callback=initMap">
+    </script>
 {% endblock %}

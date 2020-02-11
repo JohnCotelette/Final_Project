@@ -9,18 +9,36 @@ use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class UserChecker
+ * @package App\Security
+ */
 class UserChecker implements UserCheckerInterface
 {
+    /**
+     * @var RouterInterface
+     */
     private $router;
 
+    /**
+     * @var SessionInterface
+     */
     private $session;
 
+    /**
+     * UserChecker constructor.
+     * @param RouterInterface $router
+     * @param SessionInterface $session
+     */
     public function __construct(RouterInterface $router, SessionInterface $session)
     {
         $this->router = $router;
         $this->session = $session;
     }
 
+    /**
+     * @param UserInterface $user
+     */
     public function checkPreAuth(UserInterface $user)
     {
         if (!$user instanceof AppUser) {
@@ -34,6 +52,8 @@ class UserChecker implements UserCheckerInterface
         }
     }
 
-
+    /**
+     * @param UserInterface $user
+     */
     public function checkPostAuth(UserInterface $user) {}
 }

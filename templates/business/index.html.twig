@@ -18,7 +18,8 @@
             <div class="displayBusiness">
                 <div class="businessImgContainer">
                     <figure>
-                        <img src="{{ business.avatar ? "public/business_avatars/" ~ business.avatar.name : asset("build/images/question_mark.42e63c4a.png") }}" alt="">
+                        <img src="{{ business.avatar ? asset('business_avatars/' ~ business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
+                             alt="Business Avatar" />
                     </figure>
                 </div>
                 <div class="displayBusinessDetails">
