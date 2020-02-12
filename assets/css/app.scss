@@ -86,6 +86,26 @@ main {
     margin: auto 14px;
 }
 
+#defaultNavLinksContainer li a:after
+{
+    content: "";
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1px;
+    height: 1px;
+    width: 0;
+    background: transparent;
+    transition: width 0.6s ease, background-color 0.6s ease;
+    -webkit-transition: width 0.6s ease, background-color 0.6s ease;
+}
+
+#defaultNavLinksContainer li a:hover:after
+{
+    width: 100%;
+    background: white;
+}
+
 #commonNavigationBar a, footer a {
     color: $blanc;
     transition: color 0.3s ease;
@@ -93,11 +113,11 @@ main {
 
 #commonNavigationBar a:hover, footer a:hover {
     text-decoration: none;
-    color: rgb(180, 180, 180) !important;
+    color: $blanc-clair;
 }
 
 .defaultNavLinks {
-    font-size: 1em !important;
+    font-size: 0.96em !important;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -121,6 +141,24 @@ main {
 
 .defaultNavLinksSeparators {
     display: none;
+}
+
+.importantLinks {
+    background-color: $blanc-clair !important;
+    color: $noir !important;
+    padding: 8px 16px;
+    font-size: 0.88em !important;
+    font-weight: bold;
+    border-radius: 2px;
+    transition: color 0.3s ease;
+}
+
+.importantLinks:hover {
+    color: black !important;
+}
+
+.importantLinks:after {
+    display: none !important;
 }
 
 /* -------------------------- FOOTER -------------------------- */
@@ -157,7 +195,7 @@ footer div {
     }
 
     100% {
-        opacity: 1;
+        opacity: 1 !important;
     }
 }
 
@@ -176,6 +214,7 @@ footer div {
         opacity: 0;
         transform: translateX(-50%);
     }
+
     100% {
         opacity: 1;
         transform: translateX(0);
@@ -187,9 +226,28 @@ footer div {
         opacity: 0;
         transform: translateX(50%);
     }
+
     100% {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%, 80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%, 60% {
+        transform: translate3d(4px, 0, 0);
     }
 }
 

@@ -24,9 +24,11 @@ security:
             logout:
                 path: logout
             remember_me:
-                secret:   '%kernel.secret%'
+                secret: '%kernel.secret%'
                 lifetime: 2592000
 
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/dashboard/candidate, roles: ROLE_CANDIDATE }
+         - { path: ^/dashboard/recruiter, roles: ROLE_RECRUITER }
+         - { path: ^/offer/create, roles: ROLE_RECRUITER }

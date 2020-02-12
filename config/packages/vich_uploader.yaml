@@ -1,0 +1,16 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        candidate_cv:
+            uri_prefix: /candidate_cv
+            upload_destination: '%kernel.project_dir%/public/candidate_cv'
+            namer: Vich\UploaderBundle\Naming\OrignameNamer
+            delete_on_update: true
+            delete_on_remove: true
+        user_avatars:
+            uri_prefix: /user_avatars
+            upload_destination: '%kernel.project_dir%/public/user_avatars'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            delete_on_update: true
+            delete_on_remove: true

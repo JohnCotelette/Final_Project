@@ -18,8 +18,18 @@
 
     <div id="offersPageDescription">
         <h1>Toutes nos offres</h1>
-        Retrouvez sur cette page toutes les offres d'emploi du site.<br>
-        Vous avez la possibilité de postuler directement à ces dernières et ainsi démarrer une nouvelle carrière !
+
+        <p>
+            Retrouvez sur cette page toutes les offres d'emploi du site.<br>
+            Vous avez la possibilité de postuler directement à ces dernières et ainsi démarrer une nouvelle carrière !
+        </p>
+
+
+        {% if app.user != null %}
+            {% if app.user.roles == ["ROLE_RECRUITER"] %}
+                <a id="createOfferLinkForRecruiter" href="{{ path("offer_create") }}">Ajouter une annonce</a>
+            {% endif %}
+        {% endif %}
     </div>
 
     <div class="row">
@@ -55,8 +65,8 @@
 
                 <div>
                     {% for name, choice in form.experience.vars.choices %}
-                            {{ form_widget(form.experience[name]) }}
-                            <span class="categoriesLinks">{{ form_label(form.experience[name]) }}</span>
+                        {{ form_widget(form.experience[name]) }}
+                        <span class="categoriesLinks">{{ form_label(form.experience[name]) }}</span>
                     {% endfor %}
                 </div>
             </div>
@@ -90,7 +100,7 @@
             <hr class="categoriesSeparators">
 
             <div id="locationContainer" class="categoryContainers">
-                <h3>Recherche par localisaton</h3>
+                <h3>Recherche par localisation</h3>
 
                 <div>
                     {{ form_widget(form.city) }}
@@ -101,26 +111,28 @@
         </section>
 
         <div id="displayCategoriesForMobilesContainer">
-            <a href="#" id="displayCategoriesForMobiles">Recherche avancée <i class="arrowsStates fas fa-angle-up"></i></a>
+            <a href="#" id="displayCategoriesForMobiles">Recherche avancée</a>
         </div>
 
         <section id="rightSection">
             {% if pagination|length > 0 %}
                 {% for offer in pagination %}
-                    <div class="mb-4 container d-flex bg-white">
+                    <div class="mb-4 container d-flex bg-white offersContainers ghost">
                         <div id="businessImgContainer" class="col-md-4 d-flex">
-                            <img class="card-img-top align-self-center" src="http://via.placeholder.com/660x360" alt="Card image cap">
+                            <img class="card-img-top align-self-center"
+                                 src="{{ offer.user.business.avatar ? asset('business_avatars/' ~ offer.user.business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
+                                 alt="Business Avatar" />
                         </div>
 
-                        <div class="col-md-8">
-                            <div class="card-body">
+                        <div class="col-md-8 d-flex offersInfosContainers">
+                            <div class="card-body my-auto">
                                 <div class=" linkOffer">
-                                    <h4 class="card-title"><a href="{{ path('show_offer', {'id':offer.id}) }}">{{ offer.title }}  </a></h4>
-
-                                    <h5>Chez <a class="offersLinks" href="#"> {{ offer.user.business.name|upper }}</a> </h5>
+                                    <h4 class="card-title"><a id="offerReference" href="{{ path('show_offer', {'reference': offer.reference}) }}">{{ offer.title }}  </a></h4
+                                    
+                                    <h5>Chez <a class="offersLinks" href="{{ path("show_business", {"id" : offer.user.business.id }) }}"> {{ offer.user.business.name|upper }}</a> </h5>
 
                                     <div class="offersCategoriesContainers">
-                                        <p><i class="fas fa-user"></i></i> {{ offer.experience }}</p>
+                                        <p><i class="fas fa-user"></i> {{ offer.experience }}</p>
                                         <p><i class="fas fa-suitcase"></i> {{ offer.salary }}</p>
                                         <p><i class="fas fa-file-contract"></i> {{ offer.type }}</p>
                                         <p><i class="fas fa-map-marker-alt"></i> {{ offer.location }}</p>
@@ -128,7 +140,7 @@
                                 </div>
 
                                 <p class="offersDescriptions card-text">{{ offer.description|truncate(100) }}
-                                    <a class="clickToKnowMoreLinks" href="{{ path('show_offer', {'id':offer.id}) }}">En savoir plus</a>
+                                    <a id="linkToSeeOffer" class="clickToKnowMoreLinks" href="{{ path('show_offer', {'reference': offer.reference}) }}">En savoir plus</a>
                                 </p>
                             </div>
                         </div>

@@ -1,0 +1,67 @@
+@import "../../core.scss";
+
+
+ 
+@media only screen and (max-width:800px)
+ {
+    .heightmenu {
+        min-height: 20%;
+    }
+ }
+ @media only screen and (min-width:800px)
+ {
+    .heightmenu {
+        min-height: 100vh;
+    }
+ }
+
+
+.heightmenu
+{
+  
+    background-color: $violet-clair;
+    color: $vert;
+    
+}
+
+.rightblock
+{
+    background-color: $violet-fonce;
+}
+.group-item-action:hover
+{
+   
+    color:  #8bf5ec !important;
+}
+.list-group-item
+{
+    background-color: $violet-clair !important;
+    color: white;
+    padding-bottom: 80px;
+}
+
+.img-thumbnail
+{
+   
+    width: 300px  !important;;
+    height: 300px !important;;
+    border-radius: 50% !important;
+}
+.avatar
+{
+  margin-left: 100px;
+}
+.formavatar
+{
+    text-align: right !important;
+}
+
+.positionmodal
+{
+    position: relative !important;
+}
+.btn-primary
+{
+    background-color: $vert !important;
+    border-color: $noir !important;
+}

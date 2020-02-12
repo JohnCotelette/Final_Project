@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Regex;
 
 class CandidatType extends AbstractType
@@ -25,6 +26,7 @@ class CandidatType extends AbstractType
                 ],
             ])
             ->add("password", RepeatedType::class, [
+                "label" => "mot de passe ",
                 "type" => PasswordType::class,
                 "invalid_message" => "Les mots de passe ne correspondent pas",
                 "options" => [
@@ -49,15 +51,17 @@ class CandidatType extends AbstractType
                     new Regex([
                         "pattern" => "/^\S+$/",
                         "message" => "N'utilisez pas d'espace dans votre mot de passe",
-                    ])
+                    ]),
                 ],
             ])
             ->add("firstName", TextType::class, [
+                "label" => 'Prénom',
                 "attr" => [
                     "placeholder" => "Prénom",
                 ],
             ])
             ->add("lastName", TextType::class, [
+                "label" => "Nom",
                 "attr" => [
                     "placeholder" => "Nom",
                 ],
@@ -73,12 +77,16 @@ class CandidatType extends AbstractType
             ])
             ->add("legalConditions", CheckboxType::class, [
                 "mapped" => false,
-                "required" => true,
-                "label" => "En cochant ceci, vous acceptez les conditions générales d'utilisation et vous certifiez être majeur."
-            ])
-        ;
+                "required" =>true,
+                "label" => "En cochant ceci, vous acceptez les conditions générales d'utilisation et vous certifiez être majeur.",
+                "constraints" => [
+                    new IsTrue([
+                        "message" => "Vous devez accepter nos conditions générales d'utilisation si vous souhaitez poursuivre",
+                    ]),
+                ],
+            ]);
     }
-
+   
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

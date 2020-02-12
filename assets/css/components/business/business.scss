@@ -1,0 +1,276 @@
+@import "../../core.scss";
+
+/* -------------------------- MAIN -------------------------- */
+
+main {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    padding-bottom: 30px;
+}
+
+/* -------------------------- HEADER -------------------------- */
+
+header {
+    display: flex;
+    width: 125%;
+    margin: 0 0 0 -12.5%;
+    padding: 35px 12.5% 100px 12.5%;
+    background-color: $violet-clair;
+    color: $blanc-clair;
+}
+
+header figure {
+    display: flex;
+    width: 140px;
+    max-width: 140px;
+    height: 140px;
+    max-height: 140px;
+    background-color: $blanc-clair;
+    border-radius: 5px;
+    margin: auto;
+}
+
+header figure img {
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+
+header ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#imgContainer {
+    margin-right: 20px;
+}
+
+#businessInfosContainer {
+    margin: auto 0;
+}
+
+#businessInfosContainer h1 {
+    text-transform: uppercase;
+    font-size: 2.2em;
+    margin-bottom: 0;
+}
+
+#businessType {
+    font-size: 1.6em;
+    margin-bottom: 3px;
+}
+
+.smallLi {
+    font-size: 0.9em;
+}
+
+/* -------------------------- CONTENT -------------------------- */
+
+section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -50px;
+    z-index: 1;
+    word-break: break-word;
+}
+
+section p {
+    font-size: 1.05em;
+    line-height: 1.6em;
+    color: $noir;
+}
+
+section hr {
+    margin: 40px 0;
+    width: 100%;
+}
+
+#leftPart, #rightPart {
+    padding: 25px;
+    background-color: $blanc-clair;
+    margin-bottom: 30px;
+}
+
+#leftPart {
+    width: 65%;
+}
+
+#rightPart {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 100%;
+}
+
+h2 {
+    font-family: buenos_aires_trialblack, Arial, sans-serif;
+    font-size: 1.6em;
+    margin-bottom: 20px;
+    color: $violet-clair;
+}
+
+.indicationsContainers {
+    display: flex;
+    margin: 0;
+}
+
+.indicationsContainers > span, .indicationsContainers svg {
+    display: block;
+    align-self: auto;
+}
+
+.indicationsContainers svg {
+    font-size: 1.4em;
+    margin-right: 10px;
+}
+
+#specialH2 {
+    font-size: 1.1em;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+
+#moreOffersLink {
+    margin: 15px auto;
+    border: 1px solid $violet-clair;
+    color: $violet-clair;
+    text-transform: uppercase;
+    font-size: 1em;
+    letter-spacing: 2px;
+    padding: 8px 14px;
+    transition: all 0.3s ease;
+}
+
+#moreOffersLink:hover {
+    text-decoration: none;
+    border-color: black;
+    color: black;
+}
+
+h3 {
+    font-size: 1.08em;
+    margin-bottom: 2px;
+}
+
+h3 a, .offersContainers p a {
+    color: $violet-clair;
+}
+
+h3 a:hover, .offersContainers p a:hover {
+    text-decoration: none;
+    color: $violet-clair;
+}
+
+.offersContainers ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    font-size: 0.8em;
+    margin: 0;
+}
+
+.offersContainers p {
+    font-size: 0.9em;
+    margin-bottom: 2px;
+}
+
+.offersContainers p a {
+    text-transform: uppercase;
+}
+
+.offersContainers li {
+    white-space: nowrap;
+    color: rgba(51, 51, 51, 0.5);
+    margin: 0 10px 6px 0;
+}
+
+.offersSeparators {
+    margin: 17px 0;
+    color: rgba(51, 51, 51, 0.1) !important;
+}
+
+.categoriesContainer {
+    display: block !important;
+}
+
+.categories {
+    color: $blanc !important;
+    background-color: $violet-fonce !important;
+    border-radius: 3px;
+    padding: 2px 6px;
+    width: max-content;
+    font-size: 0.85em !important;
+}
+
+#specialSeparator {
+    margin: 28px 0 !important;
+}
+
+#noOfferYetText {
+    font-size: 0.9em;
+}
+
+/* -------------------------- MAP -------------------------------- */
+
+#map {
+    height: 400px;  /* The height is 400 pixels */
+    width: 100%;  /* The width is the width of the web page */
+   }
+
+#mapAddress {
+    font-size: 0.9em;
+    color: rgb(51, 51, 51);
+}
+
+
+/* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-width: 1500px) {
+    main {
+        width: 90%;
+    }
+}
+
+@media (max-width: 1100px) {
+    section {
+        flex-direction: column;
+    }
+
+    #leftPart, #rightPart {
+        width: 100%;
+    }
+
+    #leftPart {
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 740px) {
+    #imgContainer {
+        display: none;
+    }
+
+    header {
+        width: 120%;
+    }
+
+    #leftPart, #rightPart {
+        padding: 20px;
+    }
+
+    #businessInfosContainer h1 {
+        font-size: 1.8em;
+    }
+
+    #businessType {
+        font-size: 1.3em;
+    }
+
+    #businessInfosContainer {
+        margin-left: 20px;
+    }
+}

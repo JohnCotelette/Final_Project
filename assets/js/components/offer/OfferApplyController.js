@@ -18,7 +18,7 @@ class OfferApplyController {
     reset(target) {
         target.classList.remove("disapear");
         target.classList.remove("fadeInRight");
-    }
+    };
 
     displayApplyContainer() {
         if (this.state === 0) {
@@ -50,7 +50,7 @@ class OfferApplyController {
 
             this.state = 0;
         }
-    }
+    };
 
     countCharactersOfMotivationMessage() {
         this.count = this.motivationMessage.value.length;
@@ -65,7 +65,7 @@ class OfferApplyController {
         else {
             this.motivationCountContainer.style.color = "inherit";
         }
-    }
+    };
 
     initControls() {
         if (this.applyButton) {

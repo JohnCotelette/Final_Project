@@ -40,7 +40,7 @@ main {
     height: 150px;
     min-height: 150px;
     margin: auto;
-    border-radius: 50%;
+    border-radius: 5px;
     border: 1px solid rgba(51, 51, 51, 0.4);
     background-color: $blanc-clair;
 }
@@ -74,7 +74,7 @@ main {
 .offersCategoriesContainers p {
     white-space: nowrap;
     font-size: 0.9em;
-    color: rgba(51, 51, 51, 0.5);
+    color: rgba(51, 51, 51, 0.7);
     margin: 0 10px 6px 0;
 }
 
@@ -124,10 +124,11 @@ main {
     margin-bottom: 30px;
     padding: 25px;
     background-color: $blanc-clair;
+    word-break: break-word;
 }
 
 #offerDetailsContainer p {
-    font-size: 1.1em;
+    font-size: 1.05em;
     line-height: 1.6em;
     color: rgb(51, 51, 51);
 }
@@ -141,6 +142,18 @@ h2 {
 
 .offerDetailsSeparators {
     margin: 40px 0;
+}
+
+/* -------------------------- MAP -------------------------------- */
+
+#map {
+    height: 400px;  /* The height is 400 pixels */
+    width: 100%;  /* The width is the width of the web page */
+   }
+
+#mapAddress {
+    font-size: 0.9em !important;
+    color: rgb(51, 51, 51) !important;
 }
 
 /* -------------------------- FIXED-CONTENT -------------------------- */
@@ -164,9 +177,6 @@ h2 {
 
 .indicationsContainers {
     display: flex;
-}
-
-.indicationsContainers {
     margin: 15px 0;
 }
 
@@ -185,11 +195,7 @@ h2 {
     color: $violet-clair;
 }
 
-#connected {
-    color: $vert;
-}
-
-#nonConnected, #needConnectorRegister, #errorNoCV {
+#needConnectorRegister, #errorNoCV {
     color: red;
 }
 
@@ -227,8 +233,10 @@ h2 {
     $color: $violet-fonce;
 }
 
-#errorCvIcon {
-    font-size: 2.5em;
+#errorNoCV > span {
+    display: flex !important;
+    align-self: center !important;
+    align-items: center !important;
 }
 
 #newWindowLinkInfo {
@@ -283,6 +291,35 @@ h2 {
     text-align: right;
     font-size: 0.8em;
     margin: 3px 3% 0 0;
+}
+
+.redirectErrorNoUserLinks {
+    color: $blanc !important;
+    padding: 8px 14px;
+    transition: color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.redirectErrorNoUserLinks:hover {
+    color: white !important;
+}
+
+.buttonsContainers {
+    margin-top: 10px;
+}
+
+#redirectCandidateFirstLink {
+    display: inline-block;
+    width: max-content;
+    margin: 15px 0 15px 15px;
+}
+
+#redirectCandidateFirstLink:hover {
+    text-decoration: none;
+}
+
+#specialFlex {
+    display: flex;
 }
 
 /* -------------------------- RESPONSIVE -------------------------- */
@@ -348,6 +385,10 @@ h2 {
 
     h1 {
         font-size: 1.6em;
+    }
+
+    #offerDetailsContainer, .fixedContent, #offerInfosContainer {
+        padding: 20px;
     }
 }
 

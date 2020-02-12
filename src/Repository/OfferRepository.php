@@ -2,10 +2,12 @@
 
 namespace App\Repository;
 
-use App\Entity\Category;
 use App\Entity\Offer;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use App\Entity\Business;
+use App\Entity\Category;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Offer|null find($id, $lockMode = null, $lockVersion = null)
@@ -40,21 +42,20 @@ class OfferRepository extends ServiceEntityRepository
 
         if ($category != null) {
             $qb
-                ->andWhere(':categoryId MEMBER OF o.categories')
-                ->setParameter(':categoryId', $category->getId());
+                ->andWhere(':category MEMBER OF o.categories')
+                ->setParameter(':category', $category);
         }
 
         if ($experience != null) {
-            $parameters = [
-                "experience" => $experience,
-                "defaultExperience" => $defaultExperience,
-            ];
-
             $qb
                 ->andWhere('o.experience = :experience')
                 ->orWhere('o.experience = :defaultExperience')
                 ->setParameter(':experience', $experience)
                 ->setParameter(':defaultExperience', $defaultExperience);
+        }
+        else {
+            $qb
+                ->andWhere('o.experience IS NOT NULL');
         }
 
         if ($salary != null) {
@@ -76,6 +77,18 @@ class OfferRepository extends ServiceEntityRepository
         }
 
         return $qb
+            ->orderBy('o.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findOffersByBusinessOrderByDate(Business $business) 
+    {
+        $qb = $this->createQueryBuilder('o');
+
+        return $qb
+            ->where('o.user = :user')
+            ->setParameter(':user', $business->getUser())
             ->orderBy('o.created_at', 'DESC')
             ->getQuery()
             ->getResult();

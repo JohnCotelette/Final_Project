@@ -1,60 +1,149 @@
-h2 {
-    font-size: 20px;
-}
+@import "../../core.scss";
 
-p {
-    margin-bottom: 0em;
-}
+/* -------------------------- MAIN -------------------------- */
 
-figure {
-    display: flex;
-}
-.bodyBusinessPage {
-    font-size: 0.8rem;
-    width: 70%;
+main {
+    padding: 25px 0;
+    width: 65%;
     margin: auto;
 }
 
+/* -------------------------- CONTENT -------------------------- */
+
+#titleContainer {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.2em;
+    font-family: buenos_aires_trialblack, Arial, sans-serif;
+    color: $violet-clair;
+    margin-bottom: 3px;
+    margin-top: 10px;
+}
+
+#titleContainer p {
+    margin-bottom: 35px;
+}
+
+figure {
+    margin: 10px auto;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-left: 5px;
+    margin-top: 10px;
+    color: $violet-clair;
+}
+
+h2 a {
+    color: $violet-clair;
+    text-decoration: none;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+hr {
+    margin: 0;
+}
+
+.displayBusinessDetails {
+    margin: auto 20px;
+}
+ 
+.businessImgContainer {
+    width: 30%;
+}
+
+.businessImgContainer figure {
+    width: 120px;
+    min-width: 120px;
+    height: 120px;
+    min-height: 120px;
+    border-radius: 5px;
+    border: 1px solid rgba(51, 51, 51, 0.4);
+    display: flex;
+}
+
+.businessImgContainer figure img {
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+
+.bodyBusinessPage {
+    background-color: $blanc-clair;
+}
+
+.bodyBusinessPage ul {
+    font-size: 0.85em;
+    color: rgba(51, 51, 51, 0.8);
+    list-style: none;
+    padding: 0;
+}
+
 .displayBusiness {
-    margin-top: 30px;
+    display: flex;
+    padding: 12px;
     height: 50%;
-    display: table;
 }
 
 .businessImg {
     display: table-cell;
 }
 
-.businessName {
-    margin-left: 40px;
-}
-
-.displayUlBusinessDetails {
-    display: flex;
-    margin: auto;
-}
-
-.displayBusiness ul {
-    list-style: none;
-}
-
-.displayBusiness ul > li{
+.displayBusiness ul > li {
+    display: inline-block;
     padding-right: 5px;
     padding-left: 5px;
 }
 
-.separatorBusinessDetails {
-    margin-left: 10px;
-    margin-right: 10px;
+.container.pagination {
+    margin-top: 20px !important;
 }
 
-@media (max-width: 1200px) {
+.page-link {
+    border-color: $violet-fonce !important;
+    color: $violet-clair !important;
+}
+
+.page-item.active .page-link {
+    background-color: rgba(51, 51, 51, 0.7) !important;
+    color: white !important;
+}
+
+.paginationContainer {
+    margin-top: 35px;
+}
+
+/* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-width: 1500px) {
+    main {
+        width: 90%;
+    }
+
+    .businessImgContainer, .displayBusinessDetails {
+        margin: 0 !important;
+    }
+
+    .businessName {
+        text-align: left !important;
+    }
+
+    .businessImgContainer {
+        width: max-content;
+        margin: auto;
+    }
 
     .displayBusiness {
-        margin-top: 30px;
         height: 50%;
         display: flex;
         flex-direction: column;
+        padding-left: 40px;
     }
 
     .businessImg {
@@ -63,15 +152,34 @@ figure {
     
     .displayUlBusinessDetails {
         display: inline;
-        margin: 0em;
+        margin: 0;
     }
 
-    .displayUlBusinessDetails li{
+    .displayUlBusinessDetails li {
         width: max-content;
     }
 
     .businessName {
         text-align: center;
-        margin: 0rem;
+        margin: 0;
     }
 }
+
+@media (max-width: 680px) {
+    .displayBusiness {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.6em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+}
+
+
+
+    
+    

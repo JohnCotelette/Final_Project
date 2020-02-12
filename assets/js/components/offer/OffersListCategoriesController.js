@@ -1,4 +1,4 @@
-class OffersCategoriesController {
+class OffersListCategoriesController {
     constructor() {
         this.fieldsCategoriesControllers = document.getElementsByClassName("fieldsCategoriesControllers");
         this.fieldsCategoriesContainers = document.getElementsByClassName("fieldsCategoriesContainers");
@@ -14,7 +14,8 @@ class OffersCategoriesController {
 
         this.categoriesContainerForMobile = document.getElementById("leftSection");
         this.categoriesControllerForMobile = document.getElementById("displayCategoriesForMobiles");
-        this.arrowMobile = document.getElementById("arrowMobile");
+
+        this.offersContainers = document.getElementsByClassName("offersContainers");
     };
 
     displayCategoriesContainer(i) {
@@ -31,14 +32,7 @@ class OffersCategoriesController {
 
     displayCategoriesContainerForMobile() {
         this.categoriesContainerForMobile.classList.toggle("mobileReduced");
-
-        if (this.arrowMobile.dataset.icon === "angle-up") {
-            this.arrowMobile.dataset.icon = "angle-down";
-        }
-        else {
-            this.arrowMobile.dataset.icon = "angle-up";
-        }
-    }
+    };
 
     checkRadioButtonForStylingLabels() {
         setTimeout(() => {
@@ -55,13 +49,29 @@ class OffersCategoriesController {
         }, 10);
 
         this.displayLoader();
-    }
+    };
 
     displayLoader() {
         console.log(this.loadingCircle);
         this.loadingContainer.classList.remove("invisible");
         this.loadingCircle.classList.remove("invisible");
-    }
+    };
+
+    animateOffersContainers() {
+        let index = 0;
+
+        let intervalID = setInterval(() => {
+            this.offersContainers[index].classList.remove("ghost");
+            this.offersContainers[index].classList.add("appear");
+
+            if (index === this.offersContainers.length - 1) {
+                clearInterval(intervalID);
+            }
+            else {
+                index++;
+            }
+        }, 150);
+    };
 
     init() {
         for (let i = 0; i < this.radioButtons.length; i++) {
@@ -72,7 +82,9 @@ class OffersCategoriesController {
                 this.allCategoriesLinks[i].classList.remove("linkSelected");
             }
         }
-    }
+
+        this.animateOffersContainers();
+    };
 
     initControls() {
         for (let i = 0; i < this.fieldsCategoriesControllers.length; i++) {
@@ -100,6 +112,6 @@ class OffersCategoriesController {
     };
 }
 
-let offersCategoriesController = new OffersCategoriesController();
-offersCategoriesController.initControls();
-offersCategoriesController.init();
+let offersListCategoriesController = new OffersListCategoriesController();
+offersListCategoriesController.initControls();
+offersListCategoriesController.init();

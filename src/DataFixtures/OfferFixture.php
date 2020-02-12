@@ -48,6 +48,13 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
         53000,
     ];
 
+    const OFFER_ADDRESS = [
+        "19 rue du Président Édouard Herriot, 69001 Lyon",
+        "40 Avenue de Clichy, 75018 Paris",
+        "34, boulevard Charles-Livon, Marseille",
+        "51 rue Basse, 59800 Lille",
+    ];
+
     /**
      * OfferFixture constructor.
      * @param OfferService $offerService
@@ -65,19 +72,19 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
         $this->createMany(Offer::class, 80, function(Offer $offer) {
             $randomRecruiter = $this->getRandomRecruiter();
 
-            $randomNumberOfCategories = rand(1, 4);
+            $randomNumberOfCategories = rand(1, 3);
 
             $chanceToSetASalary = rand(0, 5);
 
             $offer
-                ->setTitle($this->faker->text($maxNbChars = 40))
-                ->setDescription($this->faker->text($maxNbChars = 2000))
+                ->setTitle($this->faker->text($minNbChars = 30, $maxNbChars = 50))
+                ->setDescription($this->faker->text($minNbChars = 1500, $maxNbChars = 2000))
                 ->setExperience(self::OFFERS_EXPERIENCES[rand(0, 3)])
                 ->setType(self::OFFERS_TYPE[rand(0, 2)])
-                ->setLocation($this->faker->city)
+                ->setLocation(self::OFFER_ADDRESS[rand(0, 3)])
                 ->setCreatedAt($this->faker->dateTimeBetween($startDate = "-1 month", $endDate = "now", $timezone = "Europe/Paris"))
                 ->setStartedAt($this->faker->dateTimeBetween($startDate = "now", $endDate = "+ 1 year", $timezone = "Europe/Paris"))
-                ->setProfilRequired($this->faker->text($maxNbChars = 250));
+                ->setProfilRequired($this->faker->text($minNbChars = 500, $maxNbChars = 800));
 
             if ($chanceToSetASalary > 0) {
                 $offer->setSalary(self::OFFERS_SALARY[rand(0, count(self::OFFERS_SALARY) - 1)]);

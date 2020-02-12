@@ -27,12 +27,34 @@ class UserFixture extends BaseFixture
 
     const DEFAULT_RECRUITER = "recruiter";
 
-    const employeesNumber = [
-            "20 employés et moins",
-            "21 à 100 employés",
-            "101 à 500 employés",
-            "Plus de 500 employés",
+    const EMPLOYEES_NUMBER = [
+            "19 employés et moins",
+            "20 à 99 employés",
+            "100 à 499 employés",
+            "500 employés et plus",
         ];
+
+    const BUSINESS_KIND = [
+        "Cabinet de recrutement",
+        "Editeur de logiciel",
+        "Entreprise",
+        "ESN / Cabinet de conseil",
+    ];
+
+    const BUSINESS_ADDRESS = [
+        "19 rue du Président Édouard Herriot, 69001 Lyon",
+        "40 Avenue de Clichy, 75018 Paris",
+        "34, boulevard Charles-Livon, Marseille",
+        "51 rue Basse, 59800 Lille",
+    ];
+
+    const BUSINESS_ACTIVITYAREA = [
+        "Industrie & Énergie",
+        "Média & Télécom",
+        "Web & Tech",
+        "Jeux vidéo",
+        "Banque & Assurance",
+    ];
 
     /**
      * UserFixture constructor.
@@ -63,12 +85,14 @@ class UserFixture extends BaseFixture
                 $business = new Business();
 
                 $business
-                    ->setEmployeesNumber(self::employeesNumber[rand(0, 3)])
+                    ->setEmployeesNumber(self::EMPLOYEES_NUMBER[rand(0, 3)])
                     ->setName($this->faker->company)
-                    ->setLocation($this->faker->city)
+                    ->setLocation(self::BUSINESS_ADDRESS[rand(0,3)])
                     ->setSiretNumber(rand(11111111111111, 99999999999999))
-                    ->setActivityArea($this->faker->text($maxNbChars = 100))
+                    ->setActivityArea(self::BUSINESS_ACTIVITYAREA[rand(0, 4)])
+                    ->setWhyUs($this->faker->text($maxNbChars = 2000))
                     ->setDescription($this->faker->text($maxNbChars = 2000))
+                    ->setKind(self::BUSINESS_KIND[rand(0,3)])
                     ;
 
                 $user

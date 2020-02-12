@@ -13,21 +13,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
  */
 class OfferService
 {
-    /**
-     * @var FlashBagInterface
-     */
-    private $bag;
-
     const LETTERS = ["A", "C", "Y", "Z"];
-
-    /**
-     * OfferService constructor.
-     * @param Security $security
-     * @param FlashBagInterface $bag
-     */
-    public function __construct(Security $security, FlashBagInterface $bag) {
-        $this->bag = $bag;
-    }
 
     /**
      * @param Offer $offer
@@ -56,6 +42,24 @@ class OfferService
                         return true;
                     }
                 }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param User $user
+     * @param Offer $offer
+     * @return bool
+     */
+    public function checkIfOfferAlreadyExistForThisUser(User $user, Offer $offer) :bool
+    {
+        $offers = $user->getOffers();
+
+        foreach ($offers as $lastOffer) {
+            if ($lastOffer->getTitle() === $offer->getTitle()) {
+                return true;
             }
         }
 

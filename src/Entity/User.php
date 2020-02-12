@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface as UUID;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -34,6 +35,7 @@ class User implements UserInterface
      * @Assert\NotBlank(
      *     message="Veuillez renseigner une adresse e-mail valide"
      * )
+     * @Groups({"detailedBusiness", "detailedOffer"})
      */
     private $email;
 
@@ -68,6 +70,13 @@ class User implements UserInterface
      * @Assert\NotBlank(
      *     message="Veuillez renseigner votre prénom"
      * )
+     * 
+     *@Assert\Regex(
+     *     pattern ="/[^A-Za-z\-]/",
+     *     match=false,
+     *     message="N'utilisez pas de caractères spéciaux"
+     * )
+     * @Groups({"detailedBusiness", "detailedOffer"})
      */
     private $firstName;
 
@@ -82,6 +91,12 @@ class User implements UserInterface
      * @Assert\NotBlank(
      *     message="Veuillez renseigner votre nom"
      * )
+     * @Assert\Regex(
+     *     pattern ="/[^A-Za-z\-]/",
+     *     match=false,
+     *     message="N'utilisez pas de caractères spéciaux"
+     * )
+     * @Groups({"detailedBusiness", "detailedOffer"})
      */
     private $lastName;
 
@@ -107,6 +122,11 @@ class User implements UserInterface
     private $passwordToken;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $public = true;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Avatar", cascade={"persist", "remove"})
      */
     private $avatar;
@@ -123,11 +143,13 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Offer", mappedBy="user", orphanRemoval=true)
+     * @Groups({"detailedBusiness"})
      */
     private $offers;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Business", inversedBy="user", cascade={"persist", "remove"})
+     * @Groups({"detailedOffer"})
      */
     private $business;
 
@@ -269,6 +291,18 @@ class User implements UserInterface
     public function setPasswordToken(?string $passwordToken): self
     {
         $this->passwordToken = $passwordToken;
+
+        return $this;
+    }
+
+    public function getPublic(): ?bool
+    {
+        return $this->public;
+    }
+
+    public function setPublic(?bool $public): self
+    {
+        $this->public = $public;
 
         return $this;
     }

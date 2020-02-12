@@ -5,7 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Faker\Provider\DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OfferRepository")
@@ -22,6 +23,7 @@ class Offer
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"detailedBusiness", "detailedOffer"})
      */
     private $created_at;
 
@@ -32,6 +34,10 @@ class Offer
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime(
+     *     message="Le format de la date de prise de poste est invalide"
+     * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $started_at;
 
@@ -42,47 +48,104 @@ class Offer
 
     /**
      * @ORM\Column(type="string", length=60)
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $reference;
 
     /**
      * @ORM\Column(type="string", length=90)
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner un titre"
+     * )
+     * @Assert\Length(
+     *     min=8,
+     *     max=90,
+     *     minMessage="Le titre de l'offre doit faire au minimum {{ limit }} caractères",
+     *     maxMessage="Le titre de l'offre ne peut dépasser {{ limit }} caractères",
+     * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner une description"
+     * )
+     * @Assert\Length(
+     *     min=100,
+     *     max=2000,
+     *     minMessage="La description de l'offre doit faire au minimum {{ limit }} caractères",
+     *     maxMessage="La description de l'offre ne peut dépasser {{ limit }} caractères",
+     * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(
+     *     message="Veuillez décrire le profil requis"
+     * )
+     * @Assert\Length(
+     *     min=80,
+     *     max=2000,
+     *     minMessage="La description de l'offre doit faire au minimum {{ limit }} caractères",
+     *     maxMessage="La description de l'offre ne peut dépasser {{ limit }} caractères",
+     * )
+     * @Groups({"detailedBusiness", "detailedOffer"})
      */
     private $profilRequired;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner une adresse (complète ou non)"
+     * )
+     * @Assert\Length(
+     *     min=4,
+     *     max=100,
+     *     minMessage="L'adresse de l'offre doit faire au minimum {{ limit }} caractères",
+     *     maxMessage="L'adresse de l'offre ne peut dépasser {{ limit }} caractères",
+     * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $location;
 
     /**
      * @ORM\Column(type="string", columnDefinition="enum('Tous', 'Junior (0 à 2 ans)', 'Confirmé (3 à 6 ans)', 'Senior (7 ans et plus)')")
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner l'experience requise"
+     * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $experience;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(
+     *     min="0",
+     *     max="1000000",
+     *     minMessage="Le salaire de l'offre ne peut être un chiffre négatif",
+     *     maxMessage="Le salaire de l'offre ne peut dépasser {{ limit }} brut annuel",
+     * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $salary;
 
     /**
      * @ORM\Column(type="string", columnDefinition="enum('CDI', 'CDD', 'Stage')")
+     * @Assert\NotBlank(
+     *     message="Veuillez renseigner le type de contrat"
+     * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="offers")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"detailedOffer"})
      */
     private $user;
 
@@ -94,6 +157,13 @@ class Offer
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="offers")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Count(
+     *     min=1,
+     *     max=3,
+     *     minMessage="Vous devez renseigner au moins {{ limit }} catégorie",
+     *     maxMessage="Vous ne pouvez selectionner plus de {{ limit }} catégories"
+     * )
+     * @Groups({"lightOffer", "detailedOffer"})
      */
     private $categories;
 

@@ -1,0 +1,154 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}{{ parent() }}Création d'une offre{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('offerAdd') }}
+{% endblock %}
+
+{% block content %}
+    {% for error in app.flashes("errorSameOffer") %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+
+    <header>
+        <h1>Creation d'une nouvelle offre</h1>
+
+        <p>
+            Vous pouvez créer une nouvelle annonce sur cette page.<br>
+            Elle sera automatiquement publiée et disponible à la recherche pour les candidats du site.
+        </p>
+    </header>
+
+    {% if app.user.business.description != null
+        and app.user.business.whyUs != null
+        and app.user.business.activityArea != null %}
+        <div id="contentContainer">
+            <section id="leftSection">
+                {{ form_start(form) }}
+                <div id="formTitleErrorsContainer" class="superContainers">
+                    {{ form_errors(form.title) }}
+                </div>
+
+                <div id="formTitleContainer" class="superContainers">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title) }}
+                </div>
+
+                <div id="formLocalisationErrorsContainer" class="superContainers">
+                    {{ form_errors(form.location) }}
+                </div>
+
+                <div id="formLocalisationContainer" class="superContainers">
+                    {{ form_label(form.location) }}
+                    {{ form_widget(form.location, { 'value': app.user.business.location }) }}
+                </div>
+
+                <div id="formStartedAtErrorsContainer" class="superContainers">
+                    {{ form_errors(form.startedAt) }}
+                </div>
+
+                <div id="formStartedAtContainer" class="superContainers">
+                    {{ form_label(form.startedAt) }}
+                    {{ form_widget(form.startedAt) }}
+                </div>
+
+                <div>
+                    <div class="flexContainers">
+                        <div id="formExperienceErrorsContainer" class="superContainers">
+                            {{ form_errors(form.experience) }}
+                        </div>
+
+                        <div id="formTypeErrorsContainer" class="superContainers">
+                            {{ form_errors(form.type) }}
+                        </div>
+                    </div>
+
+                    <div class="flexContainers">
+                        <div id="formExperienceContainer" class="superContainers">
+                            {{ form_label(form.experience) }}
+                            {{ form_widget(form.experience) }}
+                        </div>
+
+                        <div id="formTypeContainer" class="superContainers">
+                            {{ form_label(form.type) }}
+                            {{ form_widget(form.type) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div id="formSalaryErrorsContainer" class="superContainers">
+                    {{ form_errors(form.salary) }}
+                </div>
+
+                <div id="formSalaryContainer" class="superContainers">
+                    {{ form_label(form.salary) }}
+                    {{ form_widget(form.salary) }}
+
+                    <div id="slider"></div>
+                    <span id="sliderValue"></span>
+                </div>
+
+                <div id="formDescriptionErrorsContainer" class="superContainers">
+                    {{ form_errors(form.description) }}
+                </div>
+
+                <div id="formDescriptionContainer" class="superContainers">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description) }}
+                    <span class="textareaCount" id="descriptionCount">Minimum : 100 caractères</span>
+                </div>
+
+                <div id="formProfilRequiredErrorsContainer" class="superContainers">
+                    {{ form_errors(form.profilRequired) }}
+                </div>
+
+                <div id="formProfilRequiredContainer" class="superContainers">
+                    {{ form_label(form.profilRequired) }}
+                    {{ form_widget(form.profilRequired) }}
+                    <span class="textareaCount" id="profilRequiredCount">Minimum : 80 caractères</span>
+                </div>
+
+                <button id="offerFormSubmitButton" type="submit" class="commonButtons">Valider</button>
+            </section>
+
+            <div id="displayCategoriesForMobilesContainer">
+                <a href="#" id="displayCategoriesForMobiles">Categories</a>
+            </div>
+
+            <section id="rightSection" class="mobileReduced">
+                <div id="formCategoriesErrorsContainer" class="superContainers">
+                    {{ form_errors(form.categories) }}
+                    <span id="categoriesSelectorsError" class="invisible">Vous ne pouvez pas séléctionner plus de trois catégories</span>
+                </div>
+
+                <div id="formCategoriesContainer" class="superContainers">
+                    {{ form_label(form.categories) }}
+
+                    {% for category in form.categories %}
+                        <span class="categoriesSelectors">
+                            {{ form_widget(category) }}
+                            {{ form_label(category) }}
+                        </span>
+                    {% endfor %}
+                </div>
+                {{ form_end(form) }}
+            </section>
+        </div>
+    {% else %}
+        <section id="uniqueSection">
+            <p id="errorBusinessInfosNoCompleted" class="indicationsContainers">
+                <i id="errorCvIcon" class="fas fa-times"></i>
+                <span>
+                    Oups !<br>
+                    Il semble que votre entreprise ne dispose pas des informations suffisantes pour vous permettre d'ajouter une offre.<br>
+                    Complétez au préalable les informations dans votre profil <a href="#">ici</a>.
+                </span>
+            </p>
+        </section>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('offerAdd') }}
+{% endblock %}
