@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -22,6 +23,7 @@ class Offer
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"detailedBusiness", "detailedOffer"})
      */
     private $created_at;
 
@@ -35,6 +37,7 @@ class Offer
      * @Assert\DateTime(
      *     message="Le format de la date de prise de poste est invalide"
      * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $started_at;
 
@@ -45,6 +48,7 @@ class Offer
 
     /**
      * @ORM\Column(type="string", length=60)
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $reference;
 
@@ -59,6 +63,7 @@ class Offer
      *     minMessage="Le titre de l'offre doit faire au minimum {{ limit }} caractères",
      *     maxMessage="Le titre de l'offre ne peut dépasser {{ limit }} caractères",
      * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $title;
 
@@ -73,6 +78,7 @@ class Offer
      *     minMessage="La description de l'offre doit faire au minimum {{ limit }} caractères",
      *     maxMessage="La description de l'offre ne peut dépasser {{ limit }} caractères",
      * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $description;
 
@@ -87,6 +93,7 @@ class Offer
      *     minMessage="La description de l'offre doit faire au minimum {{ limit }} caractères",
      *     maxMessage="La description de l'offre ne peut dépasser {{ limit }} caractères",
      * )
+     * @Groups({"detailedBusiness", "detailedOffer"})
      */
     private $profilRequired;
 
@@ -101,6 +108,7 @@ class Offer
      *     minMessage="L'adresse de l'offre doit faire au minimum {{ limit }} caractères",
      *     maxMessage="L'adresse de l'offre ne peut dépasser {{ limit }} caractères",
      * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $location;
 
@@ -109,6 +117,7 @@ class Offer
      * @Assert\NotBlank(
      *     message="Veuillez renseigner l'experience requise"
      * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $experience;
 
@@ -120,6 +129,7 @@ class Offer
      *     minMessage="Le salaire de l'offre ne peut être un chiffre négatif",
      *     maxMessage="Le salaire de l'offre ne peut dépasser {{ limit }} brut annuel",
      * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $salary;
 
@@ -128,12 +138,14 @@ class Offer
      * @Assert\NotBlank(
      *     message="Veuillez renseigner le type de contrat"
      * )
+     * @Groups({"detailedBusiness", "lightOffer", "detailedOffer"})
      */
     private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="offers")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"detailedOffer"})
      */
     private $user;
 
@@ -151,6 +163,7 @@ class Offer
      *     minMessage="Vous devez renseigner au moins {{ limit }} catégorie",
      *     maxMessage="Vous ne pouvez selectionner plus de {{ limit }} catégories"
      * )
+     * @Groups({"lightOffer", "detailedOffer"})
      */
     private $categories;
 

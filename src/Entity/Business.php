@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BusinessRepository")
@@ -13,26 +14,31 @@ class Business
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"lightBusiness", "detailedBusiness"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="bigint", length=14)
+     * @Groups({"lightBusiness", "detailedBusiness"})
      */
     private $siretNumber;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"lightBusiness", "detailedBusiness", "detailedOffer"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", columnDefinition="enum('19 employés et moins', '20 à 99 employés', '100 à 499 employés', '500 employés et plus')", nullable=true)
+     * @Groups({"lightBusiness", "detailedBusiness", "detailedOffer"})
      */
     private $employeesNumber;
 
     /**
      * @ORM\Column(type="text", length=5000, nullable=true)
+     * @Groups({"detailedBusiness"})
      */
     private $description;
 
@@ -43,21 +49,25 @@ class Business
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"lightBusiness", "detailedBusiness"})
      */
     private $activityArea;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"lightBusiness", "detailedBusiness", "detailedOffer"})
      */
     private $location;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Groups({"lightBusiness", "detailedBusiness", "detailedOffer"})
      */
     private $kind;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\User", mappedBy="business", cascade={"persist", "remove"})
+     * @Groups({"detailedBusiness"})
      */
     private $user;
 
