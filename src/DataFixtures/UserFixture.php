@@ -9,6 +9,7 @@ use App\Service\FileService;
 use App\Entity\User;
 use App\Entity\Business;
 use App\Entity\Avatar;
+use App\Entity\Cv;
 
 /**
  * Class UserFixture
@@ -32,6 +33,8 @@ class UserFixture extends BaseFixture
     const DEFAULT_CANDIDATE = "candidate";
 
     const DEFAULT_RECRUITER = "recruiter";
+
+    const CHOICES = ["1", "2", "3", "4", "5"];
 
     const BUSINESS_SIRET_NUMBER = [
         80042662900013,
@@ -324,6 +327,31 @@ class UserFixture extends BaseFixture
                     ->setRoles(["ROLE_CANDIDATE"])
                     ->setBirthDay($this->faker->dateTimeBetween($startDate = "-60 years", $endDate = "- 18 years", $timezone = "Europe/Paris"))
                     ;
+
+                    $chanceToHaveCv = rand(0, 3);
+
+                    if ($chanceToHaveCv > 0) {
+                        $fileName = self::CHOICES[rand(0, 1)];
+                        $fileCopyName = $fileName . "copy";
+                        $filePath = __DIR__ . "/UsersCvs/";
+                        $fileExt = ".pdf";
+
+                        $fileSrc = $filePath . $fileName . $fileExt;
+                        $fileDest = $filePath . $fileCopyName . $fileExt;
+
+                        $this->fileService->copyFile($fileSrc, $fileDest);
+
+                        $cvFile = $this->fileService->createUploadFile($fileDest, $fileCopyName);
+
+                        $cv = new Cv();
+                        $cv
+                            ->setName($fileName)
+                            ->setCvFile($cvFile);
+
+                        $user->setCv($cv);
+
+                        $this->manager->persist($cv);
+                    }
             } else if ($this->index % 2 !== 0 && $this->index < 60) {
                 $business = new Business();
 
@@ -379,6 +407,31 @@ class UserFixture extends BaseFixture
                     ->setRoles(["ROLE_ADMIN"])
                     ->setBirthDay($this->faker->dateTimeBetween($startDate = "-60 years", $endDate = "- 18 years", $timezone = "Europe/Paris"))
                     ;
+            }
+
+            $chanceToHaveAvatar = rand(0, 3);
+
+            if ($chanceToHaveAvatar > 0) {
+                $fileName = self::CHOICES[rand(0, 4)];
+                $fileCopyName = $fileName . "copy";
+                $filePath = __DIR__ . "/UsersAvatars/";
+                $fileExt = ".jpg";
+
+                $fileSrc = $filePath . $fileName . $fileExt;
+                $fileDest = $filePath . $fileCopyName . $fileExt;
+
+                $this->fileService->copyFile($fileSrc, $fileDest);
+
+                $avatarFile = $this->fileService->createUploadFile($fileDest, $fileCopyName);
+
+                $avatar = new Avatar();
+                $avatar
+                    ->setName($fileName)
+                    ->setAvatarFile($avatarFile);
+
+                $user->setAvatar($avatar);
+
+                $this->manager->persist($avatar);
             }
 
             $this->index++;
