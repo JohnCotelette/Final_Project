@@ -436,7 +436,7 @@ class UserFixture extends BaseFixture
 
             $this->index++;
 
-             if ($this->index > 0 && $this->index % 2 === 0 ) {
+             if ($this->index > 0 && $this->index % 2 === 0) {
                  $this->business_index++;
              }
         });
