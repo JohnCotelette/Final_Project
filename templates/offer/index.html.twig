@@ -118,9 +118,9 @@
             {% if pagination|length > 0 %}
                 {% for offer in pagination %}
                     <div class="mb-4 container d-flex bg-white offersContainers ghost">
-                        <div id="businessImgContainer" class="col-md-4 d-flex">
+                        <div class="businessImgContainer">
                             <img class="card-img-top align-self-center"
-                                 src="{{ offer.user.business.avatar ? asset('business_avatars/' ~ offer.user.business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
+                                 src="{{ offer.user.business.avatar ? asset('user_avatars/' ~ offer.user.business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
                                  alt="Business Avatar" />
                         </div>
 

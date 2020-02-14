@@ -48,7 +48,6 @@ main {
     border: 8px solid #3812b2;
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #3812b2 transparent transparent transparent;
 }
 
 .lds-ring div:nth-child(1) {
@@ -309,14 +308,17 @@ h5 {
     padding: 15px;
 }
 
-#businessImgContainer {
+.businessImgContainer {
+    display: flex;
     background-color: inherit;
-    width: 140px;
-    height: 140px;
-    margin: auto;
+    width: 160px;
+    max-width: 160px;
+    height: 160px;
+    max-height: 160px;
+    margin: auto 10px auto 0;
 }
 
-#businessImgContainer img {
+.businessImgContainer img {
     width: 80%;
     max-width: 80%;
     height: auto;
@@ -330,6 +332,10 @@ h5 {
 
 .ghost {
     opacity: 0;
+}
+
+.offersContainers {
+    padding: 10px;
 }
 
 /* -------------------------- RESPONSIVE -------------------------- */
@@ -398,7 +404,7 @@ h5 {
         margin: auto;
     }
 
-    #businessImgContainer {
+    .businessImgContainer {
         margin-top: 20px;
     }
 
