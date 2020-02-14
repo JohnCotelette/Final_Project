@@ -67,12 +67,12 @@ class SecurityController extends AbstractController
 
             $userService->generatePasswordToken($user);
 
-            $em = $this
+            $entityManager = $this
                 ->getDoctrine()
                 ->getManager();
 
-            $em->persist($user);
-            $em->flush();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
             $resetPasswordUrl = $this->generateUrl("resetPassword", [
                 "resetPasswordToken" => $user->getPasswordToken(),

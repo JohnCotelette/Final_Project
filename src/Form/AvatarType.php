@@ -18,7 +18,6 @@ class AvatarType extends AbstractType
         $builder
         ->add("avataruser", VichFileType::class, [
             "label" => " choisir un avatar",
-
             "attr" => [
                 "class" => " ",
             ],

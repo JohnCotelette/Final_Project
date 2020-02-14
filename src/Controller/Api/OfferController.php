@@ -29,25 +29,11 @@ class OfferController extends AbstractFOSRestController
     /**
      * @Rest\Get("/api/offers/{reference}")
      * @Rest\View(serializerGroups={"detailedOffer"})
-     * @param string $reference
-     * @param OfferRepository $offerRepository
-     * @return Offer[]|View
+     * @param Offer $offer
+     * @return Offer
      */
-    public function getOffer(string $reference, OfferRepository $offerRepository)
+    public function getOffer(Offer $offer)
     {
-        $offer = $offerRepository->findBy(["reference" => $reference]);
-
-        if (empty($offer)) {
-            return $this->offerNotFound();
-        }
-
         return $offer;
-    }
-
-    /**
-     * @return View
-     */
-    private function OfferNotFound() {
-        return $this->view(["Offer not found : " => "L'offre avec cet identifiant n'existe pas"], Response::HTTP_NOT_FOUND);
     }
 }

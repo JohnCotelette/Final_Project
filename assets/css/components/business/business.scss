@@ -30,11 +30,13 @@ header figure {
     background-color: $blanc-clair;
     border-radius: 5px;
     margin: auto;
+    padding: 10px;
 }
 
 header figure img {
     width: 100%;
     height: auto;
+    max-height: 100%;
     margin: auto;
 }
 
@@ -96,6 +98,7 @@ section hr {
 
 #leftPart {
     width: 65%;
+    height: max-content;
 }
 
 #rightPart {

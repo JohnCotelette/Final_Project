@@ -41,7 +41,7 @@
        {% for offer in offers %}
             <div class="card mx-3 mb-4 align-items-center" style="width: 25rem;">
                 <figure class="businessAvatarsImgsContainers">
-                    <img src="{{ offer.user.business.avatar ? asset('business_avatars/' ~ offer.user.business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
+                    <img src="{{ offer.user.business.avatar ? asset('user_avatars/' ~ offer.user.business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
                          alt="Business Avatar" />
                 </figure>
                 <div class="card-body">

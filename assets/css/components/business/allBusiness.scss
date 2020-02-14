@@ -64,13 +64,13 @@ hr {
     height: 120px;
     min-height: 120px;
     border-radius: 5px;
-    border: 1px solid rgba(51, 51, 51, 0.4);
     display: flex;
 }
 
 .businessImgContainer figure img {
     width: 100%;
     height: auto;
+    max-height: 100%;
     margin: auto;
 }
 

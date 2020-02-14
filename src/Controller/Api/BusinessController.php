@@ -29,25 +29,11 @@ class BusinessController extends AbstractFOSRestController
     /**
      * @Rest\Get("/api/business/{id}")
      * @Rest\View(serializerGroups={"detailedBusiness"})
-     * @param int $id
-     * @param BusinessRepository $businessRepository
+     * @param Business $business
      * @return Business|View|null
      */
-    public function getBusiness(int $id, BusinessRepository $businessRepository)
+    public function getBusiness(Business $business)
     {
-        $business = $businessRepository->find($id);
-
-        if (empty($business)) {
-            return $this->businessNotFound();
-        }
-
         return $business;
-    }
-
-    /**
-     * @return View
-     */
-    private function businessNotFound() {
-        return $this->view(["Business not found : " => "L'entreprise avec cet identifiant n'existe pas"], Response::HTTP_NOT_FOUND);
     }
 }
