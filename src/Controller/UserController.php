@@ -13,16 +13,12 @@ use App\Form\EditUserType;
 use App\Form\RecruiterType;
 use App\Service\MailService;
 use App\Service\UserService;
-<<<<<<< HEAD
 use App\Repository\BusinessRepository;
-=======
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
->>>>>>> c643ec6974e8baaee5baf9dbbb7318021c00cda3
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -197,12 +193,6 @@ class UserController extends AbstractController
 
             if($formAvatar->isSubmitted() && $formAvatar->isValid())
             {
-<<<<<<< HEAD
-                
-                $entityManager = $this->getDoctrine()->getManager();
-
-=======
->>>>>>> c643ec6974e8baaee5baf9dbbb7318021c00cda3
                 if($user->getAvatar())
                 {
                    $this->entityManager->remove($user->getAvatar());
