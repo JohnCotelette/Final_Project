@@ -103,7 +103,7 @@
                 <h3>Recherche par localisation</h3>
 
                 <div>
-                    {{ form_widget(form.city) }}
+                    {{ form_widget(form.location) }}
                     <button id="submitCitySearch"><i class="fas fa-search"></i></button>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                                  alt="Business Avatar" />
                         </div>
 
-                        <div class="col-md-8 d-flex offersInfosContainers">
+                        <div class="d-flex offersInfosContainers">
                             <div class="card-body my-auto">
                                 <div class=" linkOffer">
                                     <h4 class="card-title"><a id="offerReference" href="{{ path('show_offer', {'reference': offer.reference}) }}">{{ offer.title }}  </a></h4

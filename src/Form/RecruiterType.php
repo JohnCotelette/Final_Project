@@ -76,7 +76,7 @@ class RecruiterType extends AbstractType
                 "years" => range(date('Y') - 65, date('Y') - 17),
             ])
             ->add("business", TextType::class, [
-                "label" => false,
+                "label" => "Siret Entreprise",
                 "mapped" => false,
                 "attr" => [
                     "placeholder" => "Siret Entreprise",

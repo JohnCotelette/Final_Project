@@ -207,7 +207,7 @@ class UserFixture extends BaseFixture
         "21 rue de Bonnel, 69003 Lyon",
         "311 chemin de la Sainte Allée, 83910 Pourrieres",
         "27 rue de la Clef, 75005 Paris-5E-Arrondissement",
-        "162 rue de Rivoli, 75001 Paris, France",
+        "162 rue de Rivoli, 75001 Paris",
         "20 rue Rouget de Lisle, 92130 Issy-les-Moulineaux",
         "70 avenue de l'Harmonie, 59262 Villeneuve-d'Ascq",
         "157 rue Anatole France, 92300 Levallois-Perret",

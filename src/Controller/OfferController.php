@@ -20,6 +20,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * Class OfferController
+ * @package App\Controller
+ */
 class OfferController extends AbstractController
 {
     /**
@@ -35,7 +39,7 @@ class OfferController extends AbstractController
         $experience = null;
         $salary = null;
         $type = null;
-        $city = null;
+        $location = null;
 
         $form = $this->createForm(CategoriesType::class);
 
@@ -51,10 +55,10 @@ class OfferController extends AbstractController
             $experience = $form["experience"]->getData();
             $salary = $form["salary"]->getData();
             $type = $form["type"]->getData();
-            $city = $form["city"]->getData();
+            $location = $form["location"]->getData();
         }
 
-        $offers = $offerRepository->findByCategoriesOrderByDate($category, $experience, $salary, $type, $city);
+        $offers = $offerRepository->findByCategoriesOrderByDate($category, $experience, $salary, $type, $location);
 
         $pagination = $paginator->paginate(
             $offers,

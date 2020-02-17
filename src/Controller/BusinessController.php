@@ -5,15 +5,17 @@ namespace App\Controller;
 use App\Entity\Business;
 use App\Repository\OfferRepository;
 use App\Repository\BusinessRepository;
-use App\Repository\ApplicationRepository;
 use App\Service\MapService;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * Class BusinessController
+ * @package App\Controller
+ */
 class BusinessController extends AbstractController
 {
     /**

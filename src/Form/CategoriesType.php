@@ -54,10 +54,10 @@ class CategoriesType extends AbstractType
                     "Stage" => "Stage",
                 ],
             ])
-            ->add("city", TextType::class, [
+            ->add("location", TextType::class, [
                 "label" => false,
                 "attr" => [
-                    "placeholder" => "Ville",
+                    "placeholder" => "Localisation",
                 ],
             ])
         ;

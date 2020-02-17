@@ -189,6 +189,28 @@ form button:hover {
     color: white;
 }
 
+#field-businessLabel {
+    margin-bottom: 5px;
+}
+
+#field-businessLabel label {
+    text-decoration: underline;
+}
+
+#field-business-withJs {
+    background-color: rgb(220, 220, 220);
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+#field-business-withJs div {
+    display: flex;
+}
+
+#field-business-withJs div input {
+    margin: auto 0 !important;
+}
+
 /* -------------------------- RIGHT-SECTION -------------------------- */
 
 #secondSection {

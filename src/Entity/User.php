@@ -35,7 +35,7 @@ class User implements UserInterface
      * @Assert\NotBlank(
      *     message="Veuillez renseigner une adresse e-mail valide"
      * )
-     * @Groups({"detailedBusiness", "detailedOffer"})
+     * @Groups({"detailedBusiness", "detailedOffer", "candidateRegister"})
      */
     private $email;
 
