@@ -124,13 +124,11 @@
                                  alt="Business Avatar" />
                         </div>
 
-                        <div class="d-flex offersInfosContainers">
+                        <div class="col-md-8 d-flex offersInfosContainers">
                             <div class="card-body my-auto">
-                                <div class=" linkOffer">
-                                    <h4 class="card-title"><a id="offerReference" href="{{ path('show_offer', {'reference': offer.reference}) }}">{{ offer.title }}  </a></h4
-                                    
+                                <div class="linkOffer">
+                                    <h4 class="card-title"><a id="offerReference" href="{{ path('show_offer', {'reference': offer.reference}) }}">{{ offer.title }}  </a></h4  
                                     <h5>Chez <a class="offersLinks" href="{{ path("show_business", {"id" : offer.user.business.id }) }}"> {{ offer.user.business.name|upper }}</a> </h5>
-
                                     <div class="offersCategoriesContainers">
                                         <p><i class="fas fa-user"></i> {{ offer.experience }}</p>
                                         <p><i class="fas fa-suitcase"></i> {{ offer.salary }}</p>
