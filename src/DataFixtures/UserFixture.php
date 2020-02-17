@@ -323,6 +323,8 @@ class UserFixture extends BaseFixture
                     ->setPassword($this->passwordEncoder->encodePassword($user, "12345678"))
                     ->setFirstName($this->faker->firstname)
                     ->setLastName($this->faker->lastname)
+                    ->setPhoneNumber($this->faker->phoneNumber)
+                    ->setWebSite($this->faker->url)
                     ->setIsActive(true)
                     ->setRoles(["ROLE_CANDIDATE"])
                     ->setBirthDay($this->faker->dateTimeBetween($startDate = "-60 years", $endDate = "- 18 years", $timezone = "Europe/Paris"))
