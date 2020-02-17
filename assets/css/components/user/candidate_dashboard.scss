@@ -1,5 +1,117 @@
 @import "../../core.scss";
 
+/* -------------------------- MAIN -------------------------- */
+
+main {
+    width: 80%;
+    margin: auto;
+}
+
+#dashboardContent {
+    display: flex;
+    width: 100%;
+}
+
+.superSeparators {
+    margin: 20px 0;
+    color: rgba(51, 51, 51, 0.5);
+}
+
+h2 {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    color: rgba(51, 51, 51, 0.7);
+    letter-spacing: 1px;
+}
+
+/* -------------------------- NAVBAR -------------------------- */
+
+#dashboardNav {
+    display: flex;
+    justify-content: flex-start;
+    margin: 30px 0;
+    width: 500px;
+}
+
+#dashboardNav ul {
+    display: flex;
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    height: 50px;
+    border: 1px solid rgba(51, 51, 51, 0.4);
+    padding: 0;
+}
+
+#dashboardNav ul li {
+    margin: auto;
+    font-size: 0.9em;
+}
+
+#dashboardNav ul li a {
+    color: rgba(51, 51, 51, 0.9);
+    transition: color 0.3s ease;
+}
+
+#dashboardNav ul li a:hover, #dashboardNav ul li a:active, #dashboardNav ul li a:visited {
+    color: rgba(51, 51, 51, 0.9);
+    text-decoration: none;
+}
+
+#dashboardNav ul li a:hover {
+    color: black;
+}
+
+/* -------------------------- LEFT-SECTION -------------------------- */
+
+#leftSection {
+    min-width: 350px;
+}
+
+.imgContainer figure {
+    width: 280px;
+    min-width: 280px;
+    height: 280px;
+    min-height: 280px;
+    border-radius: 5px;
+    border: 1px solid rgba(51, 51, 51, 0.4);
+    display: flex;
+    margin: 0;
+}
+
+.imgContainer figure img {
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+
+/* -------------------------- RIGHT-SECTION -------------------------- */
+
+#rightSection {
+    width: 70%;
+}
+
+h1 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width:800px)
  {
     .heightmenu {
@@ -13,11 +125,6 @@
     }
  }
 
-
-.businessImgContainer {
-    width: 30%;
-}
-
 #resetPassword {
     outline: none;
     text-decoration: none;
@@ -28,23 +135,6 @@
     border-radius: .25rem;
     border: 1px solid transparent;
     height: max-content;
-}
-
-.businessImgContainer figure {
-    width: 200px;
-    min-width: 200px;
-    height: 200px;
-    min-height: 200px;
-    border-radius: 5px;
-    border: 1px solid rgba(51, 51, 51, 0.4);
-    display: flex;
-    margin: 15px auto 50px;
-}
-
-.businessImgContainer figure img {
-    width: 100%;
-    height: auto;
-    margin: auto;
 }
 
 #avatarUser {

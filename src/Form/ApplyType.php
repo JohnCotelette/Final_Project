@@ -14,7 +14,7 @@ class ApplyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('motivation', TextareaType::class, [
+            ->add("motivation", TextareaType::class, [
                 "attr" => [
                     "placeholder" => "Message de candidature",
                     "maxlength" => 1000,
@@ -23,7 +23,7 @@ class ApplyType extends AbstractType
                 "constraints" => [
                     new Length([
                         "max" => 1000,
-                        "maxMessage" => "Votre message est trop long (max : {{ limit }} caractères",
+                        "maxMessage" => "Votre message est trop long (max : {{ limit }} caractères)",
                     ]),
                 ],
             ])
@@ -33,10 +33,10 @@ class ApplyType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Application::class,
-            'csrf_protection' => true,
-            'attr' => [
-                'novalidate' => 'novalidate',
+            "data_class" => Application::class,
+            "csrf_protection" => true,
+            "attr" => [
+                "novalidate" => "novalidate",
             ],
         ]);
     }
