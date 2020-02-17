@@ -40,6 +40,11 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -112,6 +117,28 @@ class User implements UserInterface
     private $birthDay;
 
     /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\Length(
+     *     max=20,
+     *     maxMessage="Votre numéro de téléphone est trop long ({{ limit }} max)"
+     * )
+     */
+    private $phoneNumber;
+
+    /**
+     * @ORM\Column(type="string", length=180, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/^(http|https|ftp):\/\/([\w]*)\.([\w]*)\.(com|net|org|biz|info|mobi|us|cc|bz|tv|ws|name|co|me)(\.[a-z]{1,3})?/",
+     *     message="L'url est invalide (example de bon format: http://www.test.com)"
+     * )
+     * @Assert\Length(
+     *     max=180,
+     *     maxMessage="L'url de votre site personnel ne peut dépasser {{ limit }} caractères."
+     * )
+     */
+    private $webSite;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $isActive = false;
@@ -157,8 +184,9 @@ class User implements UserInterface
     {
         $this->applications = new ArrayCollection();
         $this->offers = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
-    //UUID
+
     public function getId()
     {
         return $this->id;
@@ -172,6 +200,18 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -267,6 +307,30 @@ class User implements UserInterface
     public function setBirthDay(?\DateTimeInterface $birthDay): self
     {
         $this->birthDay = $birthDay;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getWebSite(): ?string
+    {
+        return $this->webSite;
+    }
+
+    public function setWebSite(?string $webSite): self
+    {
+        $this->webSite = $webSite;
 
         return $this;
     }

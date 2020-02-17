@@ -4,11 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Cv;
 use App\Entity\User;
-use App\Form\CvType;
 use App\Entity\Avatar;
-use App\Entity\Business;
 use App\Form\AvatarType;
 use App\Form\CandidatType;
+use App\Form\CvType;
 use App\Form\EditUserType;
 use App\Form\RecruiterType;
 use App\Service\MailService;
@@ -161,23 +160,9 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
-     * @Route("/dashboard/candidate/applications", name="candidate_applications")
-    */
-    public function candidateApplications()
-    {
-        $user = $this->getUser();
-        $applications = $user->getApplications();
-
-        return $this->render('/user/dashboard/candidate/applicationCandidate.html.twig', [
-             "applications" => $applications,
-             "user" => $user
-        ]);
-    } 
     
     /**
-     * @Route("/dashboard/candidate/profile", name="candidate_profile")
+     * @Route("/candidate/dashboard/profile", name="candidate_dashboard_profile")
      * @param Request $request
      * @return RedirectResponse|response
     */
@@ -202,8 +187,8 @@ class UserController extends AbstractController
                  $this->entityManager->persist($avatar);
                  $this->entityManager->flush();
 
-                 $this->addFlash("success", "l'avatar a bien était ajouter");
-                 $this->redirectToRoute("candidate_profile");
+                 $this->addFlash("success", "L'avatar a bien été ajouté/modifié.");
+                 $this->redirectToRoute("candidate_dashboard_profile");
             }
             
             return $this->render('/user/dashboard/candidate/profileCandidate.html.twig', [
@@ -213,10 +198,24 @@ class UserController extends AbstractController
         }
 
        return $this->redirectToRoute("login");
-    }   
+    }
 
     /**
-     * @Route("/dashboard/candidate/updateprofile", name="candidate_update_profile")
+     * @Route("/candidate/dashboard/applications", name="candidate_dasboard_applications")
+     */
+    public function candidateApplications()
+    {
+        $user = $this->getUser();
+        $applications = $user->getApplications();
+
+        return $this->render('/user/dashboard/candidate/applicationsCandidate.html.twig', [
+            "applications" => $applications,
+            "user" => $user
+        ]);
+    }
+
+    /**
+     * @Route("/candidate/dashboard/updateprofile", name="candidate_dashboard_updateprofile")
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @return RedirectResponse|Response
@@ -227,8 +226,6 @@ class UserController extends AbstractController
       
         if ($user) 
         {
-            $entityManager = $this ->getDoctrine()->getManager();
-
             $form = $this->createForm(EditUserType::class, $user);
 
             $form->handleRequest($request);
@@ -242,8 +239,8 @@ class UserController extends AbstractController
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
 
-                $this->addFlash("successcandidate", "Votre profile est bien mis à jour ");
-                return $this->redirectToRoute('candidate_profile');
+                $this->addFlash("successcandidate", "Votre profil a bien été mis à jour.");
+                return $this->redirectToRoute('candidate_dashboard_profile');
             }
 
             return $this->render('/user/dashboard/candidate/profileUpdateCandidate.html.twig', [
@@ -256,7 +253,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/dashboard/candidate/Cv", name= "candidate_cv")
+     * @Route("/candidate/dashboard/cv", name= "candidate_dashboard_cv")
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @return RedirectResponse|Response
@@ -284,11 +281,12 @@ class UserController extends AbstractController
                 $this->entityManager->persist($cv);
                 $this->entityManager->flush();
 
-                $this->addFlash("successcandidate", "Votre CV  est bien mis à jour ");
-                return $this->redirectToRoute("candidate_cv");
+                $this->addFlash("successcandidate", "Votre Cv a bien été mis à jour.");
+
+                return $this->redirectToRoute("app_user_candidatecv");
             }
 
-            return $this->render('/user/dashboard/candidate/CvupdateCandidate.html.twig', [
+            return $this->render('/user/dashboard/candidate/cvUpdateCandidate.html.twig', [
                 "formCv" => $formCv->createView(),
                 "user" => $user
             ]);
