@@ -34,7 +34,7 @@ class OfferRepository extends ServiceEntityRepository
      * @param string|null $city
      * @return array
      */
-    public function findByCategoriesOrderByDate(?Category $category, ?string $experience, ?int $salary, ?string $type, ?string $city) :array
+    public function findByCategoriesOrderByDate(?Category $category, ?string $experience, ?int $salary, ?string $type, ?string $location) :array
     {
         $defaultExperience = "Tous";
 
@@ -70,10 +70,10 @@ class OfferRepository extends ServiceEntityRepository
                 ->setParameter(':type', $type);
         }
 
-        if ($city != null) {
+        if ($location != null) {
             $qb
-                ->andWhere('o.location = :city')
-                ->setParameter(':city', $city);
+                ->andWhere('o.location LIKE :location')
+                ->setParameter(':location', "%$location%");
         }
 
         return $qb

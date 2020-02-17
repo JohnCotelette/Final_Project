@@ -1,7 +1,6 @@
 ###> VichUpluoadBundle ###
 /public/candidate_cv
 /public/user_avatars
-/public/business_avatars
 ###> VichUpluoadBundle ###
 
 ###> PHP-Storm file ###

@@ -6,6 +6,6 @@ fos_rest:
         view_response_listener: true
     format_listener:
         rules:
-            - { path: '^/api/', priorities: ['json', 'xml'], fallback_format: 'json' }
+            - { path: '^/api/', priorities: ['json'], fallback_format: 'json' }
     zone:
         - { path: ^/api/* }

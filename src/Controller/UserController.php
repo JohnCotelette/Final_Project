@@ -13,7 +13,12 @@ use App\Form\EditUserType;
 use App\Form\RecruiterType;
 use App\Service\MailService;
 use App\Service\UserService;
+<<<<<<< HEAD
 use App\Repository\BusinessRepository;
+=======
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+>>>>>>> c643ec6974e8baaee5baf9dbbb7318021c00cda3
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,15 +48,22 @@ class UserController extends AbstractController
     private $encoder;
 
     /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
      * UserController constructor.
      * @param UserService $userService
      * @param MailService $mailService
      * @param UserPasswordEncoderInterface $encoder
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(UserService $userService, MailService $mailService, UserPasswordEncoderInterface $encoder) {
+    public function __construct(UserService $userService, MailService $mailService, UserPasswordEncoderInterface $encoder, EntityManagerInterface $entityManager) {
         $this->userService = $userService;
         $this->mailService = $mailService;
         $this->encoder = $encoder;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -81,12 +93,8 @@ class UserController extends AbstractController
                     ->setPassword($password)
                     ->setRoles(['ROLE_CANDIDATE']);
 
-                $entityManager = $this
-                    ->getDoctrine()
-                    ->getManager();
-
-                $entityManager->persist($user);
-                $entityManager->flush();
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
 
                 $activationUrl = $this->generateUrl("account_activate", [
                     "uuid" => $user->getId(),
@@ -138,12 +146,8 @@ class UserController extends AbstractController
                     ->setRoles(['ROLE_RECRUITER'])
                     ->setBusiness($business);
 
-                $entityManager = $this
-                    ->getDoctrine()
-                    ->getManager();
-
-                $entityManager->persist($user);
-                $entityManager->flush();
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
 
                 $activationUrl = $this->generateUrl("account_activate", [
                     "uuid" => $user->getId(),
@@ -193,17 +197,20 @@ class UserController extends AbstractController
 
             if($formAvatar->isSubmitted() && $formAvatar->isValid())
             {
+<<<<<<< HEAD
                 
                 $entityManager = $this->getDoctrine()->getManager();
 
+=======
+>>>>>>> c643ec6974e8baaee5baf9dbbb7318021c00cda3
                 if($user->getAvatar())
                 {
-                   $entityManager->remove($user->getAvatar());
+                   $this->entityManager->remove($user->getAvatar());
                 }
                
                  $user->setAvatar($avatar);
-                 $entityManager->persist($avatar);
-                 $entityManager->flush();
+                 $this->entityManager->persist($avatar);
+                 $this->entityManager->flush();
 
                  $this->addFlash("success", "l'avatar a bien était ajouter");
                  $this->redirectToRoute("candidate_profile");
@@ -233,7 +240,6 @@ class UserController extends AbstractController
             $entityManager = $this ->getDoctrine()->getManager();
 
             $form = $this->createForm(EditUserType::class, $user);
-            $form->remove("legalConditions");
 
             $form->handleRequest($request);
   
@@ -243,8 +249,8 @@ class UserController extends AbstractController
                 $password = $encoder->encodePassword( $user, $user->getPassword());
                 $user->setPassword( $password );
 
-                $entityManager->persist($user);
-                $entityManager->flush();
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
 
                 $this->addFlash("successcandidate", "Votre profile est bien mis à jour ");
                 return $this->redirectToRoute('candidate_profile');
@@ -278,17 +284,15 @@ class UserController extends AbstractController
             // candidate change Cv
             if ($formCv->isSubmitted() && $formCv->isValid()) 
             {
-                $em = $this->getDoctrine()->getManager();
-
-                if ($user->getCv()) 
+                if ($user->getCv())
                 {
-                    $em->remove( $user->getCv() );
+                    $this->entityManager->remove( $user->getCv() );
                 }
 
                 $user->setCv($cv);
 
-                $em->persist($cv);
-                $em->flush();
+                $this->entityManager->persist($cv);
+                $this->entityManager->flush();
 
                 $this->addFlash("successcandidate", "Votre CV  est bien mis à jour ");
                 return $this->redirectToRoute("candidate_cv");

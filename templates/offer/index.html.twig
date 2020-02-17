@@ -103,7 +103,7 @@
                 <h3>Recherche par localisation</h3>
 
                 <div>
-                    {{ form_widget(form.city) }}
+                    {{ form_widget(form.location) }}
                     <button id="submitCitySearch"><i class="fas fa-search"></i></button>
                 </div>
             </div>
@@ -118,11 +118,12 @@
             {% if pagination|length > 0 %}
                 {% for offer in pagination %}
                     <div class="mb-4 container d-flex bg-white offersContainers ghost">
-                        <div id="businessImgContainer" class="col-md-4 d-flex">
+                        <div class="businessImgContainer">
                             <img class="card-img-top align-self-center"
-                                 src="{{ offer.user.business.avatar ? asset('business_avatars/' ~ offer.user.business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
+                                 src="{{ offer.user.business.avatar ? asset('user_avatars/' ~ offer.user.business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
                                  alt="Business Avatar" />
                         </div>
+
                         <div class="col-md-8 d-flex offersInfosContainers">
                             <div class="card-body my-auto">
                                 <div class="linkOffer">

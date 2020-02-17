@@ -15,6 +15,7 @@ Encore
     .addEntry("business", "./assets/js/components/business/business.js")
     .addEntry("candidate_dashboard", "./assets/js/components/user/candidate_dashboard.js")
     .addEntry("allBusiness", "./assets/js/components/business/allBusiness.js")
+    .addEntry("recruiterRegister", "./assets/js/components/user/recruiterRegister.js")
     .addStyleEntry("register", "./assets/css/components/user/register.scss")
     .addStyleEntry("login", "./assets/css/components/security/login.scss")
     .addStyleEntry("forgotPassword", "./assets/css/components/security/forgotPassword.scss")
