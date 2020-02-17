@@ -26,7 +26,6 @@ class OfferType extends AbstractType
             ])
             ->add("location", TextType::class, [
                 "label" => "Localisation",
-                "empty_data" => "lol",
             ])
             ->add("startedAt", DateTimeType::class, [
                 "label" => "Date de prise de poste",

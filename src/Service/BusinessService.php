@@ -46,7 +46,7 @@ class BusinessService {
      * @param int $siret
      * @return bool
      */
-    public function isBusinessAlreadyExistInTheDatabase(int $siret) :bool
+    public function isBusinessAlreadyExistInTheDatabase(string $siret) :bool
     {
         $business = $this->businessRepository->findOneBy(["siretNumber" => $siret]);
 
@@ -63,7 +63,7 @@ class BusinessService {
      * @param int $siret
      * @return bool
      */
-    public function isBusinessExist(int $siret) :bool
+    public function isBusinessExist(string $siret) :bool
     {
         $client = HttpClient::create([
             "auth_bearer" => $this->params->get("api_siren_token"),

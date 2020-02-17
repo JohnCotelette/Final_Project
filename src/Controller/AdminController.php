@@ -5,6 +5,10 @@ namespace App\Controller;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class AdminController
+ * @package App\Controller
+ */
 class AdminController extends EasyAdminController
 {
     /**

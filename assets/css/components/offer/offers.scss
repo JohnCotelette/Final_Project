@@ -184,7 +184,7 @@ h3 {
     margin: 0;
 }
 
-#categories_city {
+#categories_location {
     padding: 4px 7px;
     font-size: 0.85em;
 }
@@ -319,8 +319,8 @@ h5 {
 }
 
 .businessImgContainer img {
-    width: 80%;
-    max-width: 80%;
+    width: 70%;
+    max-width: 70%;
     height: auto;
     max-height: 100%;
     margin: auto;
@@ -402,10 +402,6 @@ h5 {
 
     #paginationContainer ul {
         margin: auto;
-    }
-
-    .businessImgContainer {
-        margin-top: 20px;
     }
 
     .card-body {

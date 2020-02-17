@@ -26,6 +26,23 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
      */
     private $index = 0;
 
+    const OFFERS_TITLES = [
+        "Développeur PHP/Symfony",
+        "Chef de projet Web",
+        "Directeur artistique",
+        "Data miner",
+        "Data analyst",
+        "Développeur full stack",
+        "Développeur Javascript",
+        "Chargé de programmation",
+        "Consultant technique",
+        "Consultant SEO",
+        "Designer UX/UI",
+        "Formateur multimédia",
+        "Graphiste multimédia",
+        "Web Designer",
+    ];
+
     const OFFERS_EXPERIENCES = [
         "Tous",
         "Junior (0 à 2 ans)",
@@ -40,6 +57,7 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
     ];
 
     const OFFERS_SALARY = [
+        0,
         25000,
         28000,
         32000,
@@ -69,25 +87,28 @@ class OfferFixture extends BaseFixture implements DependentFixtureInterface
      */
     protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(Offer::class, 80, function(Offer $offer) {
+        $this->createMany(Offer::class, 50, function(Offer $offer) {
             $randomRecruiter = $this->getRandomRecruiter();
 
             $randomNumberOfCategories = rand(1, 3);
 
-            $chanceToSetASalary = rand(0, 5);
-
             $offer
-                ->setTitle($this->faker->text($minNbChars = 30, $maxNbChars = 50))
+                ->setTitle(self::OFFERS_TITLES[rand(0, 13)])
                 ->setDescription($this->faker->text($minNbChars = 1500, $maxNbChars = 2000))
                 ->setExperience(self::OFFERS_EXPERIENCES[rand(0, 3)])
                 ->setType(self::OFFERS_TYPE[rand(0, 2)])
-                ->setLocation(self::OFFER_ADDRESS[rand(0, 3)])
                 ->setCreatedAt($this->faker->dateTimeBetween($startDate = "-1 month", $endDate = "now", $timezone = "Europe/Paris"))
                 ->setStartedAt($this->faker->dateTimeBetween($startDate = "now", $endDate = "+ 1 year", $timezone = "Europe/Paris"))
-                ->setProfilRequired($this->faker->text($minNbChars = 500, $maxNbChars = 800));
+                ->setProfilRequired($this->faker->text($minNbChars = 500, $maxNbChars = 800))
+                ->setSalary(self::OFFERS_SALARY[rand(0, count(self::OFFERS_SALARY) - 1)]);
 
-            if ($chanceToSetASalary > 0) {
-                $offer->setSalary(self::OFFERS_SALARY[rand(0, count(self::OFFERS_SALARY) - 1)]);
+            $chanceToHaveALocationDifferentFromBusiness = rand(0, 3);
+
+            if ($chanceToHaveALocationDifferentFromBusiness > 0) {
+                $offer->setLocation($randomRecruiter->getBusiness()->getLocation());
+            }
+            else {
+                $offer->setLocation(self::OFFER_ADDRESS[rand(0, 3)]);
             }
 
             for ($i = 0; $i < $randomNumberOfCategories; $i++) {
