@@ -2,21 +2,22 @@
 
 namespace App\Controller;
 
-use App\Entity\Avatar;
 use App\Entity\Cv;
-use App\Entity\Business;
 use App\Entity\User;
+use App\Form\CvType;
+use App\Entity\Avatar;
+use App\Entity\Business;
 use App\Form\AvatarType;
 use App\Form\CandidatType;
-use App\Form\CvType;
+use App\Form\EditUserType;
 use App\Form\RecruiterType;
-use App\Repository\BusinessRepository;
 use App\Service\MailService;
 use App\Service\UserService;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Repository\BusinessRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -192,6 +193,7 @@ class UserController extends AbstractController
 
             if($formAvatar->isSubmitted() && $formAvatar->isValid())
             {
+                
                 $entityManager = $this->getDoctrine()->getManager();
 
                 if($user->getAvatar())
@@ -203,10 +205,10 @@ class UserController extends AbstractController
                  $entityManager->persist($avatar);
                  $entityManager->flush();
 
-                 $this->addFlash("successcandidate", "l'avatar est bien ajoutée");
+                 $this->addFlash("success", "l'avatar a bien était ajouter");
                  $this->redirectToRoute("candidate_profile");
             }
-   
+            
             return $this->render('/user/dashboard/candidate/profileCandidate.html.twig', [
                  "user" => $user,
                  "formAvatar" => $formAvatar->createView()
@@ -230,7 +232,7 @@ class UserController extends AbstractController
         {
             $entityManager = $this ->getDoctrine()->getManager();
 
-            $form = $this->createForm(CandidatType::class, $user);
+            $form = $this->createForm(EditUserType::class, $user);
             $form->remove("legalConditions");
 
             $form->handleRequest($request);

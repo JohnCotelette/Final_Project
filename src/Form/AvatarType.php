@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 
@@ -20,27 +21,32 @@ class AvatarType extends AbstractType
             "label" => " choisir un avatar",
 
             "attr" => [
-                "class" => " ",
+                "class" => "",
             ],
-            "required" => true,
+            
             "allow_delete" => true,
-            "download_label" => true,
             "by_reference" => false,
+            'download_link'     => false,
+            'required'          => false,
+            "label" => false,
             "constraints" => [
+                new NotNull([
+                    "message" => "Veuillez selectionner une image"
+                ]),
                 new File([
                     "maxSize" => "1M",
                      "mimeTypes" => [
                         "image/jpeg",
                         "image/png",
                     ],
-                    'mimeTypesMessage' => "l'avatar doit étre  au format jpeg ou png",
+                    'mimeTypesMessage' => "l'avatar doit être au format jpeg ou png",
                     'maxSizeMessage' => 'Votre fichier est trop volumineux ({{ limit }} maximum)',
                 ])],
         ])
         ->add("save", SubmitType::class, [
             "label" => "ajouter/modifier avatar",
             "attr" => [
-                "class" => "btn btn-primary",
+                "class" => "commonButtons",
             ]
         ]);
         
@@ -50,6 +56,9 @@ class AvatarType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Avatar::class,
+            'attr' => [
+                "class" => "formAvatar",
+            ],
         ]);
     }
 }
