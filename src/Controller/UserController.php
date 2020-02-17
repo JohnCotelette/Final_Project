@@ -2,22 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\Avatar;
 use App\Entity\Cv;
-use App\Entity\Business;
 use App\Entity\User;
+use App\Form\CvType;
+use App\Entity\Avatar;
+use App\Entity\Business;
 use App\Form\AvatarType;
 use App\Form\CandidatType;
-use App\Form\CvType;
+use App\Form\EditUserType;
 use App\Form\RecruiterType;
-use App\Repository\BusinessRepository;
 use App\Service\MailService;
 use App\Service\UserService;
+<<<<<<< HEAD
+use App\Repository\BusinessRepository;
+=======
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+>>>>>>> c643ec6974e8baaee5baf9dbbb7318021c00cda3
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -192,6 +197,12 @@ class UserController extends AbstractController
 
             if($formAvatar->isSubmitted() && $formAvatar->isValid())
             {
+<<<<<<< HEAD
+                
+                $entityManager = $this->getDoctrine()->getManager();
+
+=======
+>>>>>>> c643ec6974e8baaee5baf9dbbb7318021c00cda3
                 if($user->getAvatar())
                 {
                    $this->entityManager->remove($user->getAvatar());
@@ -201,10 +212,10 @@ class UserController extends AbstractController
                  $this->entityManager->persist($avatar);
                  $this->entityManager->flush();
 
-                 $this->addFlash("successcandidate", "l'avatar est bien ajoutée");
+                 $this->addFlash("success", "l'avatar a bien était ajouter");
                  $this->redirectToRoute("candidate_profile");
             }
-   
+            
             return $this->render('/user/dashboard/candidate/profileCandidate.html.twig', [
                  "user" => $user,
                  "formAvatar" => $formAvatar->createView()
@@ -226,8 +237,9 @@ class UserController extends AbstractController
       
         if ($user) 
         {
-            $form = $this->createForm(CandidatType::class, $user);
-            $form->remove("legalConditions");
+            $entityManager = $this ->getDoctrine()->getManager();
+
+            $form = $this->createForm(EditUserType::class, $user);
 
             $form->handleRequest($request);
   

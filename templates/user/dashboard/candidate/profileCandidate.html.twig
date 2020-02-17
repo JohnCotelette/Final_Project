@@ -1,7 +1,5 @@
 {% extends 'layout.html.twig' %}
 
-{% form_theme formAvatar 'bootstrap_4_layout.html.twig' %}
-
 {% block stylesheets %}
     {{ encore_entry_link_tags('candidate_dashboard') }}
 {% endblock %}
@@ -9,40 +7,69 @@
 {% block title %}{{ parent() }}Profil - {{ user.firstName }}{% endblock %}
 
 {% block content %}
-    {% for label, messages in  app.flashes  %}
-    <div class="container">
-        {% for message in messages %}
-            <div class="alert alert-{{ label }}" role="alert">
-                {{ message | raw }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        {% endfor %}
-    </div>
-    {% endfor %}
 
     <div class="container-fluid">
         <div class="row flex ">
             <div class="container-fluid">
                 <div class="row flex ">
-                    <div class="col-lg-4 col-md-4 col-sm-12 flex-grow-1  heightmenu ">
+                    <div class="col-lg-2 col-md-2 col-sm-12 flex-grow-1  heightmenu ">
                        {% include 'user/dashboard/candidate/navcandidate.html.twig' %}
                     </div>    
-                    <div class="col-lg-8  col-md-8 col-sm-12 w-100">
-                        <h1 class=" text-center  my-5"> {{ user.lastName }}-{{ user.firstName }}</h1>
+                    <div class="col-lg-10 col-md-10 col-sm-12">
+                        {% for label, messages in  app.flashes  %}
+                            <div class="mt-2 container text-center">
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ label }}" role="alert">
+                                        {{ message | raw }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                        <h1 class="text-center my-3"> {{ user.lastName }}-{{ user.firstName }}</h1>
                         <div class="tab-content">
                             <!-- section of avatar and formavatar -->
-                            <div class="d-flex  justify-content-center text-align-right ">
-                                {% if user.avatar != null %}
-                                    <div class="">
-                                        <img src="{{ asset('user_avatars/' ~ user.avatar.name ) }}" class="img-thumbnail" alt="avatar de candidat">
-                                    </div >
-                                {% else %} 
-                                    <div class="">
-                                        <img src="{{ asset('user_avatars/avatar.jpg') }}"   class="img-thumbnail" alt="avatar par défaut">
+                            <div class="d-flex m-auto businessImgContainer">
+                                <figure id="avatarUser">
+                                    <button id="btnAvatarUser" type="button" class="btn btn-primary invisible" data-toggle="modal" data-target="#exampleModalCenter">
+                                            Changer de photo
+                                    </button>
+                                    {% if user.avatar != null %}
+                                        <img src="{{ asset('user_avatars/' ~ user.avatar.name ) }}" alt="avatar de candidat">
+                                    {% else %} 
+                                        <img src="{{ asset('user_avatars/avatar.jpg') }}" alt="avatar par défaut">
+                                    {%  endif %}
+                                </figure>
+                                
+                                <!-- The Modal -->
+                                <div id="myModal" class="modal">
+                                    <!-- Modal content -->
+                                    <div class="modal-content">
+                                        <span id="spanModal" class="close">&times;</span>
+                                        {{ form_start(formAvatar) }}
+                                        
+                                            {{ form_label(formAvatar.avataruser) }}
+                                    
+                                        {% if form_errors(formAvatar.avataruser) %}
+                                            <div id="avatarError" class="alert alert-warning">
+                                                {{ form_errors(formAvatar.avataruser)  }}
+                                            </div>
+                                        {% endif %}
+                                        
+                                        <div class="d-flex justify-content-around">
+                                            <div>
+                                                {{ form_widget(formAvatar.avataruser) }}
+                                            </div>
+                                            <div>
+                                                {{ form_label(formAvatar.save) }}
+                                                {{ form_widget(formAvatar.save) }}
+                                            </div>     
+                                        </div>
+                                        {{ form_end(formAvatar) }}
                                     </div>
-                                {%  endif %} 
+                                </div>
                             </div>
                         </div>   
                             {#  add all file dashboard user  #}
@@ -68,14 +95,13 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- formulaire du avatar  -->
-                        <div>
-                            {{ form_start(formAvatar) }}
-                            {{ form_end(formAvatar) }}
-                        </div>
                     </div>    
                 </div>   
             </div>   
         </div>
     </div>  
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags("candidate_dashboard") }}
 {% endblock %}
