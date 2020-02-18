@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Class FileService
@@ -10,6 +11,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class FileService
 {
+    // private $kernel;
+
+    // public function __construct(KernelInterface $kernel)
+    // {
+    //     $this->kernel = $kernel;
+    // }
+
     /**
      * @param string $fileSrc
      * @param string $fileDest
@@ -37,5 +45,13 @@ class FileService
             null,
             true
         );
+    }
+
+    function savePicture(UploadedFile $image, $dir)
+    {
+        $path = $this->kernel->getProjectDir() . $dir;
+        $imageName = uniqid() . '.' . $image->guessExtension();
+        $image->move($path,$imageName);
+        return $imageName;
     }
 }
