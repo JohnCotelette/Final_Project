@@ -5,7 +5,6 @@ namespace App\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RoutesLogoutTest extends WebTestCase {
-    
 
     function testRouteLogout()
     {
@@ -15,6 +14,5 @@ class RoutesLogoutTest extends WebTestCase {
         $client->followRedirect();
         $this->assertResponseIsSuccessful();
     }
-
 
 }

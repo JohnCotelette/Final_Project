@@ -80,9 +80,9 @@ easy_admin:
           - property: webSite
             type: text
           - { type: 'group', label: 'images', icon: 'portrait',  columns: 6}
-          - { property: 'avatar', label: 'Avatar', type: 'file' }
+          - { property: 'avatar', type: 'App\Form\AvatarType'}
           - { type: 'group', label: 'attachement', icon: 'paperclip',  columns: 6}
-          # - { property: 'cv', label: 'CV'}
+          - { property: 'cv', type: 'App\Form\CvType'}
           
   # Entity Offer
   #---------------------------------------------------------------------------------------------------------------------------------------------

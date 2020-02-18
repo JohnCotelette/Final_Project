@@ -24,8 +24,8 @@ class AvatarType extends AbstractType
             
             "allow_delete" => true,
             "by_reference" => false,
-            'download_link'     => false,
-            'required'          => false,
+            'download_link'  => false,
+            'required'  => false,
             "label" => false,
             "constraints" => [
                 new NotNull([

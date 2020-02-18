@@ -26,7 +26,6 @@ class  EasyAdminSubscriber implements EventSubscriberInterface {
     public function setAvatarToUser(GenericEvent $event)
     {
         $entity = $event->getSubject();
-        dd($entity);
         $avatar = $entity->getAvatar();
         // $avatar = $this->service->savePicture($entity->getAvatar(), 'public/images/avatar');
         // dd($avatar);
