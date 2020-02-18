@@ -113,4 +113,8 @@ class Avatar implements \Serializable
             $this->id,
         ) = unserialize($serialized);
     }
+
+    // public function __toString()
+    // {
+    // }
 }

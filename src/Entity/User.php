@@ -127,8 +127,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, nullable=true)
-     * @Assert\Regex(
-     *     pattern="/^(http|https|ftp):\/\/([\w]*)\.([\w]*)\.(com|net|org|biz|info|mobi|us|cc|bz|tv|ws|name|co|me)(\.[a-z]{1,3})?/",
+     * @Assert\Url(
      *     message="L'url est invalide (example de bon format: http://www.test.com)"
      * )
      * @Assert\Length(
