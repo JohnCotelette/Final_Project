@@ -29,6 +29,6 @@ security:
 
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/dashboard/candidate, roles: ROLE_CANDIDATE }
-         - { path: ^/dashboard/recruiter, roles: ROLE_RECRUITER }
+         - { path: ^/candidate/dashboard, roles: ROLE_CANDIDATE }
+         - { path: ^/recruiter/dashboard, roles: ROLE_RECRUITER }
          - { path: ^/offer/create, roles: ROLE_RECRUITER }

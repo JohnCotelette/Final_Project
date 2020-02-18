@@ -1,79 +1,137 @@
 {% extends 'layout.html.twig' %}
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('candidate_dashboard') }}
+    {{ encore_entry_link_tags('dashboard') }}
+    {{ encore_entry_link_tags('candidateDashboardProfileUpdate') }}
 {% endblock %}
 
 {% block title %}{{ parent() }}Profil - {{ user.firstName }}{% endblock %}
-{% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {% block content %}
-    {% for label, messages in  app.flashes  %}
-    <div class="container">
-        {% for message in messages %}
-            <div class="alert alert-{{ label }}" role="alert">
-                {{ message | raw }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    {% include 'user/dashboard/common_components/navbar.html.twig' %}
+
+    {{ form_start(formProfile) }}
+        <h2>Informations générales</h2>
+
+        {% if form_errors(formProfile.firstName) or form_errors(formProfile.lastName) %}
+            <div id="identityErrorsContainer" class="superContainers errorsContainers">
+                <div>
+                    {{ form_errors(formProfile.firstName) }}
+                </div>
+
+                <div>
+                    {{ form_errors(formProfile.lastName) }}
+                </div>
             </div>
-        {% endfor %}
-    </div>
-    {% endfor %}
+        {% endif %}
 
-    <div class="container-fluid">
-        <div class="row flex ">
-            <div class="container-fluid">
-                <div class="row flex ">
-                    <div class="col-lg-2  col-md-2 col-sm-12 flex-grow-1  heightmenu ">
-                        {% include 'user/dashboard/candidate/navcandidate.html.twig' %}
-                    </div>    
-                    <div class="col-lg-10 col-md-10 col-sm-12">
-                        <h1 class=" text-center  my-5"> {{ user.lastName }}-{{ user.firstName }}</h1>
-                        <div class="form">
-                            {{ form_start( form ) }}
-                            <div class="form-group">
-                                {{ form_label(form.firstName) }}
-                                {{ form_widget(form.firstName) }}
-                                <div class="errors">
-                                    {{ form_errors(form.firstName) }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {{ form_label(form.lastName) }}
-                                {{ form_widget(form.lastName) }}
-                                <div class="errors">
-                                    {{ form_errors(form.lastName) }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {{ form_label(form.birthDay) }}
-                                <div class="row">
-                                    <div class="col">{{ form_widget(form.birthDay.day) }}</div>
-                                    <div class="col">{{ form_widget(form.birthDay.month) }}</div>
-                                    <div class="col">{{ form_widget(form.birthDay.year) }}</div>
-                                </div>
-                                <div class="errors">
-                                    {{ form_errors(form.birthDay) }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {{ form_label(form.email) }}
-                                {{ form_widget(form.email) }}
-                                <div class="errors">
-                                    {{ form_errors(form.email) }}
-    
-                                </div>
-                            </div>
-                            {{ form_end( form ) }}
+        <div id="identityContainer" class="superContainers containers">
+             <div>
+                 {{ form_label(formProfile.firstName) }}
+                 {{ form_widget(formProfile.firstName) }}
+             </div>
 
-                            <div class="container-fluid d-flex justify-content-between">
-                                <!-- <a id="resetPassword" href="">Changer le mot de passe?</a> -->
-                            </div>
-                        </div>
-                    </div>   
-                </div>   
+            <div>
+                {{ form_label(formProfile.lastName) }}
+                {{ form_widget(formProfile.lastName) }}
             </div>
         </div>
-    </div>  
+
+        {% if form_errors(formProfile.birthDay) %}
+            <div id="birthdayErrorsContainer" class="superContainers errorsContainers">
+                <div>
+                    {{ form_errors(formProfile.birthDay) }}
+                </div>
+            </div>
+        {% endif %}
+
+        <div id="birthdayContainer" class="superContainers containers">
+            {{ form_label(formProfile.birthDay) }}
+            {{ form_widget(formProfile.birthDay) }}
+        </div>
+
+        <hr class="superSeparators">
+
+        <h2>Informations de contact</h2>
+
+
+    {% if form_errors(formProfile.phoneNumber) or form_errors(formProfile.webSite) %}
+        <div id="contactErrorsContainer" class="superContainers errorsContainers">
+            <div>
+                {{ form_errors(formProfile.phoneNumber) }}
+            </div>
+
+            <div>
+                {{ form_errors(formProfile.webSite) }}
+            </div>
+        </div>
+    {% endif %}
+
+    <div id="contactContainer" class="superContainers containers">
+        <div>
+            {{ form_label(formProfile.phoneNumber) }}
+            {{ form_widget(formProfile.phoneNumber) }}
+        </div>
+
+        <div>
+            {{ form_label(formProfile.webSite) }}
+            {{ form_widget(formProfile.webSite) }}
+        </div>
+    </div>
+
+        <button class="commonButtons" type="submit">Confirmer</button>
+    {{ form_end(formProfile) }}
+
+    <div id="totalSecurityContainer">
+        <a href="#" id="securityController" class="controllers">Sécurité <i class="arrows fas fa-angle-up"></i></a>
+
+        <div id="securityContainer" class="reduced jsContainers">
+            <div>
+                <a href="#" id="passwordContainerController" class="controllers">Changement de mot de passe <i class="arrows fas fa-angle-up"></i></a>
+            </div>
+
+            <div id="passwordContainer" class="smallContainers jsContainers reduced">
+                {{ form_start(formResetPassword) }}
+                    <div class="superContainers containers specialsContainersForOldPassword">
+                        <div>
+                            {{ form_label(formResetPassword.oldPassword) }}
+                            {{ form_widget(formResetPassword.oldPassword) }}
+                        </div>
+                    </div>
+
+                    <div class="containers">
+                        {{ form_label(formResetPassword.newPassword) }}
+                        {{ form_widget(formResetPassword.newPassword) }}
+                    </div>
+
+                    <button type="submit" class="securityButtons">Confirmer</button>
+                {{ form_end(formResetPassword) }}
+
+                <hr class="superSeparators">
+            </div>
+
+            <div>
+                <a href="#" id="deleteAccountController" class="controllers">Suppression du compte <i class="arrows fas fa-angle-up"></i></a>
+            </div>
+
+            <div id="deleteAccountContainer" class="smallContainers jsContainers reduced">
+                {{ form_start(formDeleteAccount) }}
+                <div class="superContainers containers">
+                    <div>
+                        {{ form_label(formDeleteAccount.oldPassword) }}
+                        {{ form_widget(formDeleteAccount.oldPassword) }}
+                    </div>
+                </div>
+
+                <button type="submit" id="dangerousButton" class="securityButtons">Supprimer mon compte</button>
+                {{ form_end(formDeleteAccount) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('dashboard') }}
+    {{ encore_entry_script_tags('candidateDashboardProfileUpdate') }}
+{% endblock %}
+

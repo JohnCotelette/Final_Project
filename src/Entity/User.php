@@ -56,10 +56,12 @@ class User implements UserInterface
      *     min=8,
      *     max=30,
      *     minMessage="Votre mot de passe doit faire plus de {{ limit }} caractères",
-     *     maxMessage="Votre mot de passe ne peut dépasser {{ limit }} caractères"
+     *     maxMessage="Votre mot de passe ne peut dépasser {{ limit }} caractères",
+     *     groups={"RegisterAndReset"}
      * )
      * @Assert\NotBlank(
-     *     message="Veuillez renseigner votre mot de passe"
+     *     message="Veuillez renseigner votre mot de passe",
+     *     groups={"RegisterAndReset"}
      * )
      */
     private $password;
@@ -127,8 +129,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, nullable=true)
-     * @Assert\Regex(
-     *     pattern="/^(http|https|ftp):\/\/([\w]*)\.([\w]*)\.(com|net|org|biz|info|mobi|us|cc|bz|tv|ws|name|co|me)(\.[a-z]{1,3})?/",
+     * @Assert\Url(
      *     message="L'url est invalide (example de bon format: http://www.test.com)"
      * )
      * @Assert\Length(
@@ -197,7 +198,7 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -280,7 +281,7 @@ class User implements UserInterface
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
 
@@ -292,7 +293,7 @@ class User implements UserInterface
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): self
+    public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
 

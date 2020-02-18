@@ -1,0 +1,8 @@
+<nav id="dashboardNav">
+    <ul>
+        <li><a {{ app.request.attributes.get("_route") == 'candidate_dashboard' ? 'id="dashboardLinkSelected"' }} href="{{ path("candidate_dashboard") }}">Profil public</a></li>
+        <li><a {{ app.request.attributes.get("_route") == 'candidate_dashboard_updateprofile' ? 'id="dashboardLinkSelected"' }} href="{{ path("candidate_dashboard_updateprofile") }}">Mettre à jour</a></li>
+        <li><a {{ app.request.attributes.get("_route") == 'candidate_dasboard_applications' ? 'id="dashboardLinkSelected"' }} href="{{ path("candidate_dasboard_applications") }}">Mes candidatures</a></li>
+        <li><a {{ app.request.attributes.get("_route") == 'candidate_dashboard_cv' ? 'id="dashboardLinkSelected"' }} href="{{ path("candidate_dashboard_cv") }}">Mon CV</a></li>
+    </ul>
+</nav>
