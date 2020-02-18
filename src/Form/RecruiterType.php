@@ -109,6 +109,7 @@ class RecruiterType extends AbstractType
     {
         $resolver->setDefaults([
             "data_class" => User::class,
+            "validation_groups" => ["Default", "RegisterAndReset"],
             "csrf_protection" => true,
             "attr" => [
                 "novalidate" => "novalidate",
