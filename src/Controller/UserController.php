@@ -208,9 +208,7 @@ class UserController extends AbstractController
         $formResetPassword = $this->createForm(ResetPasswordDashboardType::class, null, [
             "ResetPasswordDashboard" => true,
         ]);
-        $formDeleteAccount = $this->createForm(ResetPasswordDashboardType::class, null, [
-            "ResetPasswordDashboard" => false,
-        ]);
+        $formDeleteAccount = $this->createForm(ResetPasswordDashboardType::class, null);
 
         $formProfile->handleRequest($request);
         $formResetPassword->handleRequest($request);
@@ -254,13 +252,7 @@ class UserController extends AbstractController
      */
     public function candidateApplications()
     {
-        $user = $this->getUser();
-        $applications = $user->getApplications();
-
-        return $this->render('/user/dashboard/candidate/applicationsCandidate.html.twig', [
-            "applications" => $applications,
-            "user" => $user
-        ]);
+        return $this->render("/user/dashboard/candidate/applicationsCandidate.html.twig");
     }
 
     /**
