@@ -10,18 +10,56 @@
 {% block content %}
     {{ include('user/dashboard/common_components/navbar.html.twig') }}
 
+    {% for success in app.flashes("successCvUpdated") %}
+        <div class="alert alert-success">{{ success }}</div>
+    {% endfor %}
+
+    <div id="bodyFilterDashboard" class="invisible"></div>
+
+    <div id="modalBoxContainer">
+        <div id="modalBoxContent">
+            <button id="closeModalBoxContainerButton"><i class="far fa-window-close"></i></button>
+
+            {{ form_start(formCv) }}
+                <div id="errorCvFormContainer" class="invisible"></div>
+
+                <div class="invisible">
+                    {{ form_widget(formCv.cvFile) }}
+                </div>
+
+                <div id="realFormContainer">
+                    <label id="fakeLabel" for="cv_cvFile_file">Selectionner un fichier...</label>
+
+                    <button id="formCvSubmitButton" class="invisible" type="submit">Valider</button>
+                </div>
+            {{ form_end(formCv) }}
+        </div>
+    </div>
+
     <h1>Administrez le CV automatiquement rattaché à vos candidatures</h1>
 
     <div id="cvContentContainer">
-        <section>
-            BLABLA
-        </section>
+        <div>
+            <p id="noticeCV">
+                <i class="fas fa-exclamation"></i>
+                    {% if user.cv != null %}
+                            <span>
+                                Remplacer votre CV actuel supprimera automatiquement l'ancien.
+                            </span>
+                    {% else %}
+                            <span>
+                                Vous ne disposez d'aucun CV enregistré.<br>
+                                Cliquez sur le bouton ci dessous pour en ajouter un.
+                            </span>
+                    {% endif %}
+            </p>
 
-        <section>
-            {% if user.cv %}
-                <iframe id="cvPreviewContainer" src="{{ asset('candidate_cv/' ~ user.cv.name ) }}"></iframe>
-            {% endif %}
-        </section>
+            <button id="addCvController">Envoyer un CV</button>
+        </div>
+
+        {% if user.cv %}
+            <iframe id="cvPreviewContainer" src="{{ asset('candidate_cv/' ~ user.cv.name ) }}"></iframe>
+        {% endif %}
     </div>
 {% endblock %}
 

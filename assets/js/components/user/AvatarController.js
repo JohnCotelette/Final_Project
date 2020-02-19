@@ -3,6 +3,7 @@ class AvatarController {
         this.avatarContainer = document.getElementById("avatarUser");
         this.changeAvatarContainer = document.getElementById("changeProfilPictureContainer");
         this.changeAvatarButton = document.getElementById("changeAvatarButton");
+
         this.modalBoxContainer = document.getElementById("modalBoxContainer");
         this.closeModalBoxContainerButton = document.getElementById("closeModalBoxContainerButton");
         this.avatarFormContainerFakeLabel = document.getElementById("fakeLabel");
@@ -10,6 +11,7 @@ class AvatarController {
         this.avatarFormSubmitButton = document.getElementById("formAvatarSubmitButton");
         this.avatarForm = document.querySelector("#modalBoxContent form");
         this.avatarFormErrorsContainer = document.getElementById("errorAvatarFormContainer");
+
         this.bodyFilterDashboard = document.getElementById("bodyFilterDashboard");
 
         this.maxSize = 1000000;
