@@ -4,15 +4,14 @@ class MobileNav {
         this.defaultLinksContainer = document.getElementById("defaultNavLinksContainer");
         this.defaultLinksSeparators = document.getElementsByClassName("defaultNavLinksSeparators");
 
-        this.totalPageContent = document.getElementById("totalPageContent");
-        this.mainPageContent = document.getElementsByTagName("main");
+        this.bodyFilter = document.getElementById("bodyFilter");
 
         this.state = 0;
     };
 
     displayMenu() {
         this.defaultLinksContainer.classList.toggle("mobileHidden");
-        this.totalPageContent.classList.toggle("blackFilter");
+        this.bodyFilter.classList.toggle("invisible");
 
         if (this.state === 0) {
             this.state = 1;
@@ -31,7 +30,7 @@ class MobileNav {
     initControls() {
         this.hamburgerButton.addEventListener("click", this.displayMenu.bind(this));
 
-        this.mainPageContent[0].addEventListener("click", () => {
+        this.bodyFilter.addEventListener("click", () => {
             if (this.state === 1) {
                 this.displayMenu();
             }
