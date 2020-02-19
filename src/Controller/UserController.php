@@ -258,44 +258,39 @@ class UserController extends AbstractController
     /**
      * @Route("/candidate/dashboard/cv", name= "candidate_dashboard_cv")
      * @param Request $request
-     * @param UserPasswordEncoderInterface $encoder
      * @return RedirectResponse|Response
      */
-    public function candidateCV(Request $request, UserPasswordEncoderInterface $encoder)
+    public function candidateCV(Request $request)
     {
-        $user = $this->getUser();
-      
-        if ($user) 
+    $user = $this->getUser();
+
+        $cv = new Cv();
+
+        $formCv = $this->createForm(CvType::class, $cv);
+
+        $formCv->handleRequest($request);
+
+        if ($formCv->isSubmitted() && $formCv->isValid())
         {
-            $cv = new Cv();
-            $formCv = $this->createForm(CvType::class, $cv);
-            $formCv->handleRequest($request);
-
-            // candidate change Cv
-            if ($formCv->isSubmitted() && $formCv->isValid()) 
+            if ($user->getCv())
             {
-                if ($user->getCv())
-                {
-                    $this->entityManager->remove( $user->getCv() );
-                }
-
-                $user->setCv($cv);
-
-                $this->entityManager->persist($cv);
-                $this->entityManager->flush();
-
-                $this->addFlash("successcandidate", "Votre Cv a bien été mis à jour.");
-
-                return $this->redirectToRoute("app_user_candidatecv");
+                $this->entityManager->remove($user->getCv());
             }
 
-            return $this->render('/user/dashboard/candidate/cvUpdateCandidate.html.twig', [
-                "formCv" => $formCv->createView(),
-                "user" => $user
-            ]);
+            $user->setCv($cv);
+
+            $this->entityManager->persist($cv);
+            $this->entityManager->flush();
+
+            $this->addFlash("successCvUpdated", "Votre CV a bien été mis à jour.");
+
+            return $this->redirectToRoute("candidate_dashboard_cv");
         }
 
-        return $this->redirectToRoute("login");
+        return $this->render('/user/dashboard/candidate/cvUpdateCandidate.html.twig', [
+            "formCv" => $formCv->createView(),
+            "user" => $user,
+        ]);
     }
 }
 

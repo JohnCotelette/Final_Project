@@ -1,14 +1,207 @@
+@import "../../core";
+
+/* -------------------------- MAIN -------------------------- */
+
+#bodyFilterDashboard {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.76);
+    z-index: 4;
+    animation: fadeIn 0.6s ease;
+}
+
+.alert {
+    margin-bottom: 25px !important;
+}
+
 /* -------------------------- CONTENT -------------------------- */
 
-#cvContentContainer {
-    display: flex;
-    justify-content: space-between;
+h1 {
+    margin-bottom: 30px;
+    color: $violet-clair;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 #cvPreviewContainer {
-    width: 550px;
-    height: 810px;
+    width: 700px;
+    height: 1020px;
     margin-bottom: 30px;
 }
 
+#noticeCV {
+    padding: 25px;
+    display: flex;
+    background-color: $violet-clair;
+    color: $blanc;
+    margin-bottom: 0;
+}
+
+#noticeCV svg {
+    margin: auto 20px auto 0;
+    font-size: 2em;
+}
+
+#noticeCV span {
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+}
+
+
+#cv_cvFile_file {
+    display: none;
+}
+
+#addCvController {
+    font-size: 1em;
+    text-transform: uppercase;
+    background-color: $violet-clair;
+    color: $blanc;
+    letter-spacing: 2px;
+    padding: 8px 16px;
+    border: none;
+    transition: 0.3s ease;
+    margin: 20px 0 35px;
+}
+
+#addCvController:hover {
+    color: $blanc-clair;
+    background-color: $violet-fonce;
+}
+
+/* -------------------------- MODAL-BOX -------------------------- */
+
+#modalBoxContainer {
+    position: fixed;
+    top: calc(50% - 100px);
+    left: 100%;
+    z-index: 1000;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    opacity: 0.93;
+    transition: all 0.4s ease;
+}
+
+#modalBoxContent {
+    position: relative;
+    width: 600px;
+    height: 250px;
+    margin: auto;
+    padding: 25px;
+    background-color: rgb(51, 51, 51);
+    color: $blanc-clair;
+    display: flex;
+}
+
+#modalBoxContent form {
+    margin: auto;
+}
+
+#modalBoxContent form label {
+    width: max-content;
+    cursor: pointer;
+    padding: 9px 25px;
+    border: 1px solid $blanc-clair;
+    margin: 0 auto;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+}
+
+#modalBoxContent form label:hover {
+    opacity: 1;
+}
+
+#realFormContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+#closeModalBoxContainerButton {
+    position: absolute;
+    right: 15px;
+    top: 5px;
+    background-color: transparent;
+    border: none;
+    color: $blanc;
+    transition: all 0.3s ease;
+    padding: 2px;
+    font-size: 2em;
+    opacity: 0.9;
+}
+
+#formCvSubmitButton {
+    width: max-content;
+    animation: fadeIn 0.6s ease both;
+    margin: 30px auto 0 auto;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 9px 25px;
+    background-color: $violet-clair;
+    color: $blanc-clair;
+    transition: color 0.3s ease;
+    border: none;
+}
+
+#formCvSubmitButton:hover {
+    color: $blanc;
+}
+
+#closeModalBoxContainerButton:hover {
+    color: $blanc-clair;
+    opacity: 1;
+}
+
+#errorCvFormContainer {
+    color: red;
+    font-size: 0.8em;
+    margin-bottom: 15px;
+    animation: shake 0.3s linear;
+    text-align: center;
+    font-weight: bold;
+}
+
 /* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-width: 1000px) {
+    #modalBoxContainer {
+        position: fixed;
+        max-width: 90%;
+        margin-left: 5%;
+        top: calc(50vh - 125px);
+    }
+
+    #modalBoxContent {
+        padding: 10px;
+    }
+
+    #modalBoxContent form label {
+        font-size: 0.8em;
+        max-width: 100%;
+    }
+
+    #formCvSubmitButton {
+        font-size: 0.9em;
+    }
+
+    #closeModalBoxContainerButton {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 810px) {
+    #cvPreviewContainer {
+        display: none;
+    }
+}
+
+@media (max-width: 740px) {
+    #noticeCV {
+        padding: 20px;
+    }
+}
