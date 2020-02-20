@@ -10,6 +10,7 @@ use App\Form\CandidatType;
 use App\Form\CvType;
 use App\Form\EditUserType;
 use App\Form\RecruiterType;
+use App\Form\ResetPasswordDashboardType;
 use App\Service\MailService;
 use App\Service\UserService;
 use App\Repository\BusinessRepository;
@@ -162,42 +163,90 @@ class UserController extends AbstractController
     }
     
     /**
-     * @Route("/candidate/dashboard/profile", name="candidate_dashboard_profile")
+     * @Route("/candidate/dashboard", name="candidate_dashboard", methods={"GET", "POST"})
      * @param Request $request
      * @return RedirectResponse|response
     */
-    public function candidateProfile(Request $request )
+    public function candidateProfile(Request $request)
     {
-        $user =$this->getUser();
+        $user = $this->getUser();
         $avatar = new Avatar();
 
-        if($user)
-        {
             $formAvatar = $this->createForm(AvatarType::class, $avatar);
             $formAvatar->handleRequest($request);
 
-            if($formAvatar->isSubmitted() && $formAvatar->isValid())
+            if ($formAvatar->isSubmitted() && $formAvatar->isValid())
             {
-                if($user->getAvatar())
+                if ($user->getAvatar())
                 {
                    $this->entityManager->remove($user->getAvatar());
                 }
-               
+
                  $user->setAvatar($avatar);
                  $this->entityManager->persist($avatar);
                  $this->entityManager->flush();
 
-                 $this->addFlash("success", "L'avatar a bien été ajouté/modifié.");
-                 $this->redirectToRoute("candidate_dashboard_profile");
+                 $this->redirectToRoute("candidate_dashboard");
             }
-            
-            return $this->render('/user/dashboard/candidate/profileCandidate.html.twig', [
-                 "user" => $user,
-                 "formAvatar" => $formAvatar->createView()
-            ]);
+
+        return $this->render('/user/dashboard/candidate/profileCandidate.html.twig', [
+             "user" => $user,
+             "formAvatar" => $formAvatar->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/candidate/dashboard/updateprofile", name="candidate_dashboard_updateprofile", methods={"GET", "POST"})
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function candidateUpdateProfile(Request $request)
+    {
+        $user = $this->getUser();
+
+        $formProfile = $this->createForm(EditUserType::class, $user);
+        $formResetPassword = $this->createForm(ResetPasswordDashboardType::class, null, [
+            "ResetPasswordDashboard" => true,
+        ]);
+        $formDeleteAccount = $this->createForm(ResetPasswordDashboardType::class, null, [
+            "ResetPasswordDashboard" => false,
+        ]);
+
+        $formProfile->handleRequest($request);
+        $formResetPassword->handleRequest($request);
+        $formDeleteAccount->handleRequest($request);
+
+        if ($formProfile->isSubmitted() && $formProfile->isValid()) {
+            $this->entityManager->flush();
+
+            $this->addFlash("successProfileUpdated", "Votre profil a bien été mis à jour.");
+
+            return $this->redirectToRoute('candidate_dashboard');
         }
 
-       return $this->redirectToRoute("login");
+        if ($formResetPassword->isSubmitted() && $formResetPassword->isValid()) {
+            $user->setPassword($this->encoder->encodePassword($user, $formResetPassword["newPassword"]->getData()));
+
+            $this->addFlash("successPasswordChanged", "Votre mot de passe a bien été modifié.");
+
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('candidate_dashboard');
+        }
+
+        if ($formDeleteAccount->isSubmitted() && $formDeleteAccount->isValid()) {
+            $this->entityManager->remove($user);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute("home");
+        }
+
+        return $this->render('/user/dashboard/candidate/profileUpdateCandidate.html.twig', [
+            "formProfile" => $formProfile->createView(),
+            "formResetPassword" => $formResetPassword->createView(),
+            "formDeleteAccount" => $formDeleteAccount->createView(),
+            "user" => $user,
+        ]);
     }
 
     /**
@@ -212,44 +261,6 @@ class UserController extends AbstractController
             "applications" => $applications,
             "user" => $user
         ]);
-    }
-
-    /**
-     * @Route("/candidate/dashboard/updateprofile", name="candidate_dashboard_updateprofile")
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $encoder
-     * @return RedirectResponse|Response
-     */
-    public function candidateUpdateProfile(Request $request, UserPasswordEncoderInterface $encoder)
-    {
-        $user = $this->getUser();
-      
-        if ($user) 
-        {
-            $form = $this->createForm(EditUserType::class, $user);
-
-            $form->handleRequest($request);
-  
-             // Update profile candidate
-            if ($form->isSubmitted() && $form->isValid())
-            {
-                $password = $encoder->encodePassword( $user, $user->getPassword());
-                $user->setPassword( $password );
-
-                $this->entityManager->persist($user);
-                $this->entityManager->flush();
-
-                $this->addFlash("successcandidate", "Votre profil a bien été mis à jour.");
-                return $this->redirectToRoute('candidate_dashboard_profile');
-            }
-
-            return $this->render('/user/dashboard/candidate/profileUpdateCandidate.html.twig', [
-                "form" => $form->createView(),
-                "user" => $user
-            ]);
-        }
-
-        return $this->redirectToRoute("login");
     }
 
     /**

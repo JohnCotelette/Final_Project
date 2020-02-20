@@ -1,22 +1,51 @@
 {% extends 'layout.html.twig' %}
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('candidate_dashboard') }}
+    {{ encore_entry_link_tags("dashboard") }}
+    {{ encore_entry_link_tags('candidateDashboardProfile') }}
 {% endblock %}
 
 {% block title %}{{ parent() }}Profil - {{ user.firstName }}{% endblock %}
 
 {% block content %}
-    {% include 'user/dashboard/candidate/common_components/navbar.html.twig' %}
+    {% include 'user/dashboard/common_components/navbar.html.twig' %}
+
+    {% for error in app.flashes("successProfileUpdated") %}
+        <div class="alert alert-success">{{ error }}</div>
+    {% endfor %}
+
+    {% for error in app.flashes("successPasswordChanged") %}
+        <div class="alert alert-success">{{ error }}</div>
+    {% endfor %}
+
+    <div id="modalBoxContainer">
+        <div id="modalBoxContent">
+            <button id="closeModalBoxContainerButton"><i class="far fa-window-close"></i></button>
+
+            {{ form_start(formAvatar) }}
+                <div id="errorAvatarFormContainer" class="invisible"></div>
+
+                <div class="invisible">
+                    {{ form_widget(formAvatar.avatarFile) }}
+                </div>
+
+                <div id="realFormContainer">
+                    <label id="fakeLabel" for="avatar_avatarFile_file">Selectionner un fichier...</label>
+
+                    <button id="formAvatarSubmitButton" class="invisible" type="submit">Valider</button>
+                </div>
+            {{ form_end(formAvatar) }}
+        </div>
+    </div>
 
     <div id="dashboardContent">
         <section id="leftSection">
             <div class="tab-content">
                 <div class="imgContainer">
                     <figure id="avatarUser">
-                        <button id="btnAvatarUser" type="button" class="btn btn-primary invisible" data-toggle="modal" data-target="#exampleModalCenter">
-                            Changer de photo
-                        </button>
+                        <div id="changeProfilPictureContainer">
+                            <a href="#" id="changeAvatarButton">Mettre à jour</a>
+                        </div>
 
                         <img src="{{ user.avatar ? asset('user_avatars/' ~ user.avatar.name) : asset('build/images/question_mark.42e63c4a.png') }}" />
                     </figure>
@@ -29,72 +58,45 @@
 
             <hr class="superSeparators">
 
-            <div id="contactInformationsContainer">
-                <h2>Informations générales</h2>
+            <div id="generalsInformationsContainer">
+                <h2><i class="fas fa-eye"></i> Informations générales</h2>
 
-                <span>Email : {{ user.email }}</span>
-                <span>Inscrit le : </span>
+                <div class="infosContainers">
+                    <span class="labelsInfos">Inscrit depuis le :</span>
+                    <span class="infos">{{ user.createdAt | date("d-m-Y") }}</span>
+                </div>
+
+                <div class="infosContainers">
+                    <span class="labelsInfos">Date de naissance :</span>
+                    <span class="infos">{{ user.birthday | date("d-m-Y") }}</span>
+                </div>
+            </div>
+
+            <hr class="superSeparators">
+
+            <div id="contactInformationsContainer">
+                <h2><i class="fas fa-eye"></i> Informations de contact</h2>
+
+                <div class="infosContainers">
+                    <span class="labelsInfos">Email :</span>
+                    <span class="infos">{{ user.email }}</span>
+                </div>
+
+                <div class="infosContainers">
+                    <span class="labelsInfos">Téléphone :</span>
+                    <span class="infos">{{ user.phoneNumber }}</span>
+                </div>
+
+                <div class="infosContainers">
+                    <span class="labelsInfos">Website :</span>
+                    <span class="infos">{{ user.website }}</span>
+                </div>
             </div>
         </section>
     </div>
-
-
-
-
-
-                <!--
-                <div id="myModal" class="modal">
-                    <div class="modal-content">
-                        <span id="spanModal" class="close">&times;</span>
-                        {{ form_start(formAvatar) }}
-                            {{ form_label(formAvatar.avatarFile) }}
-
-                            {% if form_errors(formAvatar.avatarFile) %}
-                                <div id="avatarError" class="alert alert-warning">
-                                    {{ form_errors(formAvatar.avatarFile)  }}
-                                </div>
-                            {% endif %}
-
-                            <div class="d-flex justify-content-around">
-                                <div>
-                                    {{ form_widget(formAvatar.avatarFile) }}
-                                </div>
-                                <div>
-                                    {{ form_label(formAvatar.save) }}
-                                    {{ form_widget(formAvatar.save) }}
-                                </div>
-                            </div>
-                        {{ form_end(formAvatar) }}
-                    </div>
-                </div>
-            </div>
-        </div>
-            {#  add all file dashboard user  #}
-        <div class="fade show">
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>Nom:</th>
-                        <td>{{ user.firstName }}</td>
-                    </tr>
-                    <tr>
-                        <th>Prénom:</th>
-                        <td>{{ user.lastName }}</td>
-                    </tr>
-                    <tr>
-                    <tr>
-                        <th>Email</th>
-                        <td>{{ user.email }}</td>
-                    </tr>
-                    <th>Date de naissance</th>
-                    <td>{{ user.birthDay ? user.birthDay|date('d-m-Y') }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>-->
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags("candidate_dashboard") }}
+    {{ encore_entry_script_tags("dashboard") }}
+    {{ encore_entry_script_tags("candidateDashboardProfile") }}
 {% endblock %}

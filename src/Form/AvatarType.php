@@ -16,47 +16,38 @@ class AvatarType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $constraints = [
+            new File([
+                "maxSize" => "1M",
+                 "mimeTypes" => [
+                    "image/jpeg",
+                    "image/png",
+                ],
+            ])
+        ];
+
+        if( $options['require_avatar'] ){
+            $constraints[] = new NotNull();
+        }
+
         $builder
         ->add("avatarFile", VichFileType::class, [
-            "attr" => [
-                "class" => "",
-            ],
-            
-            "allow_delete" => true,
+
+            "allow_delete" => false,
             "by_reference" => false,
-            'download_link'  => false,
-            'required'  => false,
+            "download_link" => false,
+            "required" => false,
             "label" => false,
-            "constraints" => [
-                new NotNull([
-                    "message" => "Veuillez selectionner une image"
-                ]),
-                new File([
-                    "maxSize" => "1M",
-                     "mimeTypes" => [
-                        "image/jpeg",
-                        "image/png",
-                    ],
-                    'mimeTypesMessage' => "l'avatar doit être au format jpeg ou png",
-                    'maxSizeMessage' => 'Votre fichier est trop volumineux ({{ limit }} maximum)',
-                ])],
-        ])
-        ->add("save", SubmitType::class, [
-            "label" => "ajouter/modifier avatar",
-            "attr" => [
-                "class" => "commonButtons",
-            ]
+            "constraints" => $constraints,
         ]);
-        
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Avatar::class,
-            'attr' => [
-                "class" => "formAvatar",
-            ],
+            "data_class" => Avatar::class,
+            "csrf_protection" => true,
+            "require_avatar" => true,
         ]);
     }
 }

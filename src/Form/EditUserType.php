@@ -16,22 +16,11 @@ class EditUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("email", EmailType::class, [
-                "attr" => [
-                    "placeholder" => "Email",
-                ],
-            ])
             ->add("firstName", TextType::class, [
-                "label" => 'Prénom',
-                "attr" => [
-                    "placeholder" => "Prénom",
-                ],
+                "label" => "Prénom",
             ])
             ->add("lastName", TextType::class, [
                 "label" => "Nom",
-                "attr" => [
-                    "placeholder" => "Nom",
-                ],
             ])
             ->add("birthDay", BirthdayType::class, [
                 "label" => "Date de naissance",
@@ -40,12 +29,18 @@ class EditUserType extends AbstractType
                     "month" => "Mois",
                     "year" => "Année",
                 ],
-                "years" => range(date('Y') - 65, date('Y') - 17)
+                "years" => range(date("Y") - 65, date("Y") - 17)
             ])
-            ->add("Sauvegarder les changements", SubmitType::class, [
-                "label" => "Sauvegarder les changements",
+            ->add("phoneNumber", TextType::class, [
+                "label" => "Téléphone",
                 "attr" => [
-                    "class" => "btn btn-primary",
+                    "maxlength" => 12,
+                ]
+            ])
+            ->add("webSite", TextType::class, [
+                "label" => "Site Web",
+                "attr" => [
+                    "maxlength" => 180,
                 ]
             ]);
     }
@@ -54,9 +49,10 @@ class EditUserType extends AbstractType
     {
         $resolver->setDefaults([
             "data_class" => User::class,
-            'csrf_protection' => true,
-            'attr' => [
-                'novalidate' => 'novalidate',
+            "csrf_protection" => true,
+            "attr" => [
+                "novalidate" => "novalidate",
+                "id" => "formProfile",
             ],
         ]);
     }

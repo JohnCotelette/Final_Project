@@ -66,6 +66,7 @@ class ResetPasswordType extends AbstractType
     {
         $resolver->setDefaults([
             "csrf_protection" => true,
+            "validation_groups" => ["Default", "RegisterAndReset"],
             "attr" => [
                 "novalidate" => "novalidate",
             ]

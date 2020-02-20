@@ -1,0 +1,111 @@
+@import "../../../core.scss";
+
+/* -------------------------- MAIN -------------------------- */
+
+main {
+    width: 80%;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+/* -------------------------- NAV-BAR -------------------------- */
+
+#dashboardNav {
+    display: flex;
+    justify-content: flex-end;
+    margin: 40px 0;
+    width: 100%;
+}
+
+#dashboardNav ul {
+    display: flex;
+    width: 500px;
+    list-style: none;
+    margin: 0;
+    height: 50px;
+    border: 1px solid rgba(51, 51, 51, 0.4);
+    padding: 0;
+}
+
+#dashboardNav ul li {
+    margin: auto;
+    font-size: 0.9em;
+}
+
+#dashboardNav ul li a {
+    color: rgba(51, 51, 51, 0.9);
+    transition: color 0.3s ease;
+}
+
+#dashboardNav ul li a:hover, #dashboardNav ul li a:active, #dashboardNav ul li a:visited {
+    color: rgba(51, 51, 51, 0.9);
+    text-decoration: none;
+}
+
+#dashboardNav ul li a:hover {
+    color: black;
+}
+
+#dashboardLinkSelected {
+    font-weight: bold;
+}
+
+/* -------------------------- CONTENT -------------------------- */
+
+.superSeparators {
+    margin: 35px 0;
+    color: rgba(51, 51, 51, 0.5);
+}
+
+h2 {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    color: rgba(51, 51, 51, 0.7);
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+}
+
+h2 svg {
+    margin-right: 6px;
+}
+
+/* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-width: 1500px) {
+    main {
+        width: 90%;
+    }
+}
+
+@media (max-width: 1000px) {
+    #dashboardNav {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 750px) {
+    #dashboardNav ul {
+        max-width: 100%;
+    }
+
+    #dashboardNav ul li {
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 650px) {
+    #dashboardNav {
+        margin: 30px 0;
+    }
+
+    #dashboardNav ul {
+        flex-wrap: wrap;
+        height: 70px;
+    }
+
+    #dashboardNav ul li {
+        width: 45%;
+        text-align: center;
+    }
+}

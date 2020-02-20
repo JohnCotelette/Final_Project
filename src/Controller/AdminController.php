@@ -16,14 +16,9 @@ class AdminController extends EasyAdminController
     /**
      * @Route("/admin/dashboard", name="admin_dashbord")
      */
-    public function index(BusinessRepository $businessRepository, UserRepository $userRepository)
+    public function index()
     {
-        $business = $businessRepository->findAll();
-        $users = $userRepository->findAll();
-
-        return $this->render('bundles/EasyAdminBundle/default\dashbord.html.twig', [
-            'business' => $business,
-            'users' => $users,
+        return $this->render('bundles/EasyAdminBundle/default\index.html.twig', [
         ]);
     }
 }

@@ -114,4 +114,8 @@ class Avatar implements \Serializable
         ) = unserialize($serialized);
     }
 
+    public function __toString()
+    {
+        return $this->name ?? '';
+    }
 }
