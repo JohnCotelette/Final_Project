@@ -3,7 +3,10 @@ easy_admin:
   formats:
       datetime: 'd/m/Y'
   design:
-        brand_color: '#4115cf'
+        brand_color: '#81b9ba'
+        assets:
+            css: ['build/easyAdmin.css']
+            # js: ['build/runtime.js', 'build/vendors~app.js', 'build/easyAdmin.js']
         menu:
             - { label: 'Dashboard', route: 'admin_dashbord', default: true , icon: 'chalkboard' }
             - { entity: 'User', icon: 'user-tie' }
@@ -11,9 +14,8 @@ easy_admin:
             - { entity: 'Application', icon: 'mail-bulk' }
             - { entity: 'Category', icon: 'folder' }
             - { entity: 'Field', icon: 'book' }
-            # - { entity: 'CV', icon: 'envelope-open-text' }
-        assets:
-          css: ['/assets/css/easyAdmin/easyAdmin.scss']    
+            - { label : 'Accueil', route: 'home', icon: 'home' }
+
   entities:
 
   # Entity User
@@ -24,65 +26,39 @@ easy_admin:
       label: Utilisateurs
       list:
         fields:
-            - property: firstName
-              label: Prénom
-            - property: lastName
-              label: Nom
-            - property: roles
-              label: Rôle
-            - property: email
-              label: Email
-              type: 'email'
-            - property: isActive
-              label: Compte
-            - property: birthDay
-              label: Date de naissance
-              type: date
-            - property: business
-              label: Entreprise
-            - property: avatar
-              label: Avatar
-            - property: cv
-              label: CV
-        filters: ['business', 'roles']    
+            - { property: firstName, label: Prénom }
+            - { property: lastName, label: Nom }
+            - { property: roles, label: Rôle }
+            - { property: email, label: Email, type: 'email' }
+            - { property: isActive, label: Compte activé }
+            - { property: birthDay, label: Date de naissance, type: date }
+            - { property: business, label: Entreprise, type: text }
+            - { property: avatar, label: Avatar, type: image, base_path: '/user_avatars' }
+            - { property: cv, label: CV, type: boolean }
+        filters: ['business', 'roles']
+      new:
+        fields:
+          - { type: 'group', label: 'Informations de connexion ', icon: 'lock', columns: 12 }
+          - { property: password, label: 'Mot de passe', type: 'repeated', type_options: { invalid_message: 'Les mots de passe doivent être identiques', first_options: { label: 'Mot de passe' }, second_options: { label: 'Confirmer mot de passe' } } }
+      edit:
+        title: Modification de l'%%entity_label%%
+        
       form:
         form_options: { validation_groups: [] }
-        new:
-          title: Ajouter un utilisateur
-        edit:
-          title: Modifier un utilisateur  
         fields:
-          - { type: 'group', columns: 4, label: 'informations de base' }
-          - property: firstName
-            label: Prénom
-          - property: lastName
-            label: Nom
+          - { type: 'group', columns: 6, label: 'informations de base' }
+          - { property: firstName, label: Prénom }
+          - { property: lastName, label: Nom }
           - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_ADMIN': 'ROLE_ADMIN','ROLE_CANDIDATE': 'ROLE_CANDIDATE','ROLE_RECRUITER': 'ROLE_RECRUITER' } } }  
-          - { type: 'group', label: ' informations de contact ', icon: 'phone', columns: 4 }
-          - property: email
-            label: Email
-          # - property: business
-          #   label: Entreprise  
-          - { type: 'group', label: ' Autres informations',  columns: 4 }
-          - property: birthDay
-            label: Date de naissance
-            type: date
-            type_options:
-              widget: single_text
-          - property: isActive
-            label: Compte
-          - property: password
-            css_class: 'd-none'
-            type: text
-            type_options:
-              mapped: false
-              disabled: true
-          - property: webSite
-            type: text
+          - { type: 'group', label: ' informations de contact ', icon: 'phone', columns: 6 }
+          - { property: email, label: Email }
+        # - { property: busines label: Entreprise }
+          - { type: 'group', label: ' Autres informations',  columns: 6 }
+          - { property: birthDay, label: Date de naissance, type: date, type_options: { widget: single_text } }
+          - { property: isActive, label: Compte activé }
+          - { property: webSite, type: text }
           - { type: 'group', label: 'images', icon: 'portrait',  columns: 6}
-          - { property: 'avatar', label: 'Avatar', type: 'file' }
-          - { type: 'group', label: 'attachement', icon: 'paperclip',  columns: 6}
-          # - { property: 'cv', label: 'CV'}
+          - { property: 'avatar', type: App\Form\AvatarType, type_options: { require_avatar: false } }
           
   # Entity Offer
   #---------------------------------------------------------------------------------------------------------------------------------------------
@@ -91,43 +67,25 @@ easy_admin:
       label: Annonces
       list:
           fields:
-              - property: title
-                label: Titre
-              - property: description
-                label: Description
-              - property: profilRequired
-                label: Compétences
-              - property: experience
-                label: Experiences
-              - property: location
-                label: Adresse
-              - property: 'created_at'
-                label: Créer le 
+              - { property: title, label: Titre }
+              - { property: description, label: Description }
+              - { property: profilRequired, label: Compétences }
+              - { property: experience, label: Experiences }
+              - { property: location, label: Adresse }
+              - { property: 'created_at', label: Créer le }
           sort: ['created_at', 'DESC']  
           filters: ['created_at', 'location', 'experience']        
       form:
           edit:
-                title:  "changer l'annonce"
+                title: "Changer l'annonce"
           fields:
             - { type: 'section', label: 'entéte-annonce'}
-            - property: title
-              label: Titre
-            - property: profilRequired
-              label: Compétences
-            - property: 'experience'
-              label: 'Experience'
-              type: choice
-              type_options:
-                choices:
-                  'Tous': 'Tous'
-                  'Junior moin 2ans': 'Junior moin 2ans' 
-                  'Confirmé (3 à 6 ans)': 'Confirmé (3 à 6 ans)'
-                  'Senior (7 ans et plus)': 'Senior (7 ans et plus)'
-            - property: location
-              label: Adresse
+            - { property: title, label: Titre }
+            - { property: profilRequired, label: Compétences }
+            - { property: 'experience', label: 'Experience', type: 'choice', type_options: { choices: { 'Tous':'Tous', 'Junior moins de 2ans':'Junior moins de 2ans', 'Confirmé (3 à 6 ans)': 'Confirmé (3 à 6 ans)', 'Senior (7 ans et plus)': 'Senior (7 ans et plus)' } } }
+            - { property: location, label: Adresse }
             - { type: 'section', label: "Description de l'annonce"}  
-            - property: description
-              label: Description
+            - { property: description, label: Description }
            
   # Entity Application
   #---------------------------------------------------------------------------------------------------------------------------------------------
@@ -136,32 +94,18 @@ easy_admin:
       label: Candidatures
       list:
           fields:
-              - property: user
-                label: Candidat
-              - property: offer
-                label: Offre
-                redirect: false
-              - property: created_at
-                label:  Date de création
-              - property: motivation
-                label: Motivation
+              - { property: user,                label: Candidat }
+              - { property: created_at,                label:  Date de candidature }
+              - { property: motivation,                label: Motivation }
           sort: ['created_at', 'DESC']  
           filters: ['user', 'offer', 'created_at']      
       form:
           fields:
               - { type: 'group', columns: 4, label: 'Candidat' }
-              - property: user
-                label:  Candidat
-                type: 'easyadmin_autocomplete'
-                type_options: { class: 'App\Entity\User' }
-              - property: created_at
-                label:  Date de création
-                type: date
-                type_options:
-                  widget: single_text
+              - { property: user, label: Candidat, type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\User' } }
+              - { property: created_at, label: Date de création, type: date, type_options: { widget: single_text } }
               - { type: 'group', columns: 8, label: 'Message de motivation' }    
-              - property: motivation
-                label: Motivation
+              - { property: motivation, label: Motivation }
 
   # Entity Category
   #---------------------------------------------------------------------------------------------------------------------------------------------
@@ -170,20 +114,14 @@ easy_admin:
       label: Categories
       list:
           fields:
-              - property: name
-                label:  Nom
-              - property: field
-                label:  Domaine
+              - { property: name, label: Nom }
+              - { property: field, label: Domaine }
       form:
           fields:
-              - { type: 'section', label: "Nom du category"}  
-              - property: name
-                label:  Nom
+              - { type: 'section', label: "Nom de la catégorie"}  
+              - { property: name, label: Catégorie }
               - { type: 'section', label: "Nom du domaine"} 
-              - property: field
-                label:  Domaine
-                type: 'easyadmin_autocomplete'
-                type_options: { class: 'App\Entity\Field' }
+              - { property: field, label: Domaine, type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Field' } }
 
   # Entity Field
   #---------------------------------------------------------------------------------------------------------------------------------------------
@@ -192,21 +130,12 @@ easy_admin:
        label: Domaines
        list:
            fields:
-               - property: name
-                 label:  Nom
-               - property: color
-                 label:  couleur
+               - { property: name, label: Nom }
+               - { property: color, label: couleur }
        form:
            fields:
              - { type: 'section', label: "Nom du domaine"}  
-             - property: name
-               label:  Nom 
+             - { property: name, label: Nom }
              - { type: 'section', label: "couleur du domaine"} 
-             - property: color
-               label: Couleur 
-  # Entity Avatar
-  #---------------------------------------------------------------------------------------------------------------------------------------------
-    Avatar:
-        class: App\Entity\Avatar              
-              
-                            
+             - { property: color, label: Couleur }
+            

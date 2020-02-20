@@ -16,22 +16,29 @@ class AvatarType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $constraints = [
+            new File([
+                "maxSize" => "1M",
+                 "mimeTypes" => [
+                    "image/jpeg",
+                    "image/png",
+                ],
+            ])
+        ];
+
+        if( $options['require_avatar'] ){
+            $constraints[] = new NotNull();
+        }
+
         $builder
         ->add("avatarFile", VichFileType::class, [
-            "allow_delete" => true,
+
+            "allow_delete" => false,
             "by_reference" => false,
             "download_link" => false,
             "required" => false,
             "label" => false,
-            "constraints" => [
-                new NotNull(),
-                new File([
-                    "maxSize" => "1M",
-                     "mimeTypes" => [
-                        "image/jpeg",
-                        "image/png",
-                    ],
-                ])],
+            "constraints" => $constraints,
         ]);
     }
 
@@ -40,6 +47,7 @@ class AvatarType extends AbstractType
         $resolver->setDefaults([
             "data_class" => Avatar::class,
             "csrf_protection" => true,
+            "require_avatar" => true,
         ]);
     }
 }
