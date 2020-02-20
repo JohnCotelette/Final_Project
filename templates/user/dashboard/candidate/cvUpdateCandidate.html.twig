@@ -1,51 +1,69 @@
 {% extends 'layout.html.twig' %}
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('candidate_dashboard') }}
+    {{ encore_entry_link_tags("dashboard") }}
+    {{ encore_entry_link_tags("candidateDashboardCV") }}
 {% endblock %}
 
-{% block title %}{{ parent() }}Profil - {{ user.firstName }}{% endblock %}
-{% form_theme formCv 'bootstrap_4_layout.html.twig' %}
+{% block title %}{{ parent() }}Profil - {{ user.firstName }} - Votre CV{% endblock %}
 
 {% block content %}
+    {{ include('user/dashboard/common_components/navbar.html.twig') }}
 
-    {% for label, messages in  app.flashes %}
-    <div class="container">
-        {% for message in messages %}
-            <div class="alert alert-{{ label }}" role="alert">
-                {{ message | raw }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        {% endfor %}
-    </div>
+    {% for success in app.flashes("successCvUpdated") %}
+        <div class="alert alert-success">{{ success }}</div>
     {% endfor %}
 
-    <div class="container-fluid">
-        <div class="row flex ">
-            <div class="container-fluid">
-                <div class="row flex ">
-                    <div class="col-lg-2 col-md-2 col-sm-12 flex-grow-1  heightmenu ">
-                        {% include 'user/dashboard/candidate/navcandidate.html.twig' %}
-                    </div>    
-                    <div class="col-lg-10 col-md-10 col-sm-12">
-                        <h1 class=" text-center  my-5"> {{ user.lastName }}-{{ user.firstName }}</h1>
-                                                   
-                        <div class="align-self-center mb-3">
-                            {{ form_start(formCv) }}
-    
-                            {{ form_end(formCv) }}
-                           
-                            {% if user.cv %}
-                                <iframe src="{{ asset('candidate_cv/' ~ user.cv.name ) }}" frameborder="0"
-                                        style="height: 100vh; width: 100%">
-                                </iframe>
-                            {% endif %}
-                        </div>    
-                    </div>   
-                </div>   
-            </div>
+    <div id="bodyFilterDashboard" class="invisible"></div>
+
+    <div id="modalBoxContainer">
+        <div id="modalBoxContent">
+            <button id="closeModalBoxContainerButton"><i class="far fa-window-close"></i></button>
+
+            {{ form_start(formCv) }}
+                <div id="errorCvFormContainer" class="invisible"></div>
+
+                <div class="invisible">
+                    {{ form_widget(formCv.cvFile) }}
+                </div>
+
+                <div id="realFormContainer">
+                    <label id="fakeLabel" for="cv_cvFile_file">Selectionner un fichier...</label>
+
+                    <button id="formCvSubmitButton" class="invisible" type="submit">Valider</button>
+                </div>
+            {{ form_end(formCv) }}
         </div>
-    </div>  
+    </div>
+
+    <h1>Administrez le CV automatiquement rattaché à vos candidatures</h1>
+
+    <div id="cvContentContainer">
+        <div>
+            <p id="noticeCV">
+                <i class="fas fa-exclamation"></i>
+                    {% if user.cv != null %}
+                            <span>
+                                Remplacer votre CV actuel supprimera automatiquement l'ancien.
+                            </span>
+                    {% else %}
+                            <span>
+                                Vous ne disposez d'aucun CV enregistré.<br>
+                                Cliquez sur le bouton ci dessous pour en ajouter un.
+                            </span>
+                    {% endif %}
+            </p>
+
+            <button id="addCvController">Envoyer un CV</button>
+        </div>
+
+        {% if user.cv %}
+            <iframe id="cvPreviewContainer" src="{{ asset('candidate_cv/' ~ user.cv.name ) }}"></iframe>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags("dashboard") }}
+    {{ encore_entry_script_tags("candidateDashboardCV") }}
 {% endblock %}

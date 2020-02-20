@@ -3,6 +3,7 @@ class AvatarController {
         this.avatarContainer = document.getElementById("avatarUser");
         this.changeAvatarContainer = document.getElementById("changeProfilPictureContainer");
         this.changeAvatarButton = document.getElementById("changeAvatarButton");
+
         this.modalBoxContainer = document.getElementById("modalBoxContainer");
         this.closeModalBoxContainerButton = document.getElementById("closeModalBoxContainerButton");
         this.avatarFormContainerFakeLabel = document.getElementById("fakeLabel");
@@ -10,6 +11,8 @@ class AvatarController {
         this.avatarFormSubmitButton = document.getElementById("formAvatarSubmitButton");
         this.avatarForm = document.querySelector("#modalBoxContent form");
         this.avatarFormErrorsContainer = document.getElementById("errorAvatarFormContainer");
+
+        this.bodyFilterDashboard = document.getElementById("bodyFilterDashboard");
 
         this.maxSize = 1000000;
         this.exts = ["jpeg", "jpg", "png"];
@@ -30,10 +33,12 @@ class AvatarController {
 
     displayChangeAvatarFormContainer() {
         this.modalBoxContainer.style.left = "0";
+        this.bodyFilterDashboard.classList.remove("invisible");
     };
 
     hideChangeAvatarFormContainer() {
         this.modalBoxContainer.style.left = "100%";
+        this.bodyFilterDashboard.classList.add("invisible");
     };
 
     changeFakeLabel() {
@@ -125,6 +130,7 @@ class AvatarController {
         });
 
         this.closeModalBoxContainerButton.addEventListener("click", this.hideChangeAvatarFormContainer.bind(this));
+        this.bodyFilterDashboard.addEventListener("click", this.hideChangeAvatarFormContainer.bind(this));
 
         this.avatarFormInputFile.addEventListener("input", this.changeFakeLabel.bind(this));
 

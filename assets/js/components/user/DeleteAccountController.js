@@ -5,7 +5,7 @@ class DeleteAccountController {
     };
 
     askConfirm() {
-        let dangerousConfirm = window.confirm("Votre compte sera supprimé\nCette action est irréversible\nEtes vous sur de vouloir continuer ?");
+        let dangerousConfirm = window.confirm("Votre compte sera supprimé.\nCette action est irréversible...\nEtes vous sur de vouloir continuer ?");
 
         if (dangerousConfirm) {
             this.deleteAccountForm.submit();

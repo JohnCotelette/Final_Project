@@ -17,39 +17,32 @@ class CvType extends AbstractType
     {
         $builder
             ->add("cvFile", VichFileType::class, [
-                "label" => "Cv (au format PDF)",
-
-                "attr" => [
-                    "class" => " btn btn-default btn-file",
-                ],
+                "label" => false,
                 "required" => true,
                 "allow_delete" => true,
                 "download_label" => true,
                 "by_reference" => false,
                 "constraints" => [
                     new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'application/pdf',
-                            'application/x-pdf',
+                        "maxSize" => "1024k",
+                        "mimeTypes" => [
+                            "application/pdf",
+                            "application/x-pdf",
                         ],
-                        'mimeTypesMessage' => 'Le Cv doit être au format PDF',
-                        'maxSizeMessage' => 'Votre fichier est trop volumineux ({{ limit }} maximum)',
+                        "mimeTypesMessage" => "Le Cv doit être au format PDF",
+                        "maxSizeMessage" => "Votre fichier est trop volumineux ({{ limit }} maximum)",
                     ])],
-            ])
-            ->add("save", SubmitType::class, [
-                "label" => "télécharger ",
-                "attr" => [
-                    "class" => "btn btn-primary",
-                ]
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Cv::class,
-            'csrf_protection' => true,
+            "data_class" => Cv::class,
+            "csrf_protection" => true,
+            "attr" => [
+                "id" => "cvForm",
+            ],
         ]);
     }
 }
