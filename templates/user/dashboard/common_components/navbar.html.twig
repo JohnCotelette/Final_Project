@@ -1,8 +1,18 @@
+{% set userRole = app.user.roles %}
+
 <nav id="dashboardNav">
     <ul>
-        <li><a {{ app.request.attributes.get("_route") == 'candidate_dashboard' ? 'id="dashboardLinkSelected"' }} href="{{ path("candidate_dashboard") }}">Profil public</a></li>
-        <li><a {{ app.request.attributes.get("_route") == 'candidate_dashboard_updateprofile' ? 'id="dashboardLinkSelected"' }} href="{{ path("candidate_dashboard_updateprofile") }}">Mettre à jour</a></li>
-        <li><a {{ app.request.attributes.get("_route") == 'candidate_dasboard_applications' ? 'id="dashboardLinkSelected"' }} href="{{ path("candidate_dasboard_applications") }}">Mes candidatures</a></li>
-        <li><a {{ app.request.attributes.get("_route") == 'candidate_dashboard_cv' ? 'id="dashboardLinkSelected"' }} href="{{ path("candidate_dashboard_cv") }}">Mon CV</a></li>
+        <li><a {{ currentRoute == 'candidate_dashboard' or currentRoute == 'recruiter_dashboard' ? 'id="dashboardLinkSelected"' }} href="{{ userRole == ["ROLE_RECRUITER"] ? path("recruiter_dashboard") : path("candidate_dashboard") }}">Profil public</a></li>
+        <li><a {{ currentRoute == 'candidate_dashboard_updateprofile' or currentRoute == 'recruiter_dashboard_updateprofile' ? 'id="dashboardLinkSelected"' }} href="{{ userRole == ["ROLE_RECRUITER"] ? path("recruiter_dashboard_updateprofile") : path("candidate_dashboard_updateprofile") }}">Mettre à jour</a></li>
+
+        {% if userRole == ["ROLE_CANDIDATE"] %}
+            <li><a {{ currentRoute == 'candidate_dashboard_applications' ? 'id="dashboardLinkSelected"' }} href="{{ path("candidate_dashboard_applications") }}">Mes candidatures</a></li>
+        {% else %}
+            <li><a {{ currentRoute == 'recruiter_dashboard_offers' ? 'id="dashboardLinkSelected"' }} href="{{ path("recruiter_dashboard_offers") }}">Mes offres</a></li>
+        {% endif %}
+
+        {% if userRole == ["ROLE_CANDIDATE"] %}
+            <li><a {{ currentRoute == 'candidate_dashboard_cv' ? 'id="dashboardLinkSelected"' }} href="{{ path("candidate_dashboard_cv") }}">Mon CV</a></li>
+        {% endif %}
     </ul>
 </nav>

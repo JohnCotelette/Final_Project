@@ -31,7 +31,7 @@ class OfferRepository extends ServiceEntityRepository
      * @param string|null $experience
      * @param int|null $salary
      * @param string|null $type
-     * @param string|null $city
+     * @param string|null $location
      * @return array
      */
     public function findByCategoriesOrderByDate(?Category $category, ?string $experience, ?int $salary, ?string $type, ?string $location) :array

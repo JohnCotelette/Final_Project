@@ -24,7 +24,7 @@
 
 /* -------------------------- MAIN -------------------------- */
 
-body {
+html, body {
     font-family: aktivgrotesk-mediuploadedfile, Arial, sans-serif;
     background-color: $blanc;
     scroll-behavior: smooth;
@@ -260,6 +260,18 @@ footer div {
     }
 }
 
+@keyframes fadeOutLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-50%);
+    }
+}
+
 /* -------------------------- CLASS FOR JAVASCRIPT -------------------------- */
 
 .invisible {
@@ -291,8 +303,16 @@ footer div {
     animation: fadeOut 0.4s ease both;
 }
 
+.fadeInLeft {
+    animation: fadeInLeft 0.4s ease both;
+}
+
 .fadeInRight {
     animation: fadeInRight 0.4s ease both;
+}
+
+.fadeOutLeft {
+    animation: fadeOutLeft 0.4s ease both;
 }
 
 /* -------------------------- RESPONSIVE -------------------------- */

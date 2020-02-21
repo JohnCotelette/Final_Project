@@ -1,5 +1,15 @@
 @import "../../core.scss";
 
+/* -------------------------- MAIN -------------------------- */
+
+body {
+    overflow: hidden;
+}
+
+main {
+    overflow: visible;
+}
+
 /* -------------------------- CONTENT -------------------------- */
 
 #offersWhereHaveApplyContainer {
@@ -53,7 +63,8 @@ h3 a, .businessRedirectLinks {
     transition: color 0.3s ease;
 }
 
-h3 a:active, h3 a:visited, .businessRedirectLinks:active, .businessRedirectLinks:visited, .offersRedirectLinks:active, .offersRedirectLinks:visited {
+h3 a:active, h3 a:visited, .businessRedirectLinks:active, .businessRedirectLinks:visited, .offersRedirectLinks:active,
+.offersRedirectLinks:visited {
     color: $violet-clair;
 }
 
@@ -109,6 +120,10 @@ h3 a:hover, .businessRedirectLinks:hover, .offersRedirectLinks:hover {
 
 .fa-arrow-right {
     font-size: 0.88em;
+}
+
+.ghost {
+    opacity: 0;
 }
 
 /* -------------------------- RESPONSIVE -------------------------- */

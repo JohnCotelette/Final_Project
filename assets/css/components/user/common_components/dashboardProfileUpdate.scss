@@ -1,8 +1,8 @@
-@import "../../core.scss";
+@import "../../../core";
 
 /* -------------------------- CONTENT -------------------------- */
 
-#formProfile {
+#formProfile, #formBusiness {
     width: 80%;
     max-width: 1000px;
     min-width: 280px;
@@ -24,7 +24,7 @@
     width: 48%;
 }
 
-.superContainers label, .superContainers input {
+.superContainers label, .superContainers input, .superContainers.fakeInputs {
     width: 100%;
 }
 
@@ -40,13 +40,13 @@
     animation: shake 0.4s linear;
 }
 
-#formProfile label, #securityContainer form label {
+#formProfile label, #formBusiness label, #securityContainer form label {
     font-size: 0.8em;
     color: rgba(51, 51, 51, 0.8);
     margin-bottom: 5px;
 }
 
-#formProfile div input, #securityContainer div input {
+#formProfile div input, #formBusiness div input, #formBusiness div .fakeInputs, #securityContainer div input {
     padding: 8px 12px;
     background-color: $blanc;
     border: none;
@@ -164,16 +164,31 @@
     margin-bottom: 25px;
 }
 
+.submitContainers {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.submitContainers button, .changeFormControllers  {
+    margin: auto 0;
+}
+
+#businessDescriptionContainer div, #businessWhyUsContainer div, #businessDescriptionContainer textarea,
+#businessWhyUsContainer textarea {
+    width: 100%;
+}
+
 /* -------------------------- RESPONSIVE -------------------------- */
 
 @media (max-width: 1000px) {
-    #formProfile, #totalSecurityContainer {
+    #formProfile, #formBusiness, #totalSecurityContainer {
         width: 100%;
     }
 }
 
 @media (max-width: 750px) {
-    #formProfile {
+    #formProfile, #formBusiness {
         margin-bottom: 20px;
     }
 }
