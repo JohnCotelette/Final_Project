@@ -2,10 +2,11 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\RouterInterface;
 use App\Entity\User;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserService
@@ -28,10 +29,12 @@ class UserService
      * @param RouterInterface $router
      * @param RequestStack $request
      */
-    public function __construct(RouterInterface $router, RequestStack $request)
+    public function __construct(RouterInterface $router, RequestStack $request, UserPasswordEncoderInterface $encoder)
     {
         $this->router = $router;
         $this->request = $request;
+        $this->encoder = $encoder;
+
     }
 
     /**
@@ -64,5 +67,11 @@ class UserService
         $passwordToken = md5($user->getEmail().uniqid());
 
         $user->setPasswordToken($passwordToken);
+    }
+
+    public function cryptPassword(User $user)
+    {
+        $password = $this->encoder->encodePassword($user, $user->getPassword());
+        $user->setPassword($password);
     }
 }

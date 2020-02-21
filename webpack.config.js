@@ -26,9 +26,10 @@ Encore
     .addStyleEntry("login", "./assets/css/components/security/login.scss")
     .addStyleEntry("forgotPassword", "./assets/css/components/security/forgotPassword.scss")
     .addStyleEntry("changePassword", "./assets/css/components/security/changePassword.scss")
-    .addStyleEntry("easyAdmin", "./assets/css/components/easyAdmin/easyAdmin.scss")
     .addStyleEntry("404", "./assets/css/components/error/404.scss")
     .addStyleEntry("403", "./assets/css/components/error/403.scss")
+    .addStyleEntry("easyAdmin", "./assets/css/components/easyAdmin/easyAdmin.scss")
+
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
