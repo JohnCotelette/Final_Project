@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Class FileService
@@ -11,12 +10,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class FileService
 {
-    // private $kernel;
-
-    // public function __construct(KernelInterface $kernel)
-    // {
-    //     $this->kernel = $kernel;
-    // }
 
     /**
      * @param string $fileSrc

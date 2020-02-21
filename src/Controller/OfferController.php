@@ -12,7 +12,6 @@ use App\Service\OfferService;
 use App\Repository\OfferRepository;
 use App\Service\MailService;
 use App\Service\MapService;
-use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
