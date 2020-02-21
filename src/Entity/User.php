@@ -63,6 +63,11 @@ class User implements UserInterface
      *     message="Veuillez renseigner votre mot de passe",
      *     groups={"RegisterAndReset"}
      * )
+     * 
+     * @Assert\Regex(
+     *      pattern = "/^\S+$/",
+     *      message = "N'utilisez pas d'espace dans votre mot de passe",
+     * )
      */
     private $password;
 
@@ -79,9 +84,9 @@ class User implements UserInterface
      * )
      * 
      *@Assert\Regex(
-     *     pattern ="/[^A-Za-z\-]/",
-     *     match=false,
-     *     message="N'utilisez pas de caractères spéciaux"
+     *     pattern = "/[^A-Za-z\-]/",
+     *     match = false,
+     *     message = "N'utilisez pas de caractères spéciaux"
      * )
      * @Groups({"detailedBusiness", "detailedOffer"})
      */

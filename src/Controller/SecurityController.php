@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
 use App\Service\MailService;

@@ -48,13 +48,6 @@ class RecruiterType extends AbstractType
                         "placeholder" => "Confirmation de mot de passe",
                     ],
                 ],
-                "constraints" => [
-                    new Regex([
-                        "pattern" => "/^\S+$/",
-                        "message" => "N'utilisez pas d'espace dans votre mot de passe",
-
-                    ]),
-                ],
             ])
             ->add("firstName", TextType::class, [
                 "attr" => [

@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Offer;
-use Doctrine\ORM\Query;
 use App\Entity\Business;
 use App\Entity\Category;
 use Doctrine\Common\Persistence\ManagerRegistry;
