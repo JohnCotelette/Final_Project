@@ -1,5 +1,7 @@
 {% extends 'base.html.twig'  %}
 
+{% set currentRoute = app.request.attributes.get("_route") %}
+
 {% block body %}
     {{ include("common_components/nav.html.twig") }}
 

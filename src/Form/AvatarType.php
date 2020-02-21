@@ -18,7 +18,7 @@ class AvatarType extends AbstractType
     {
         $builder
         ->add("avatarFile", VichFileType::class, [
-            "allow_delete" => true,
+            "allow_delete" => false,
             "by_reference" => false,
             "download_link" => false,
             "required" => false,

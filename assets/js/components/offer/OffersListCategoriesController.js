@@ -52,7 +52,6 @@ class OffersListCategoriesController {
     };
 
     displayLoader() {
-        console.log(this.loadingCircle);
         this.loadingContainer.classList.remove("invisible");
         this.loadingCircle.classList.remove("invisible");
     };

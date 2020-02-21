@@ -14,10 +14,12 @@ Encore
     .addEntry("offerAdd", "./assets/js/components/offer/offerAdd.js")
     .addEntry("business", "./assets/js/components/business/business.js")
     .addEntry("dashboard", "./assets/js/components/user/common_components/dashboard.js")
-    .addEntry("candidateDashboardProfile", "./assets/js/components/user/candidateDashboardProfile.js")
-    .addEntry("candidateDashboardProfileUpdate", "./assets/js/components/user/candidateDashboardProfileUpdate.js")
+    .addEntry("dashboardProfile", "./assets/js/components/user/common_components/dashboardProfile.js")
+    .addEntry("dashboardProfileUpdate", "./assets/js/components/user/common_components/dashboardProfileUpdate.js")
     .addEntry("candidateDashboardApplications", "./assets/js/components/user/candidateDashboardApplications.js")
     .addEntry("candidateDashboardCV", "./assets/js/components/user/candidateDashboardCV.js")
+    .addEntry("dashboardRecruiterProfileUpdate", "./assets/js/components/user/dashboardRecruiterProfileUpdate.js")
+    .addEntry("recruiterDashboardOffers", "./assets/js/components/user/recruiterDashboardOffers.js")
     .addEntry("allBusiness", "./assets/js/components/business/allBusiness.js")
     .addEntry("recruiterRegister", "./assets/js/components/user/recruiterRegister.js")
     .addStyleEntry("register", "./assets/css/components/user/register.scss")
@@ -38,7 +40,6 @@ Encore
         config.corejs = 3;
     })
     .enableSassLoader()
-    .autoProvidejQuery()
     .copyFiles({
         from: "./assets/img",
         to: "images/[path][name].[hash:8].[ext]",

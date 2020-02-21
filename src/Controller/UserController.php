@@ -6,6 +6,7 @@ use App\Entity\Cv;
 use App\Entity\User;
 use App\Entity\Avatar;
 use App\Form\AvatarType;
+use App\Form\BusinessType;
 use App\Form\CandidatType;
 use App\Form\CvType;
 use App\Form\EditUserType;
@@ -190,8 +191,7 @@ class UserController extends AbstractController
             }
 
         return $this->render('/user/dashboard/candidate/profileCandidate.html.twig', [
-             "user" => $user,
-             "formAvatar" => $formAvatar->createView()
+             "formAvatar" => $formAvatar->createView(),
         ]);
     }
 
@@ -243,12 +243,11 @@ class UserController extends AbstractController
             "formProfile" => $formProfile->createView(),
             "formResetPassword" => $formResetPassword->createView(),
             "formDeleteAccount" => $formDeleteAccount->createView(),
-            "user" => $user,
         ]);
     }
 
     /**
-     * @Route("/candidate/dashboard/applications", name="candidate_dasboard_applications")
+     * @Route("/candidate/dashboard/applications", name="candidate_dashboard_applications", methods={"GET"})
      */
     public function candidateApplications()
     {
@@ -289,8 +288,127 @@ class UserController extends AbstractController
 
         return $this->render('/user/dashboard/candidate/cvUpdateCandidate.html.twig', [
             "formCv" => $formCv->createView(),
-            "user" => $user,
         ]);
+    }
+
+    /**
+     * @Route("/recruiter/dashboard", name="recruiter_dashboard", methods={"GET", "POST"})
+     * @param Request $request
+     * @return RedirectResponse|response
+     */
+    public function recruiterProfile(Request $request)
+    {
+        $user = $this->getUser();
+        $avatar = new Avatar();
+
+        $formAvatar = $this->createForm(AvatarType::class, $avatar);
+        $formAvatar->handleRequest($request);
+
+        if ($formAvatar->isSubmitted() && $formAvatar->isValid())
+        {
+            if ($user->getAvatar())
+            {
+                $this->entityManager->remove($user->getAvatar());
+            }
+
+            $user->setAvatar($avatar);
+            $this->entityManager->persist($avatar);
+            $this->entityManager->flush();
+
+            $this->redirectToRoute("recruiter_dashboard");
+        }
+
+        return $this->render('/user/dashboard/recruiter/profileRecruiter.html.twig', [
+            "formAvatar" => $formAvatar->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/recruiter/dashboard/updateprofile", name="recruiter_dashboard_updateprofile", methods={"GET", "POST"})
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function recruiterUpdateProfile(Request $request)
+    {
+        $user = $this->getUser();
+        $avatar = new Avatar();
+
+        $formProfile = $this->createForm(EditUserType::class, $user);
+        $formBusiness = $this->createForm(BusinessType::class, $user->getBusiness());
+        $formResetPassword = $this->createForm(ResetPasswordDashboardType::class, null, [
+            "ResetPasswordDashboard" => true,
+        ]);
+        $formDeleteAccount = $this->createForm(ResetPasswordDashboardType::class, null);
+        $formAvatar = $this->createForm(AvatarType::class, $avatar);
+
+        $formProfile->handleRequest($request);
+        $formResetPassword->handleRequest($request);
+        $formDeleteAccount->handleRequest($request);
+        $formBusiness->handleRequest($request);
+        $formAvatar->handleRequest($request);
+
+        if ($formProfile->isSubmitted() && $formProfile->isValid()) {
+            $this->entityManager->flush();
+
+            $this->addFlash("successProfileUpdated", "Votre profil a bien été mis à jour.");
+
+            return $this->redirectToRoute('recruiter_dashboard');
+        }
+
+        if ($formBusiness->isSubmitted() && $formBusiness->isValid()) {
+            $this->entityManager->flush();
+
+            $this->addFlash("successBusinessUpdated", "Votre entreprise a bien été mis à jour.");
+
+            return $this->redirectToRoute('recruiter_dashboard');
+        }
+
+        if ($formResetPassword->isSubmitted() && $formResetPassword->isValid()) {
+            $user->setPassword($this->encoder->encodePassword($user, $formResetPassword["newPassword"]->getData()));
+
+            $this->addFlash("successPasswordChanged", "Votre mot de passe a bien été modifié.");
+
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('recruiter_dashboard');
+        }
+
+        if ($formDeleteAccount->isSubmitted() && $formDeleteAccount->isValid()) {
+            $this->entityManager->remove($user);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute("home");
+        }
+
+        if ($formAvatar->isSubmitted() && $formAvatar->isValid()) {
+            if ($user->getBusiness()->getAvatar())
+            {
+                $this->entityManager->remove($user->getBusiness()->getAvatar());
+            }
+
+            $user->getBusiness()->setAvatar($avatar);
+
+            $this->entityManager->persist($avatar);
+            $this->entityManager->flush();
+
+            $this->redirectToRoute("recruiter_dashboard_updateprofile");
+        }
+
+        return $this->render('/user/dashboard/recruiter/profileUpdateRecruiter.html.twig', [
+            "formProfile" => $formProfile->createView(),
+            "formResetPassword" => $formResetPassword->createView(),
+            "formDeleteAccount" => $formDeleteAccount->createView(),
+            "formBusiness" => $formBusiness->createView(),
+            "formAvatar" => $formAvatar->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/recruiter/dashboard/offers", name="recruiter_dashboard_offers", methods={"GET"})
+     */
+    public function recruitersOffers()
+    {
+        return $this->render("user/dashboard/recruiter/offersRecruiter.html.twig");
     }
 }
 

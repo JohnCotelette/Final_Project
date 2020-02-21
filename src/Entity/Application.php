@@ -29,9 +29,6 @@ class Application
      *     max=1000,
      *     maxMessage="Votre motivation ne peut dépasser {{ limit }} caractères"
      * )
-     * @Assert\NotBlank(
-     *     message="Veuillez renseigner votre message de motivation"
-     * )
      */
     private $motivation;
 

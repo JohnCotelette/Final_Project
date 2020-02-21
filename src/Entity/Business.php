@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BusinessRepository")
@@ -39,29 +40,49 @@ class Business
     /**
      * @ORM\Column(type="text", length=5000, nullable=true)
      * @Groups({"detailedBusiness"})
+     * @Assert\Length(
+     *     max=5000,
+     *     maxMessage="La description de votre entreprise ne peut dépasser {{ limit }} caractères"
+     * )
      */
     private $description;
 
     /**
      * @ORM\Column(type="text", length=5000, nullable=true)
+     * @Assert\Length(
+     *     max=5000,
+     *     maxMessage="Le champs 'pourquoi nous ?' ne peut dépasser {{ limit }} caractères"
+     * )
      */
     private $whyUs;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"lightBusiness", "detailedBusiness"})
+     * @Assert\Length(
+     *     max=255,
+     *     maxMessage="Votre secteur d'activité ne peut dépasser {{ limit }} caractères"
+     * )
      */
     private $activityArea;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      * @Groups({"lightBusiness", "detailedBusiness", "detailedOffer"})
+     * @Assert\Length(
+     *     max=100,
+     *     maxMessage="L'adresse de votre entreprise ne peut dépasser {{ limit }} caractères"
+     * )
      */
     private $location;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      * @Groups({"lightBusiness", "detailedBusiness", "detailedOffer"})
+     * @Assert\Length(
+     *     max=100,
+     *     maxMessage="L'adresse de votre entreprise ne peut dépasser {{ limit }} caractères"
+     * )
      */
     private $kind;
 
