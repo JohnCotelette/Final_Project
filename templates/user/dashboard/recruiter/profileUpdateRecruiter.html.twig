@@ -3,6 +3,7 @@
 {% block stylesheets %}
     {{ encore_entry_link_tags('dashboard') }}
     {{ encore_entry_link_tags('dashboardProfileUpdate') }}
+    {{ encore_entry_link_tags('dashboardRecruiterProfileUpdate') }}
 {% endblock %}
 
 {% block title %}{{ parent() }}Profil - {{ app.user.firstName }} - Mettre à jour{% endblock %}
@@ -16,5 +17,6 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('dashboard') }}
     {{ encore_entry_script_tags('dashboardProfileUpdate') }}
+    {{ encore_entry_script_tags('dashboardRecruiterProfileUpdate') }}
 {% endblock %}
 

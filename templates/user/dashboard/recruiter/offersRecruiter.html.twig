@@ -1,0 +1,113 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags("dashboard") }}
+    {{ encore_entry_link_tags("recruiterDashboardOffers") }}
+{% endblock %}
+
+{% block title %}{{ parent() }}Profil - {{ app.user.firstName }} - Mes offres{% endblock %}
+
+{% block content %}
+    {% include 'user/dashboard/common_components/navbar.html.twig' %}
+
+    {% for success in app.flashes("successOfferDeleted") %}
+        <div class="alert alert-success">{{ success }}</div>
+    {% endfor %}
+
+    <div id="bodyFilterDashboard" class="invisible"></div>
+
+    <div id="modalBoxContainer">
+        <div id="modalBoxContent">
+            <button id="closeModalBoxContainerButton"><i class="far fa-window-close"></i></button>
+
+            <div id="applicationsContentContainer">
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+                LOLOLOL<br>
+            </div>
+        </div>
+    </div>
+
+    <h1>Liste de vos offres en ligne</h1>
+
+    <div id="offersContainer">
+        {% if app.user.offers | length > 0 %}
+            {% for offer in app.user.offers %}
+                <div class="offersContainers ghost">
+                    <h3><a href="{{ path('show_offer', {'reference': offer.reference}) }}">{{ offer.title }}</a></h3>
+
+                    <p class="offersDates">Annonce postée le : {{ offer.createdAt | date("d/m/Y") }}</p>
+
+                    <a class="offersRedirectLinks" href="{{ path('show_offer', {'reference': offer.reference }) }}"><i class="fas fa-arrow-right"></i> Revoir l'annonce</a>
+
+                    <hr class="separators">
+
+                    <div class="applicationsContainers">
+                        {% if offer.applications | length > 0 %}
+                            <a class="applicationsControllers" data-offerReference="{{ offer.reference }}" href="#">{{ offer.applications | length }} candidature{{ offer.applications | length > 1 ? "s" : "" }}</a>
+                        {% else %}
+                            <span class="noApplication">Aucune candidature</span>
+                        {% endif %}
+
+                        <form method="post" action="{{ path("delete_offer", {"reference": offer.reference}) }}">
+                            <button class="dangerousButtonsDelete" type="submit">Supprimer</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div id="errorNoOfferContainer">
+                Vous ne disposez d'aucune offre en ligne.<br>
+                Pour en créer une, cliquez <a id="redirectOfferCreate" href="{{ path("offer_create") }}">ici</a>.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags("dashboard") }}
+    {{ encore_entry_script_tags("recruiterDashboardOffers") }}
+{% endblock %}
+

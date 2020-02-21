@@ -13,9 +13,9 @@
     <h1>Liste des offres pour lesquelles vous avez candidaté</h1>
 
     <div id="offersWhereHaveApplyContainer">
-        {% if app.user.applications != null %}
+        {% if app.user.applications | length > 0 %}
             {% for application in app.user.applications %}
-                <div class="offersContainers">
+                <div class="offersContainers ghost">
                     <h3><a href="{{ path('show_offer', {'reference': application.offer.reference}) }}">{{ application.offer.title }}</a></h3>
 
                     <p class="applicationDates">Candidature effectuée le : {{ application.createdAt | date("d/m/Y") }}</p>
