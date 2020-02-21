@@ -93,4 +93,16 @@ class OfferRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function FindOffersForClear(){
+        $qb = $this->createQueryBuilder('o');
+        $now = new \DateTime();
+
+        return $qb
+            ->where("date_format(o.expired_at, '%Y-%m-%d') <= :now")
+            ->setParameter('now', $now->format("Y-m-d"))
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
