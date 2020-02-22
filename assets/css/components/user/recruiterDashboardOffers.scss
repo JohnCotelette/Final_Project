@@ -26,7 +26,7 @@ main {
 
 #modalBoxContent {
     position: relative;
-    width: 600px;
+    width: 800px;
     height: 100%;
     margin: auto;
     padding: 25px;
@@ -62,6 +62,51 @@ main {
     overflow: auto;
     width: 100%;
     margin-top: 42px;
+}
+
+.applicationContainers {
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.3s ease;
+    font-size: 0.8em;
+    margin: 0;
+    padding: 0 26px;
+}
+
+.modalSeparators {
+    margin: 30px 0;
+    background-color: $blanc;
+    width: 100%;
+    height: 1px;
+    border: none;
+}
+
+.applicationControllersContainers {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.applicationControllersContainers a {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    color: black;
+    background-color: $blanc;
+    padding: 5px 14px;
+    transition: all 0.3s ease;
+}
+
+.applicationContainers p {
+    margin-bottom: 18px;
+}
+
+.applicationControllersContainers a:active, .applicationControllersContainers a:visited {
+    color: black;
+}
+
+.applicationControllersContainers a:hover {
+    color: rgb(51, 51, 51);
+    text-decoration: none;
 }
 
 /* -------------------------- CONTENT -------------------------- */

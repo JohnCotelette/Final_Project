@@ -62,7 +62,7 @@
 
             <div class="infosContainers">
                 <span class="labelsInfos">Date de naissance :</span>
-                <span class="infos">{{ app.user.birthday | date("d-m-Y") }}</span>
+                <span class="infos">{{ app.user.birthDay | date("d-m-Y") }}</span>
             </div>
         </div>
 
@@ -78,12 +78,12 @@
 
             <div class="infosContainers">
                 <span class="labelsInfos">Téléphone :</span>
-                <span class="infos">{{ app.user.phoneNumber }}</span>
+                <span class="infos">{{ app.user.phoneNumber ? app.user.phoneNumber : "non renseigné" }}</span>
             </div>
 
             <div class="infosContainers">
                 <span class="labelsInfos">Website :</span>
-                <span class="infos">{{ app.user.website }}</span>
+                <span class="infos">{{ app.user.website ? app.user.webSite : "non renseigné" }}</span>
             </div>
         </div>
 
@@ -100,12 +100,12 @@
 
                 <div class="infosContainers">
                     <span class="labelsInfos">Type :</span>
-                    <span class="infos">{{ app.user.business.kind }}</span>
+                    <span class="infos">{{ app.user.business.kind ? app.user.business.kind : "non renseigné" }}</span>
                 </div>
 
                 <div class="infosContainers">
                     <span class="labelsInfos">Secteur d'activité :</span>
-                    <span class="infos">{{ app.user.business.activityArea }}</span>
+                    <span class="infos">{{ app.user.business.activityArea ? app.user.business.activityArea : "non renseigné" }}</span>
                 </div>
             </div>
         {% endif %}

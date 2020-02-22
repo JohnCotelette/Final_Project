@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -321,9 +322,10 @@ class UserController extends AbstractController
     /**
      * @Route("/recruiter/dashboard/updateprofile", name="recruiter_dashboard_updateprofile", methods={"GET", "POST"})
      * @param Request $request
+     * @param TokenStorageInterface $tokenStorageInterface
      * @return RedirectResponse|Response
      */
-    public function recruiterUpdateProfile(Request $request)
+    public function recruiterUpdateProfile(Request $request, TokenStorageInterface $tokenStorageInterface)
     {
         $user = $this->getUser();
         $avatar = new Avatar();
@@ -369,6 +371,9 @@ class UserController extends AbstractController
         }
 
         if ($formDeleteAccount->isSubmitted() && $formDeleteAccount->isValid()) {
+            $tokenStorageInterface->setToken(null);
+            $request->getSession()->invalidate();
+
             $this->entityManager->remove($user);
             $this->entityManager->flush();
 
@@ -376,6 +381,8 @@ class UserController extends AbstractController
         }
 
         if ($formAvatar->isSubmitted() && $formAvatar->isValid()) {
+            /* @var User $user */
+
             if ($user->getBusiness()->getAvatar())
             {
                 $this->entityManager->remove($user->getBusiness()->getAvatar());
@@ -401,10 +408,27 @@ class UserController extends AbstractController
 
     /**
      * @Route("/recruiter/dashboard/offers", name="recruiter_dashboard_offers", methods={"GET"})
+     * @return Response
      */
     public function recruitersOffers()
     {
         return $this->render("user/dashboard/recruiter/offersRecruiter.html.twig");
+    }
+
+    /**
+     * @Route("/profile/{id}", name="public_profile", methods={"GET"})
+     * @param User $user
+     * @return Response
+     */
+    public function publicProfile(User $user)
+    {
+        if ($user->getRoles() === ["ROLE_CANDIDATE"]) {
+            return $this->render("user/publicProfile.html.twig", [
+                "user" => $user,
+            ]);
+        }
+
+        return $this->redirectToRoute("home");
     }
 }
 

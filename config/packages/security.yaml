@@ -1,4 +1,6 @@
 security:
+    always_authenticate_before_granting: true
+
     encoders:
         App\Entity\User:
             algorithm: auto
@@ -13,7 +15,6 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
         main:
             pattern: ^/
             anonymous: lazy
@@ -32,3 +33,4 @@ security:
          - { path: ^/candidate/dashboard, roles: ROLE_CANDIDATE }
          - { path: ^/recruiter/dashboard, roles: ROLE_RECRUITER }
          - { path: ^/offer/create, roles: ROLE_RECRUITER }
+         - { path: ^/profile, roles: [ROLE_CANDIDATE, ROLE_RECRUITER] }
