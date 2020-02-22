@@ -148,8 +148,8 @@ h2 {
 /* -------------------------- MAP -------------------------------- */
 
 #map {
-    height: 400px;  /* The height is 400 pixels */
-    width: 100%;  /* The width is the width of the web page */
+    height: 400px;
+    width: 100%;
    }
 
 #mapAddress {
@@ -390,6 +390,10 @@ h2 {
 
     #offerDetailsContainer, .fixedContent, #offerInfosContainer {
         padding: 20px;
+    }
+
+    #specialFlex {
+        flex-direction: column;
     }
 }
 

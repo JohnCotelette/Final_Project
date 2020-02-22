@@ -161,19 +161,19 @@
         <div id="offerDetailsContainer">
             <h2>Le poste</h2>
 
-            <p>{{ offer.description }}</p>
+            <p>{{ offer.description | nl2br }}</p>
 
             <hr class="offerDetailsSeparators">
 
             <h2>Profil requis</h2>
 
-            <p>{{ offer.profilRequired }}</p>
+            <p>{{ offer.profilRequired | nl2br }}</p>
 
             <hr class="offerDetailsSeparators">
 
             <h2>A propos de {{ offer.user.business.name }}</h2>
 
-            <p>{{ offer.user.business.description }}</p>
+            <p>{{ offer.user.business.description | nl2br }}</p>
 
             <hr class="offerDetailsSeparators">
 

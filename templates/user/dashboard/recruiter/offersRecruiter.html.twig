@@ -20,53 +20,7 @@
         <div id="modalBoxContent">
             <button id="closeModalBoxContainerButton"><i class="far fa-window-close"></i></button>
 
-            <div id="applicationsContentContainer">
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-                LOLOLOL<br>
-            </div>
+            <div id="applicationsContentContainer"></div>
         </div>
     </div>
 
@@ -80,7 +34,8 @@
 
                     <p class="offersDates">Annonce postée le : {{ offer.createdAt | date("d/m/Y") }}</p>
 
-                    <a class="offersRedirectLinks" href="{{ path('show_offer', {'reference': offer.reference }) }}"><i class="fas fa-arrow-right"></i> Revoir l'annonce</a>
+                    <a class="offersRedirectLinks" href="{{ path('show_offer', {'reference': offer.reference }) }}"><i class="fas fa-arrow-right"></i> Revoir l'annonce</a><br>
+                    <a class="offersRedirectLinks" href="{{ path('edit_offer', {'reference': offer.reference }) }}"><i class="fas fa-arrow-right"></i> Modifier l'annonce</a>
 
                     <hr class="separators">
 

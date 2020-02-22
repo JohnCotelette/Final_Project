@@ -22,3 +22,15 @@ h1 {
 #errorMessageContainer p {
     margin: 0;
 }
+
+/* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-width: 800px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    #errorMessageContainer figure img {
+        width: 125px;
+    }
+}
