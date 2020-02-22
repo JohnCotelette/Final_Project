@@ -2,9 +2,6 @@
 
 namespace App\Service;
 
-
-use App\Entity\Business;
-use App\Entity\Offer;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\HttpClient;
 

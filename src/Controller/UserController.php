@@ -71,9 +71,8 @@ class UserController extends AbstractController
      */
     public function newCandidate(Request $request): Response
     {
-        $user = $this->getUser();
 
-        if ($user) {
+        if ($user = $this->getUser()) {
             return $this->userService->redirectBasedOnRoles($user);
         }
 
@@ -84,26 +83,24 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form["legalConditions"]->getData() === true) {
-                $password = $this->encoder->encodePassword($user, $user->getPassword());
+            $password = $this->encoder->encodePassword($user, $user->getPassword());
 
-                $user
-                    ->setPassword($password)
-                    ->setRoles(['ROLE_CANDIDATE']);
+            $user
+                ->setPassword($password)
+                ->setRoles(['ROLE_CANDIDATE']);
 
-                $this->entityManager->persist($user);
-                $this->entityManager->flush();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
-                $activationUrl = $this->generateUrl("account_activate", [
-                    "uuid" => $user->getId(),
-                ], false);
+            $activationUrl = $this->generateUrl("account_activate", [
+                "uuid" => $user->getId(),
+            ], false);
 
-                $this->mailService->sendMailToRecipient($user, $activationUrl, "activationLink");
+            $this->mailService->sendMailToRecipient($user, $activationUrl, "activationLink");
 
-                $this->addFlash("successAccountCreated", "Votre compte nécessite désormais une activation pour être pleinement fonctionnel, veuillez cliquer sur le lien d'activation reçu par e-mail.");
+            $this->addFlash("successAccountCreated", "Votre compte nécessite désormais une activation pour être pleinement fonctionnel, veuillez cliquer sur le lien d'activation reçu par e-mail.");
 
-                return $this->redirectToRoute("login");
-            }
+            return $this->redirectToRoute("login");
         }
 
         return $this->render('user/register.html.twig', [
@@ -117,11 +114,9 @@ class UserController extends AbstractController
      * @param BusinessRepository $businessRepository
      * @return Response
      */
-    public function newRecruiter(Request $request, BusinessRepository $businessRepository): Response
+    public function newRecruiter(Request $request): Response
     {
-        $user = $this->getUser();
-
-        if ($user) {
+        if ($user = $this->getUser()) {
             {
                 return $this->userService->redirectBasedOnRoles($user);
             }
@@ -134,29 +129,27 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form["legalConditions"]->getData() === true) {
-                $password = $this->encoder->encodePassword($user, $user->getPassword());
+            $password = $this->encoder->encodePassword($user, $user->getPassword());
 
-                $business = $request->attributes->get("businessItem");
+            $business = $request->attributes->get("businessItem");
 
-                $user
-                    ->setPassword($password)
-                    ->setRoles(['ROLE_RECRUITER'])
-                    ->setBusiness($business);
+            $user
+                ->setPassword($password)
+                ->setRoles(['ROLE_RECRUITER'])
+                ->setBusiness($business);
 
-                $this->entityManager->persist($user);
-                $this->entityManager->flush();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
-                $activationUrl = $this->generateUrl("account_activate", [
-                    "uuid" => $user->getId(),
-                ], false);
+            $activationUrl = $this->generateUrl("account_activate", [
+                "uuid" => $user->getId(),
+            ], false);
 
-                $this->mailService->sendMailToRecipient($user, $activationUrl, "activationLink");
+            $this->mailService->sendMailToRecipient($user, $activationUrl, "activationLink");
 
-                $this->addFlash("successAccountCreated", "Votre compte nécessite désormais une activation pour être pleinement fonctionnel, veuillez cliquer sur le lien d'activation reçu par e-mail.");
+            $this->addFlash("successAccountCreated", "Votre compte nécessite désormais une activation pour être pleinement fonctionnel, veuillez cliquer sur le lien d'activation reçu par e-mail.");
 
-                return $this->redirectToRoute("login");
-            }
+            return $this->redirectToRoute("login");
         }
 
         return $this->render('user/register.html.twig', [
@@ -174,22 +167,22 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $avatar = new Avatar();
 
-            $formAvatar = $this->createForm(AvatarType::class, $avatar);
-            $formAvatar->handleRequest($request);
+        $formAvatar = $this->createForm(AvatarType::class, $avatar);
+        $formAvatar->handleRequest($request);
 
-            if ($formAvatar->isSubmitted() && $formAvatar->isValid())
+        if ($formAvatar->isSubmitted() && $formAvatar->isValid())
+        {
+            if ($user->getAvatar())
             {
-                if ($user->getAvatar())
-                {
-                   $this->entityManager->remove($user->getAvatar());
-                }
-
-                 $user->setAvatar($avatar);
-                 $this->entityManager->persist($avatar);
-                 $this->entityManager->flush();
-
-                 $this->redirectToRoute("candidate_dashboard");
+                $this->entityManager->remove($user->getAvatar());
             }
+
+                $user->setAvatar($avatar);
+                $this->entityManager->persist($avatar);
+                $this->entityManager->flush();
+
+                $this->redirectToRoute("candidate_dashboard");
+        }
 
         return $this->render('/user/dashboard/candidate/profileCandidate.html.twig', [
              "formAvatar" => $formAvatar->createView(),
@@ -206,9 +199,11 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         $formProfile = $this->createForm(EditUserType::class, $user);
+
         $formResetPassword = $this->createForm(ResetPasswordDashboardType::class, null, [
             "ResetPasswordDashboard" => true,
         ]);
+
         $formDeleteAccount = $this->createForm(ResetPasswordDashboardType::class, null);
 
         $formProfile->handleRequest($request);
@@ -226,9 +221,9 @@ class UserController extends AbstractController
         if ($formResetPassword->isSubmitted() && $formResetPassword->isValid()) {
             $user->setPassword($this->encoder->encodePassword($user, $formResetPassword["newPassword"]->getData()));
 
-            $this->addFlash("successPasswordChanged", "Votre mot de passe a bien été modifié.");
-
             $this->entityManager->flush();
+
+            $this->addFlash("successPasswordChanged", "Votre mot de passe a bien été modifié.");
 
             return $this->redirectToRoute('candidate_dashboard');
         }
@@ -262,7 +257,7 @@ class UserController extends AbstractController
      */
     public function candidateCV(Request $request)
     {
-    $user = $this->getUser();
+        $user = $this->getUser();
 
         $cv = new Cv();
 
@@ -400,6 +395,7 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute("recruiter_dashboard_updateprofile");
         }
+
 
         return $this->render('/user/dashboard/recruiter/profileUpdateRecruiter.html.twig', [
             "formProfile" => $formProfile->createView(),

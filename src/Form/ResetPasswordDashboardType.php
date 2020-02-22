@@ -9,7 +9,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 
 class ResetPasswordDashboardType extends AbstractType
@@ -46,10 +45,6 @@ class ResetPasswordDashboardType extends AbstractType
                         new NotBlank([
                             "message" => "Veuillez renseigner votre mot de passe",
                         ]),
-                        new Regex([
-                            "pattern" => "/^\S+$/",
-                            "message" => "N'utilisez pas d'espace dans votre mot de passe"
-                        ])
                     ],
                     "options" => [
                         "label" => false,

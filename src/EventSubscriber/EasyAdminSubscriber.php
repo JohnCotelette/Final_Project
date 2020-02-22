@@ -2,11 +2,9 @@
 
 namespace App\EventSubscriber;
 
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use App\Service\UserService;
-use App\Entity\User;
 
 class  EasyAdminSubscriber implements EventSubscriberInterface {
     

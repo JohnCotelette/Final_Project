@@ -3,10 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Offer;
-use App\Entity\Application;
 use App\Entity\User;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 /**
  * Class OfferService
@@ -62,7 +59,7 @@ class OfferService
                 return true;
             }
         }
-
+        
         return false;
     }
 }

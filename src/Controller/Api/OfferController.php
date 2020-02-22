@@ -6,8 +6,7 @@ use App\Entity\Offer;
 use App\Repository\OfferRepository;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\View\View;
-use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Class OfferController
