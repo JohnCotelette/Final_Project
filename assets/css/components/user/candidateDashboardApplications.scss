@@ -1,0 +1,141 @@
+@import "../../core.scss";
+
+/* -------------------------- MAIN -------------------------- */
+
+body {
+    overflow: hidden;
+}
+
+main {
+    overflow: visible;
+}
+
+/* -------------------------- CONTENT -------------------------- */
+
+#offersWhereHaveApplyContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin-bottom: 30px;
+    color: $violet-clair;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.offersContainers {
+    padding: 25px;
+    width: 48.5%;
+    background-color: $blanc-clair;
+    color: rgb(51, 51, 51);
+    margin-bottom: 28px;
+}
+
+#errorNoApplyContainer {
+    padding: 25px;
+    color: $blanc-clair;
+    background-color: $violet-clair;
+}
+
+#redirectOffersIndexLink {
+    color: $blanc;
+    transition: color 0.3s ease;
+    text-decoration: underline;
+}
+
+#redirectOffersIndexLink:active, #redirectOffersIndexLink:visited {
+    color: $blanc;
+}
+
+#redirectOffersIndexLink:hover {
+    color: $blanc-clair;
+}
+
+h3 {
+    font-size: 1.25em;
+}
+
+h3 a, .businessRedirectLinks {
+    color: $violet-clair;
+    transition: color 0.3s ease;
+}
+
+h3 a:active, h3 a:visited, .businessRedirectLinks:active, .businessRedirectLinks:visited, .offersRedirectLinks:active,
+.offersRedirectLinks:visited {
+    color: $violet-clair;
+}
+
+h3 a:hover, .businessRedirectLinks:hover, .offersRedirectLinks:hover {
+    color: $violet-fonce;
+    text-decoration: none;
+}
+
+.applicationDates {
+    font-size: 0.7em;
+    padding: 6px 12px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 3px;
+    width: max-content;
+    margin-bottom: 8px;
+}
+
+.businessRedirectContainer {
+    font-size: 0.8em;
+    margin-bottom: 4px;
+}
+
+.businessRedirectLinks {
+    text-transform: uppercase;
+    color: $violet-clair;
+}
+
+.offersContainers ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+}
+
+.offersContainers ul li {
+    font-size: 0.7em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    margin: 3px 6px 3px 0;
+    background-color: $violet-clair;
+    color: $blanc;
+}
+
+.offersDescriptions {
+    font-size: 0.85em;
+    margin-bottom: 10px;
+}
+
+.offersRedirectLinks {
+    color: $violet-clair;
+    font-size: 0.9em;
+}
+
+.fa-arrow-right {
+    font-size: 0.88em;
+}
+
+.ghost {
+    opacity: 0;
+}
+
+/* -------------------------- RESPONSIVE -------------------------- */
+
+@media (max-width: 1000px) {
+    .offersContainers {
+        width: 100%;
+    }
+}
+
+@media (max-width: 750px) {
+    .offersContainers {
+        padding: 20px;
+    }
+}

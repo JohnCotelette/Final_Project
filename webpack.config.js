@@ -13,15 +13,23 @@ Encore
     .addEntry("offer", "./assets/js/components/offer/offer.js")
     .addEntry("offerAdd", "./assets/js/components/offer/offerAdd.js")
     .addEntry("business", "./assets/js/components/business/business.js")
+    .addEntry("dashboard", "./assets/js/components/user/common_components/dashboard.js")
+    .addEntry("dashboardProfile", "./assets/js/components/user/common_components/dashboardProfile.js")
+    .addEntry("dashboardProfileUpdate", "./assets/js/components/user/common_components/dashboardProfileUpdate.js")
+    .addEntry("candidateDashboardApplications", "./assets/js/components/user/candidateDashboardApplications.js")
+    .addEntry("candidateDashboardCV", "./assets/js/components/user/candidateDashboardCV.js")
+    .addEntry("dashboardRecruiterProfileUpdate", "./assets/js/components/user/dashboardRecruiterProfileUpdate.js")
+    .addEntry("recruiterDashboardOffers", "./assets/js/components/user/recruiterDashboardOffers.js")
+    .addEntry("publicProfile", "./assets/js/components/user/publicProfile.js")
     .addEntry("allBusiness", "./assets/js/components/business/allBusiness.js")
+    .addEntry("recruiterRegister", "./assets/js/components/user/recruiterRegister.js")
     .addStyleEntry("register", "./assets/css/components/user/register.scss")
-    .addStyleEntry("candidate_dashboard", "./assets/css/components/user/candidate_dashboard.scss")
     .addStyleEntry("login", "./assets/css/components/security/login.scss")
     .addStyleEntry("forgotPassword", "./assets/css/components/security/forgotPassword.scss")
     .addStyleEntry("changePassword", "./assets/css/components/security/changePassword.scss")
+    .addStyleEntry("errors", "./assets/css/components/error/403_404.scss")
     .addStyleEntry("easyAdmin", "./assets/css/components/easyAdmin/easyAdmin.scss")
-    .addStyleEntry("404", "./assets/css/components/error/404.scss")
-    .addStyleEntry("403", "./assets/css/components/error/403.scss")
+
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()
@@ -33,7 +41,6 @@ Encore
         config.corejs = 3;
     })
     .enableSassLoader()
-    .autoProvidejQuery()
     .copyFiles({
         from: "./assets/img",
         to: "images/[path][name].[hash:8].[ext]",

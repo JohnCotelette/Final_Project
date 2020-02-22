@@ -1,0 +1,49 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags("dashboard") }}
+    {{ encore_entry_link_tags("candidateDashboardApplications") }}
+{% endblock %}
+
+{% block title %}{{ parent() }}Profil - {{ app.user.firstName }} - Mes candidatures{% endblock %}
+
+{% block content %}
+    {% include 'user/dashboard/common_components/navbar.html.twig' %}
+
+    <h1>Liste des offres pour lesquelles vous avez candidaté</h1>
+
+    <div id="offersWhereHaveApplyContainer">
+        {% if app.user.applications | length > 0 %}
+            {% for application in app.user.applications %}
+                <div class="offersContainers ghost">
+                    <h3><a href="{{ path('show_offer', {'reference': application.offer.reference}) }}">{{ application.offer.title }}</a></h3>
+
+                    <p class="applicationDates">Candidature effectuée le : {{ application.createdAt | date("d/m/Y") }}</p>
+
+                    <p class="businessRedirectContainer">Chez <a class="businessRedirectLinks" href="{{ path('show_business', {'id': application.offer.user.business.id }) }}">{{ application.offer.user.business.name }}</a></p>
+
+                    <ul>
+                        {% for category in application.offer.categories %}
+                            <li>{{ category.name }}</li>
+                        {% endfor %}
+                    </ul>
+
+                    <p class="offersDescriptions">{{ application.offer.description | truncate(250) }}</p>
+
+                    <a class="offersRedirectLinks" href="{{ path('show_offer', {'reference': application.offer.reference }) }}"><i class="fas fa-arrow-right"></i> Revoir l'annonce</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div id="errorNoApplyContainer">
+                Vous n'avez encore postulé à aucune annonce.<br>
+                Pour débuter votre nouvelle carrière, retrouvez la liste des annonces disponibles sur le site en cliquant <a id="redirectOffersIndexLink" href="{{ path("offers_index") }}">ici</a>.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags("dashboard") }}
+    {{ encore_entry_script_tags("candidateDashboardApplications") }}
+{% endblock %}
+ 

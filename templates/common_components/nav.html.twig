@@ -4,17 +4,17 @@
     <div id="allLinksContainer">
         <button id="mobileButton"><i class="fas fa-bars"></i></button>
         <ul id="defaultNavLinksContainer" class="mobileHidden">
-        {% if app.request.attributes.get("_route") != "home" %}
+        {% if currentRoute != "home" %}
             <li>
                 <a class="defaultNavLinks" href="{{ path("home") }}">Accueil</a>
             </li>
         {% endif %}
-            {% if app.request.attributes.get("_route") != "all_business" %}
+            {% if currentRoute != "all_business" %}
                 <li>
                     <a class="defaultNavLinks" href="{{ path("all_business") }}">Entreprises</a>
                 </li>
             {% endif %}
-            {% if app.request.attributes.get("_route") != "offers_index" %}
+            {% if currentRoute != "offers_index" %}
                 <li>
                     <a class="defaultNavLinks" href="{{ path("offers_index") }}">Offres</a>
                 </li>
@@ -31,28 +31,27 @@
 
         {% endif %}
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            {% if app.request.attributes.get("_route") != "login" %}
+            {% if currentRoute != "login" %}
                 <li>
                     <a class="defaultNavLinks" href="{{ path("login") }}">Se connecter</a>
                 </li>
             {% endif %}
-            {% if app.request.attributes.get("_route") != "candidate_register" and
-                app.request.attributes.get("_route") != "recruiter_register" %}
+            {% if currentRoute != "candidate_register" and currentRoute != "recruiter_register" %}
                 <li>
                     <a class="defaultNavLinks importantLinks" href="{{ path("candidate_register") }}">S'inscrire</a>
                 </li>
-            {% elseif app.request.attributes.get("_route") == "candidate_register" %}
+            {% elseif currentRoute == "candidate_register" %}
                 <li>
                     <a class="defaultNavLinks importantLinks" href="{{ path("recruiter_register") }}">Je suis recruteur</a>
                 </li>
-            {% elseif app.request.attributes.get("_route") == "recruiter_register" %}
+            {% elseif currentRoute == "recruiter_register" %}
                 <li>
                     <a class="defaultNavLinks importantLinks" href="{{ path("candidate_register") }}">Je suis candidat</a>
                 </li>
             {% endif %}
         {% else %}
             {% if is_granted("ROLE_RECRUITER") %}
-                {% if app.request.attributes.get("_route") != "offer_create" %}
+                {% if currentRoute != "offer_create" %}
                     <li>
                         <a class="defaultNavLinks" href="{{ path("offer_create" ) }}">Créer une offre</a>
                     </li>
@@ -61,11 +60,12 @@
 
                 {% endif %}
             {% endif %}
-            {% if app.request.attributes.get("_route") != "candidate_dashboard" and
-                app.request.attributes.get("_route") != "recruiter_dashboard" %}
-                    <li>
-                        <a class="defaultNavLinks" href="{{ path("candidate_profile" ) }}">Mon Compte</a>
-                    </li>
+            {% if app.user.roles != ["ROLE_ADMIN"] %}
+                {% if currentRoute != "candidate_dashboard" and currentRoute != "recruiter_dashboard" %}
+                        <li class="dashboardLink">
+                            <a class="defaultNavLinks" href="{{ app.user.roles == ['ROLE_RECRUITER'] ? path('recruiter_dashboard') : path('candidate_dashboard') }}">Mon Compte</a>
+                        </li>
+                {% endif %}
             {% endif %}
             <li>
                 <a class="defaultNavLinks" href="{{ path("logout") }}">Déconnexion</a>

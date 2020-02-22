@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags("dashboard") }}
+    {{ encore_entry_link_tags('dashboardProfile') }}
+{% endblock %}
+
+{% block title %}{{ parent() }}Profil - {{ app.user.firstName }}{% endblock %}
+
+{% block content %}
+    {% include 'user/dashboard/common_components/navbar.html.twig' %}
+
+    {% include 'user/dashboard/common_components/dashboardCommonContent.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags("dashboard") }}
+    {{ encore_entry_script_tags("dashboardProfile") }}
+{% endblock %}

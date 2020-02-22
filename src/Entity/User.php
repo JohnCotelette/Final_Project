@@ -35,9 +35,14 @@ class User implements UserInterface
      * @Assert\NotBlank(
      *     message="Veuillez renseigner une adresse e-mail valide"
      * )
-     * @Groups({"detailedBusiness", "detailedOffer"})
+     * @Groups({"detailedBusiness", "detailedOffer", "candidateRegister"})
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
 
     /**
      * @ORM\Column(type="json")
@@ -51,10 +56,17 @@ class User implements UserInterface
      *     min=8,
      *     max=30,
      *     minMessage="Votre mot de passe doit faire plus de {{ limit }} caractères",
-     *     maxMessage="Votre mot de passe ne peut dépasser {{ limit }} caractères"
+     *     maxMessage="Votre mot de passe ne peut dépasser {{ limit }} caractères",
+     *     groups={"RegisterAndReset"}
      * )
      * @Assert\NotBlank(
-     *     message="Veuillez renseigner votre mot de passe"
+     *     message="Veuillez renseigner votre mot de passe",
+     *     groups={"RegisterAndReset"}
+     * )
+     * 
+     * @Assert\Regex(
+     *      pattern = "/^\S+$/",
+     *      message = "N'utilisez pas d'espace dans votre mot de passe",
      * )
      */
     private $password;
@@ -72,9 +84,9 @@ class User implements UserInterface
      * )
      * 
      *@Assert\Regex(
-     *     pattern ="/[^A-Za-z\-]/",
-     *     match=false,
-     *     message="N'utilisez pas de caractères spéciaux"
+     *     pattern = "/[^A-Za-z\-]/",
+     *     match = false,
+     *     message = "N'utilisez pas de caractères spéciaux"
      * )
      * @Groups({"detailedBusiness", "detailedOffer"})
      */
@@ -110,6 +122,27 @@ class User implements UserInterface
      * )
      */
     private $birthDay;
+
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\Length(
+     *     max=20,
+     *     maxMessage="Votre numéro de téléphone est trop long ({{ limit }} max)"
+     * )
+     */
+    private $phoneNumber;
+
+    /**
+     * @ORM\Column(type="string", length=180, nullable=true)
+     * @Assert\Url(
+     *     message="L'url est invalide (example de bon format: http://www.test.com)"
+     * )
+     * @Assert\Length(
+     *     max=180,
+     *     maxMessage="L'url de votre site personnel ne peut dépasser {{ limit }} caractères."
+     * )
+     */
+    private $webSite;
 
     /**
      * @ORM\Column(type="boolean")
@@ -157,8 +190,9 @@ class User implements UserInterface
     {
         $this->applications = new ArrayCollection();
         $this->offers = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
-    //UUID
+
     public function getId()
     {
         return $this->id;
@@ -169,9 +203,21 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -240,7 +286,7 @@ class User implements UserInterface
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
 
@@ -252,7 +298,7 @@ class User implements UserInterface
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): self
+    public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
 
@@ -267,6 +313,30 @@ class User implements UserInterface
     public function setBirthDay(?\DateTimeInterface $birthDay): self
     {
         $this->birthDay = $birthDay;
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getWebSite(): ?string
+    {
+        return $this->webSite;
+    }
+
+    public function setWebSite(?string $webSite): self
+    {
+        $this->webSite = $webSite;
 
         return $this;
     }

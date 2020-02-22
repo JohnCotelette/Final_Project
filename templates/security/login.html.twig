@@ -11,7 +11,7 @@
         <form method="post" novalidate="novalidate">
             <div>
                 {% if error %}
-                <div id="error" class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    <div id="error" class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
             </div>
             
@@ -31,7 +31,7 @@
                 <div class="alert alert-success">{{ success }}</div>
             {% endfor %}
 
-            <h1>Connectez vous</h1>
+            <h1>Connectez-vous</h1>
 
             <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Votre Email" required autofocus>
 

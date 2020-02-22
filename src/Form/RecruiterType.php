@@ -48,13 +48,6 @@ class RecruiterType extends AbstractType
                         "placeholder" => "Confirmation de mot de passe",
                     ],
                 ],
-                "constraints" => [
-                    new Regex([
-                        "pattern" => "/^\S+$/",
-                        "message" => "N'utilisez pas d'espace dans votre mot de passe",
-
-                    ]),
-                ],
             ])
             ->add("firstName", TextType::class, [
                 "attr" => [
@@ -76,7 +69,7 @@ class RecruiterType extends AbstractType
                 "years" => range(date('Y') - 65, date('Y') - 17),
             ])
             ->add("business", TextType::class, [
-                "label" => false,
+                "label" => "Siret Entreprise",
                 "mapped" => false,
                 "attr" => [
                     "placeholder" => "Siret Entreprise",
@@ -109,6 +102,7 @@ class RecruiterType extends AbstractType
     {
         $resolver->setDefaults([
             "data_class" => User::class,
+            "validation_groups" => ["Default", "RegisterAndReset"],
             "csrf_protection" => true,
             "attr" => [
                 "novalidate" => "novalidate",

@@ -233,7 +233,7 @@ class Offer
     {
         $now = new \DateTime();
 
-        $this->expired_at = $now->add(new \DateInterval("P6M"));
+        $this->expired_at = $now->add(new \DateInterval("P2M"));
 
         return $this;
     }

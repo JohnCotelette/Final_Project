@@ -24,7 +24,7 @@
 
 /* -------------------------- MAIN -------------------------- */
 
-body {
+html, body {
     font-family: aktivgrotesk-mediuploadedfile, Arial, sans-serif;
     background-color: $blanc;
     scroll-behavior: smooth;
@@ -48,6 +48,18 @@ main {
     text-transform: uppercase;
     color: $blanc;
     border: none;
+}
+
+#bodyFilter {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.76);
+    z-index: 3;
+    animation: fadeIn 0.6s ease;
 }
 
 /* -------------------------- NAVIGATION -------------------------- */
@@ -86,8 +98,7 @@ main {
     margin: auto 14px;
 }
 
-#defaultNavLinksContainer li a:after
-{
+#defaultNavLinksContainer li a:after {
     content: "";
     display: block;
     margin-left: auto;
@@ -100,8 +111,7 @@ main {
     -webkit-transition: width 0.6s ease, background-color 0.6s ease;
 }
 
-#defaultNavLinksContainer li a:hover:after
-{
+#defaultNavLinksContainer li a:hover:after {
     width: 100%;
     background: white;
 }
@@ -170,7 +180,6 @@ footer {
     color: $blanc;
     height: 80px;
     padding: .5rem 1rem;
-    z-index: 1000;
 }
 
 footer div {
@@ -251,6 +260,18 @@ footer div {
     }
 }
 
+@keyframes fadeOutLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-50%);
+    }
+}
+
 /* -------------------------- CLASS FOR JAVASCRIPT -------------------------- */
 
 .invisible {
@@ -282,8 +303,16 @@ footer div {
     animation: fadeOut 0.4s ease both;
 }
 
+.fadeInLeft {
+    animation: fadeInLeft 0.4s ease both;
+}
+
 .fadeInRight {
     animation: fadeInRight 0.4s ease both;
+}
+
+.fadeOutLeft {
+    animation: fadeOutLeft 0.4s ease both;
 }
 
 /* -------------------------- RESPONSIVE -------------------------- */
@@ -293,8 +322,16 @@ footer div {
         font-size: 95% !important;
     }
 
+    #bodyFilter {
+        display: block;
+    }
+
     #mobileButton {
         display: block;
+    }
+
+    #defaultNavLinksContainer li a:after {
+        display: none;
     }
 
     #defaultNavLinksContainer {
@@ -328,9 +365,5 @@ footer div {
     .mobileHidden {
         top: -200% !important;
         opacity: 0 !important;
-    }
-
-    .blackFilter {
-        filter: brightness(80%);
     }
 }

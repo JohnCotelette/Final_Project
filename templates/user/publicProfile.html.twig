@@ -1,0 +1,93 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags("publicProfile") }}
+{% endblock %}
+
+{% block title %}{{ parent() }}Profil - {{ user.firstName }}{% endblock %}
+
+{% block content %}
+    <div id="bodyFilterDashboard" class="invisible"></div>
+
+    <div id="modalBoxContainer">
+        <div id="modalBoxContent">
+            <button id="closeModalBoxContainerButton"><i class="far fa-window-close"></i></button>
+
+            {% if user.cv != null %}
+                <iframe id="cvContainer" src="{{ asset('candidate_cv/' ~ user.cv.name ) }}"></iframe>
+            {% else %}
+                <p id="noErrorCvMessageContainer">
+                    <span>Cet utilisateur ne dispose d'aucun CV enregistré sur le site.</span>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="dashboardContent">
+        <section id="leftSection">
+            <div class="tab-content">
+                <div class="imgContainer">
+                    <figure id="avatarUser">
+                        <img src="{{ user.avatar ? asset('user_avatars/' ~ user.avatar.name) : asset('build/images/question_mark.42e63c4a.png') }}" alt='User picture' />
+                    </figure>
+                </div>
+            </div>
+
+            <div id="cvControllerContainer">
+                <button class="commonButtons" id="cvController">Voir le CV</button>
+            </div>
+        </section>
+
+        <section id="rightSection">
+            <h1>{{ user.lastName }} {{ user.firstName }}</h1>
+
+            <hr class="superSeparators">
+
+            <div id="generalsInformationsContainer">
+                <h2><i class="fas fa-eye"></i> Informations générales</h2>
+
+                <div class="infosContainers">
+                    <span class="labelsInfos">Inscrit depuis le :</span>
+                    <span class="infos">{{ user.createdAt | date("d-m-Y") }}</span>
+                </div>
+
+                <div class="infosContainers">
+                    <span class="labelsInfos">Date de naissance :</span>
+                    <span class="infos">{{ user.birthday | date("d-m-Y") }}</span>
+                </div>
+            </div>
+
+            <hr class="superSeparators">
+
+            <div id="contactInformationsContainer">
+                <h2><i class="fas fa-eye"></i> Informations de contact</h2>
+
+                <div class="infosContainers">
+                    <span class="labelsInfos">Email :</span>
+                    <span class="infos"><a class="userLinks" href="mailto:{{ user.email }}">{{ user.email }}</a></span>
+                </div>
+
+                <div class="infosContainers">
+                    <span class="labelsInfos">Téléphone :</span>
+                    <span class="infos">{{ user.phoneNumber ? user.phoneNumber : "non renseigné" }}</span>
+                </div>
+
+                <div class="infosContainers">
+                    <span class="labelsInfos">Website :</span>
+                    <span class="infos">
+                        {% if user.webSite %}
+                            <a class="userLinks" href="{{ user.webSite }}">{{ user.webSite }}</a>
+                        {% else %}
+                            Non renseigné
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags("publicProfile") }}
+{% endblock %}
+

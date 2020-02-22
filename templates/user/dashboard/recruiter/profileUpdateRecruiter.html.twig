@@ -1,0 +1,22 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('dashboard') }}
+    {{ encore_entry_link_tags('dashboardProfileUpdate') }}
+    {{ encore_entry_link_tags('dashboardRecruiterProfileUpdate') }}
+{% endblock %}
+
+{% block title %}{{ parent() }}Profil - {{ app.user.firstName }} - Mettre à jour{% endblock %}
+
+{% block content %}
+    {% include 'user/dashboard/common_components/navbar.html.twig' %}
+
+    {% include 'user/dashboard/common_components/dashboardUpdateProfileCommonContent.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('dashboard') }}
+    {{ encore_entry_script_tags('dashboardProfileUpdate') }}
+    {{ encore_entry_script_tags('dashboardRecruiterProfileUpdate') }}
+{% endblock %}
+

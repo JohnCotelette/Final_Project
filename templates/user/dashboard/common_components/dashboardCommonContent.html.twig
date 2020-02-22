@@ -1,0 +1,113 @@
+{% for success in app.flashes("successProfileUpdated") %}
+    <div class="alert alert-success">{{ success }}</div>
+{% endfor %}
+
+{% for success in app.flashes("successPasswordChanged") %}
+    <div class="alert alert-success">{{ success }}</div>
+{% endfor %}
+
+{% for success in app.flashes("successBusinessUpdated") %}
+    <div class="alert alert-success">{{ success }}</div>
+{% endfor %}
+
+<div id="bodyFilterDashboard" class="invisible"></div>
+
+<div id="modalBoxContainer">
+    <div id="modalBoxContent">
+        <button id="closeModalBoxContainerButton"><i class="far fa-window-close"></i></button>
+
+        {{ form_start(formAvatar) }}
+        <div id="errorAvatarFormContainer" class="invisible"></div>
+
+        <div class="invisible">
+            {{ form_widget(formAvatar.avatarFile) }}
+        </div>
+
+        <div id="realFormContainer">
+            <label id="fakeLabel" for="avatar_avatarFile_file">Selectionner un fichier...</label>
+
+            <button id="formAvatarSubmitButton" class="invisible" type="submit">Valider</button>
+        </div>
+        {{ form_end(formAvatar) }}
+    </div>
+</div>
+
+<div id="dashboardContent">
+    <section id="leftSection">
+        <div class="tab-content">
+            <div class="imgContainer">
+                <figure id="avatarUser">
+                    <div id="changeProfilPictureContainer">
+                        <a href="#" id="changeAvatarButton">Mettre à jour</a>
+                    </div>
+
+                    <img src="{{ app.user.avatar ? asset('user_avatars/' ~ app.user.avatar.name) : asset('build/images/question_mark.42e63c4a.png') }}" alt='User picture' />
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section id="rightSection">
+        <h1>{{ app.user.lastName }} {{ app.user.firstName }}</h1>
+
+        <hr class="superSeparators">
+
+        <div id="generalsInformationsContainer">
+            <h2><i class="fas fa-eye"></i> Informations générales</h2>
+
+            <div class="infosContainers">
+                <span class="labelsInfos">Inscrit depuis le :</span>
+                <span class="infos">{{ app.user.createdAt | date("d-m-Y") }}</span>
+            </div>
+
+            <div class="infosContainers">
+                <span class="labelsInfos">Date de naissance :</span>
+                <span class="infos">{{ app.user.birthDay | date("d-m-Y") }}</span>
+            </div>
+        </div>
+
+        <hr class="superSeparators">
+
+        <div id="contactInformationsContainer">
+            <h2><i class="fas fa-eye"></i> Informations de contact</h2>
+
+            <div class="infosContainers">
+                <span class="labelsInfos">Email :</span>
+                <span class="infos">{{ app.user.email }}</span>
+            </div>
+
+            <div class="infosContainers">
+                <span class="labelsInfos">Téléphone :</span>
+                <span class="infos">{{ app.user.phoneNumber ? app.user.phoneNumber : "non renseigné" }}</span>
+            </div>
+
+            <div class="infosContainers">
+                <span class="labelsInfos">Website :</span>
+                <span class="infos">{{ app.user.website ? app.user.webSite : "non renseigné" }}</span>
+            </div>
+        </div>
+
+        {% if app.user.roles == ["ROLE_RECRUITER"] %}
+            <hr class="superSeparators">
+
+            <div id="BusinessInformationsContainer">
+                <h2><i class="fas fa-eye"></i> Entreprise</h2>
+
+                <div class="infosContainers">
+                    <span class="labelsInfos">Nom :</span>
+                    <span class="infos">{{ app.user.business.name }}</span>
+                </div>
+
+                <div class="infosContainers">
+                    <span class="labelsInfos">Type :</span>
+                    <span class="infos">{{ app.user.business.kind ? app.user.business.kind : "non renseigné" }}</span>
+                </div>
+
+                <div class="infosContainers">
+                    <span class="labelsInfos">Secteur d'activité :</span>
+                    <span class="infos">{{ app.user.business.activityArea ? app.user.business.activityArea : "non renseigné" }}</span>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+</div>

@@ -10,7 +10,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 
 class ResetPasswordType extends AbstractType
 {
@@ -31,10 +30,6 @@ class ResetPasswordType extends AbstractType
                     new NotBlank([
                         "message" => "Veuillez renseigner votre mot de passe",
                     ]),
-                    new Regex([
-                        "pattern" => "/^\S+$/",
-                        "message" => "N'utilisez pas d'espace dans votre mot de passe"
-                    ])
                 ],
                 "options" => [
                     "label" => false,
@@ -66,6 +61,7 @@ class ResetPasswordType extends AbstractType
     {
         $resolver->setDefaults([
             "csrf_protection" => true,
+            "validation_groups" => ["Default", "RegisterAndReset"],
             "attr" => [
                 "novalidate" => "novalidate",
             ]

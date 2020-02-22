@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Offer;
-use Doctrine\ORM\Query;
 use App\Entity\Business;
 use App\Entity\Category;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -31,10 +30,10 @@ class OfferRepository extends ServiceEntityRepository
      * @param string|null $experience
      * @param int|null $salary
      * @param string|null $type
-     * @param string|null $city
+     * @param string|null $location
      * @return array
      */
-    public function findByCategoriesOrderByDate(?Category $category, ?string $experience, ?int $salary, ?string $type, ?string $city) :array
+    public function findByCategoriesOrderByDate(?Category $category, ?string $experience, ?int $salary, ?string $type, ?string $location) :array
     {
         $defaultExperience = "Tous";
 
@@ -70,10 +69,10 @@ class OfferRepository extends ServiceEntityRepository
                 ->setParameter(':type', $type);
         }
 
-        if ($city != null) {
+        if ($location != null) {
             $qb
-                ->andWhere('o.location = :city')
-                ->setParameter(':city', $city);
+                ->andWhere('o.location LIKE :location')
+                ->setParameter(':location', "%$location%");
         }
 
         return $qb
@@ -92,5 +91,17 @@ class OfferRepository extends ServiceEntityRepository
             ->orderBy('o.created_at', 'DESC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function FindOffersForClear(){
+        $qb = $this->createQueryBuilder('o');
+        $now = new \DateTime();
+
+        return $qb
+            ->where("date_format(o.expired_at, '%Y-%m-%d') <= :now")
+            ->setParameter('now', $now->format("Y-m-d"))
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

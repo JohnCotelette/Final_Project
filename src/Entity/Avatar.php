@@ -33,13 +33,12 @@ class Avatar implements \Serializable
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
-    
 
      /**
      * @Vich\UploadableField(mapping="user_avatars", fileNameProperty="name", size="size" )
      * @var File| null
      */
-    private $avataruser;
+    private $avatarFile;
 
 
     public function getId(): ?int
@@ -83,20 +82,18 @@ class Avatar implements \Serializable
         return $this;
     }
 
-    public function setAvataruser(?File $avataruser = null): void
+    public function setAvatarFile(?File $avatarFile = null): void
     {
-        $this->avataruser= $avataruser;
+        $this->avatarFile = $avatarFile;
 
-        if (null !== $avataruser) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
+        if (null !== $avatarFile) {
             $this->updatedAt = new \DateTimeImmutable();
         }
     }
 
-    public function getAvataruser(): ?File
+    public function getAvatarFile(): ?File
     {
-        return $this->avataruser;
+        return $this->avatarFile;
     }
 
     /** @see \Serializable::serialize() */
@@ -115,5 +112,10 @@ class Avatar implements \Serializable
         list (
             $this->id,
         ) = unserialize($serialized);
+    }
+
+    public function __toString()
+    {
+        return $this->name ?? '';
     }
 }

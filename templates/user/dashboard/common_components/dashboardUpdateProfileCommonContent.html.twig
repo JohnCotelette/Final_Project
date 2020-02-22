@@ -1,0 +1,247 @@
+{{ form_start(formProfile) }}
+    <h2>Informations générales</h2>
+
+    {% if form_errors(formProfile.firstName) or form_errors(formProfile.lastName) %}
+        <div id="identityErrorsContainer" class="superContainers errorsContainers">
+            <div>
+                {{ form_errors(formProfile.firstName) }}
+            </div>
+
+            <div>
+                {{ form_errors(formProfile.lastName) }}
+            </div>
+        </div>
+    {% endif %}
+
+    <div id="identityContainer" class="superContainers containers">
+        <div>
+            {{ form_label(formProfile.firstName) }}
+            {{ form_widget(formProfile.firstName) }}
+        </div>
+
+        <div>
+            {{ form_label(formProfile.lastName) }}
+            {{ form_widget(formProfile.lastName) }}
+        </div>
+    </div>
+
+    {% if form_errors(formProfile.birthDay) %}
+        <div id="birthdayErrorsContainer" class="superContainers errorsContainers">
+            <div>
+                {{ form_errors(formProfile.birthDay) }}
+            </div>
+        </div>
+    {% endif %}
+
+    <div id="birthdayContainer" class="superContainers containers">
+        {{ form_label(formProfile.birthDay) }}
+        {{ form_widget(formProfile.birthDay) }}
+    </div>
+
+    <hr class="superSeparators">
+
+    <h2>Informations de contact</h2>
+
+    {% if form_errors(formProfile.phoneNumber) or form_errors(formProfile.webSite) %}
+        <div id="contactErrorsContainer" class="superContainers errorsContainers">
+            <div>
+                {{ form_errors(formProfile.phoneNumber) }}
+            </div>
+
+            <div>
+                {{ form_errors(formProfile.webSite) }}
+            </div>
+        </div>
+    {% endif %}
+
+    <div id="contactContainer" class="superContainers containers">
+        <div>
+            {{ form_label(formProfile.phoneNumber) }}
+            {{ form_widget(formProfile.phoneNumber) }}
+        </div>
+
+        <div>
+            {{ form_label(formProfile.webSite) }}
+            {{ form_widget(formProfile.webSite) }}
+        </div>
+    </div>
+
+    <div class="submitContainers">
+        <button class="commonButtons" type="submit">Confirmer</button>
+
+        {% if app.user.roles == ["ROLE_RECRUITER"] %}
+            <a class="changeFormControllers" id="changeFormControllerForBusiness" href="#"><i class="fas fa-arrow-circle-right"></i> Modifier mon entreprise</a>
+        {% endif %}
+    </div>
+{{ form_end(formProfile) }}
+
+{% if app.user.roles == ["ROLE_RECRUITER"] %}
+    <div id="bodyFilterDashboard" class="invisible"></div>
+
+    <div id="modalBoxContainer">
+        <div id="modalBoxContent">
+            <button id="closeModalBoxContainerButton"><i class="far fa-window-close"></i></button>
+
+            {{ form_start(formAvatar) }}
+                <div id="errorAvatarFormContainer" class="invisible"></div>
+
+                <div class="invisible">
+                    {{ form_widget(formAvatar.avatarFile) }}
+                </div>
+
+                <div id="realFormContainer">
+                    <label id="fakeLabel" for="avatar_avatarFile_file">Selectionner un fichier...</label>
+
+                    <button id="formAvatarSubmitButton" class="invisible" type="submit">Valider</button>
+                </div>
+            {{ form_end(formAvatar) }}
+        </div>
+    </div>
+
+    {{ form_start(formBusiness) }}
+        <figure id="avatarUser">
+            <div id="changeProfilPictureContainer">
+                <a href="#" id="changeAvatarButton">Mettre à jour</a>
+            </div>
+
+            <img src="{{ app.user.business.avatar ? asset('user_avatars/' ~ app.user.business.avatar.name) : asset('build/images/question_mark.42e63c4a.png') }}" alt="Business Picture" />
+        </figure>
+
+        <hr id="specialBusinessSeparator" class="superSeparators">
+
+        <h2>Informations générales</h2>
+
+        <div id="BusinessIdentityContainer" class="superContainers containers">
+            <div>
+                <label>Siret entreprise</label>
+                <div class="fakeInputs">{{ app.user.business.siretNumber }}</div>
+            </div>
+
+            <div>
+                <label>Nom de l'entreprise</label>
+                <div class="fakeInputs">{{ app.user.business.name }}</div>
+            </div>
+        </div>
+
+        <div id="BusinessIdentityContainerSecond" class="superContainers containers">
+            <div>
+                <label>Adresse</label>
+                <div class="fakeInputs">{{ app.user.business.location }}</div>
+            </div>
+
+            <div>
+                <label>Nombre de salariés</label>
+                <div class="fakeInputs">{{ app.user.business.employeesNumber }}</div>
+            </div>
+        </div>
+
+        <hr class="superSeparators" id="targetForScroll">
+
+        <h2>Informations personnalisables</h2>
+
+        {% if form_errors(formBusiness.activityArea) or form_errors(formBusiness.kind) %}
+            <div id="businessAKErrorsContainer" class="superContainers errorsContainers">
+                <div>
+                    {{ form_errors(formBusiness.activityArea) }}
+                </div>
+
+                <div>
+                    {{ form_errors(formBusiness.kind) }}
+                </div>
+            </div>
+        {% endif %}
+
+        <div id="businessAKContainer" class="superContainers containers">
+            <div>
+                {{ form_label(formBusiness.activityArea) }}
+                {{ form_widget(formBusiness.activityArea) }}
+            </div>
+
+            <div>
+                {{ form_label(formBusiness.kind) }}
+                {{ form_widget(formBusiness.kind) }}
+            </div>
+        </div>
+
+        {% if form_errors(formBusiness.description) %}
+            <div id="businessDescriptionErrorsContainer" class="superContainers errorsContainers">
+                {{ form_errors(formBusiness.description) }}
+            </div>
+        {% endif %}
+
+        <div id="businessDescriptionContainer" class="superContainers containers">
+            <div>
+                {{ form_label(formBusiness.description) }}
+                {{ form_widget(formBusiness.description) }}
+                <span class="inputsCount">lol</span>
+            </div>
+        </div>
+
+        {% if form_errors(formBusiness.whyUs) %}
+            <div id="businessWhyUsErrorsContainer" class="superContainers errorsContainers">
+                {{ form_errors(formBusiness.whyUs) }}
+            </div>
+        {% endif %}
+
+        <div id="businessWhyUsContainer" class="superContainers containers">
+            <div>
+                {{ form_label(formBusiness.whyUs) }}
+                {{ form_widget(formBusiness.whyUs) }}
+                <span class="inputsCount">lol</span>
+            </div>
+        </div>
+
+        <div class="submitContainers">
+            <button class="commonButtons" type="submit">Confirmer</button>
+
+            <a class="changeFormControllers" id="changeFormControllerForUser" href="#"><i class="fas fa-arrow-circle-right"></i> Modifier mes infos</a>
+        </div>
+    {{ form_end(formBusiness) }}
+{% endif %}
+
+<div id="totalSecurityContainer">
+    <a href="#" id="securityController" class="controllers">Sécurité <i class="arrows fas fa-angle-up"></i></a>
+
+    <div id="securityContainer" class="reduced jsContainers">
+        <div>
+            <a href="#" id="passwordContainerController" class="controllers">Changement de mot de passe <i class="arrows fas fa-angle-up"></i></a>
+        </div>
+
+        <div id="passwordContainer" class="smallContainers jsContainers reduced">
+            {{ form_start(formResetPassword) }}
+            <div class="superContainers containers specialsContainersForOldPassword">
+                <div>
+                    {{ form_label(formResetPassword.oldPassword) }}
+                    {{ form_widget(formResetPassword.oldPassword) }}
+                </div>
+            </div>
+
+            <div class="containers">
+                {{ form_label(formResetPassword.newPassword) }}
+                {{ form_widget(formResetPassword.newPassword) }}
+            </div>
+
+            <button type="submit" class="securityButtons">Confirmer</button>
+            {{ form_end(formResetPassword) }}
+
+            <hr class="superSeparators">
+        </div>
+
+        <div>
+            <a href="#" id="deleteAccountController" class="controllers">Suppression du compte <i class="arrows fas fa-angle-up"></i></a>
+        </div>
+
+        <div id="deleteAccountContainer" class="smallContainers jsContainers reduced">
+            {{ form_start(formDeleteAccount) }}
+            <div class="superContainers containers">
+                <div>
+                    {{ form_label(formDeleteAccount.oldPassword) }}
+                    {{ form_widget(formDeleteAccount.oldPassword) }}
+                </div>
+            </div>
+
+            <button type="submit" id="dangerousButton" class="securityButtons">Supprimer mon compte</button>
+            {{ form_end(formDeleteAccount) }}
+        </div>
+    </div>
+</div>

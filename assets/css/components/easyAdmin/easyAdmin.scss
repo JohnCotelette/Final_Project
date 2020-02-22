@@ -1,5 +1,52 @@
 @import "../../core.scss";
 
-.main-header .logo {
-    color: $violet-clair;
+body {
+    background-color: $blanc-clair;
+}
+.main-sidebar {
+    background-color: $blanc-clair;
+}
+
+.main-sidebar a {
+    padding: 10px;
+    margin: 5px 0;
+    color: white;
+    background-color:$violet-clair;
+    border: $violet-clair;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: $violet-fonce;
+}
+
+.sidebar-menu .fa {
+    color: rgb(255, 255, 255)!important;
+    filter: none!important;
+}
+
+.content-header {
+    background-color:$violet-clair;
+}
+
+.content-header h1{
+    color: white;
+    font-size: 2rem!important;
+}
+
+.button-action a{
+    color: #5e5d5d;
+    background-color:white;
+    border: white;
+}
+
+.pager > a {
+    margin: 0 5px;
+}
+
+.user-menu-wrapper {
+    color: white!important;
+    background-color:$violet-clair;
+    border: $violet-clair;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: $violet-fonce;
 }

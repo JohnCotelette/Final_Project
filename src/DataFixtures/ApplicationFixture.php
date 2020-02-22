@@ -40,7 +40,7 @@ class ApplicationFixture extends BaseFixture implements DependentFixtureInterfac
     {
         $randomCandidate = $this->getRandomReference(User::class);
 
-        if (!in_array("ROLE_CANDIDATE", $randomCandidate->getRoles())) {
+        if (!in_array("ROLE_CANDIDATE", $randomCandidate->getRoles()) || $randomCandidate->getCv() === null) {
             return $this->getRandomCandidate();
         }
         else {

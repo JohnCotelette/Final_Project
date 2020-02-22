@@ -47,12 +47,6 @@ class CandidatType extends AbstractType
                         "placeholder" => "Confirmation de mot de passe",
                     ],
                 ],
-                "constraints" => [
-                    new Regex([
-                        "pattern" => "/^\S+$/",
-                        "message" => "N'utilisez pas d'espace dans votre mot de passe",
-                    ]),
-                ],
             ])
             ->add("firstName", TextType::class, [
                 "label" => 'Prénom',
@@ -77,7 +71,7 @@ class CandidatType extends AbstractType
             ])
             ->add("legalConditions", CheckboxType::class, [
                 "mapped" => false,
-                "required" =>true,
+                "required" => true,
                 "label" => "En cochant ceci, vous acceptez les conditions générales d'utilisation et vous certifiez être majeur.",
                 "constraints" => [
                     new IsTrue([
@@ -91,9 +85,10 @@ class CandidatType extends AbstractType
     {
         $resolver->setDefaults([
             "data_class" => User::class,
-            'csrf_protection' => true,
-            'attr' => [
-                'novalidate' => 'novalidate',
+            "validation_groups" => ["Default", "RegisterAndReset"],
+            "csrf_protection" => true,
+            "attr" => [
+                "novalidate" => "novalidate",
             ],
         ]);
     }

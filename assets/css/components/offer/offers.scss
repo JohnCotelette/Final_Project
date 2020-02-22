@@ -46,9 +46,9 @@ main {
     height: 128px;
     margin: 8px;
     border: 8px solid #3812b2;
+    border-color: $violet-clair transparent transparent transparent;
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #3812b2 transparent transparent transparent;
 }
 
 .lds-ring div:nth-child(1) {
@@ -185,7 +185,7 @@ h3 {
     margin: 0;
 }
 
-#categories_city {
+#categories_location {
     padding: 4px 7px;
     font-size: 0.85em;
 }
@@ -309,16 +309,19 @@ h5 {
     padding: 15px;
 }
 
-#businessImgContainer {
+.businessImgContainer {
+    display: flex;
     background-color: inherit;
-    width: 140px;
-    height: 140px;
-    margin: auto;
+    width: 160px;
+    max-width: 160px;
+    height: 160px;
+    max-height: 160px;
+    margin: auto 10px auto 0;
 }
 
-#businessImgContainer img {
-    width: 80%;
-    max-width: 80%;
+.businessImgContainer img {
+    width: 70%;
+    max-width: 70%;
     height: auto;
     max-height: 100%;
     margin: auto;
@@ -330,6 +333,10 @@ h5 {
 
 .ghost {
     opacity: 0;
+}
+
+.offersContainers {
+    padding: 10px;
 }
 
 /* -------------------------- RESPONSIVE -------------------------- */
@@ -396,10 +403,6 @@ h5 {
 
     #paginationContainer ul {
         margin: auto;
-    }
-
-    #businessImgContainer {
-        margin-top: 20px;
     }
 
     .card-body {

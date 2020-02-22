@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
 use App\Service\MailService;
@@ -15,6 +14,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * Class SecurityController
+ * @package App\Controller
+ */
 class SecurityController extends AbstractController
 {
     /**
@@ -67,12 +70,12 @@ class SecurityController extends AbstractController
 
             $userService->generatePasswordToken($user);
 
-            $em = $this
+            $entityManager = $this
                 ->getDoctrine()
                 ->getManager();
 
-            $em->persist($user);
-            $em->flush();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
             $resetPasswordUrl = $this->generateUrl("resetPassword", [
                 "resetPasswordToken" => $user->getPasswordToken(),

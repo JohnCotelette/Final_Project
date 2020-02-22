@@ -26,7 +26,7 @@
     <div id="offerInfosContainer">
         <div id="businessImgContainer">
             <figure>
-                <img src="{{ offer.user.business.avatar ? asset('business_avatars/' ~ offer.user.business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
+                <img src="{{ offer.user.business.avatar ? asset('user_avatars/' ~ offer.user.business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
                      alt="Business Avatar"/>
             </figure>
         </div>
@@ -102,7 +102,7 @@
                             <p id="noCVRedirect" class="indicationsContainers specials">
                                 <i class="fas fa-arrow-right"></i>
                                 <span>
-                                    Vous pouvez cliquer directement <span id="noCvRedirect"><a href="{{ path("candidate_cv") }}">ici</a></span> pour ajouter un CV à votre compte.
+                                    Vous pouvez cliquer directement <span id="noCvRedirect"><a href="{{ path("candidate_dashboard_cv") }}">ici</a></span> pour ajouter un CV à votre compte.
                                  </span>
                             </p>
                         {% else %}
@@ -126,8 +126,6 @@
                     {% else %}
                         Vous avez déjà postulé à cette annonce.
                     {% endif %}
-                {% else %}
-                    lol
                 {% endif %}
             {% else %}
                 <p id="needConnectorRegister"  class="indicationsContainers">
@@ -163,19 +161,19 @@
         <div id="offerDetailsContainer">
             <h2>Le poste</h2>
 
-            <p>{{ offer.description }}</p>
+            <p>{{ offer.description | nl2br }}</p>
 
             <hr class="offerDetailsSeparators">
 
             <h2>Profil requis</h2>
 
-            <p>{{ offer.profilRequired }}</p>
+            <p>{{ offer.profilRequired | nl2br }}</p>
 
             <hr class="offerDetailsSeparators">
 
             <h2>A propos de {{ offer.user.business.name }}</h2>
 
-            <p>{{ offer.user.business.description }}</p>
+            <p>{{ offer.user.business.description | nl2br }}</p>
 
             <hr class="offerDetailsSeparators">
 

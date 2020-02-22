@@ -13,7 +13,7 @@
 {% block content %}
     <section id="firstSection">
         <div>
-            <h1>Inscrivez vous</h1>
+            <h1>Inscrivez-vous</h1>
 
             <div id="headerRegisterForm">
                 {% if app.request.attributes.get("_route") == "candidate_register" %}
@@ -91,8 +91,22 @@
                         </div>
                     </div>
 
-                    <div id="field-business" class="superContainers">
+                    <div id="field-businessLabel" class="superContainers">
+                        {{ form_label(form.business) }}
+                    </div>
+
+                    <div id="field-business" class="superContainers invisible">
                         {{ form_widget(form.business) }}
+                    </div>
+
+                    <div id="field-business-withJs" class="superContainers">
+                        <div>
+                            <input type="text" class="jsInputs" id="business_siren" name="business_siren" maxlength="9" placeholder="Siren" />
+                        </div>
+
+                        <div>
+                            <input type="text" class="jsInputs" id="business_nic" name="business_nic" maxlength="5" placeholder="Nic" />
+                        </div>
                     </div>
                 {% endif %}
 
@@ -154,5 +168,10 @@
             {% endif %}
         </div>
     </section>
+{% endblock %}
 
+{% block javascripts %}
+    {% if app.request.attributes.get("_route") == "recruiter_register" %}
+            {{ encore_entry_script_tags('recruiterRegister') }}
+    {% endif %}
 {% endblock %}

@@ -10,7 +10,7 @@
     <header>
         <div id="imgContainer">
             <figure>
-                <img src="{{ business.avatar ? asset('business_avatars/' ~ business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
+                <img src="{{ business.avatar ? asset('user_avatars/' ~ business.avatar.name) : asset("build/images/question_mark.42e63c4a.png") }}"
                      alt="Business Avatar" />
             </figure>
         </div>
@@ -31,14 +31,14 @@
             <div class="BusinessGlobalDescription ">
                 <div id="">
                     <h2>Notre metier</h2>
-                    <p>{{ business.description }}</p>
+                    <p>{{ business.description | nl2br }}</p>
                 </div>
 
                 <hr>
 
                 <div>
                     <h2>Pourquoi venir chez nous ?</h2>
-                    <p>{{ business.whyUs }}</p>
+                    <p>{{ business.whyUs | nl2br }}</p>
                 </div>
 
                 <hr>
