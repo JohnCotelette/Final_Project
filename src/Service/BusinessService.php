@@ -43,7 +43,7 @@ class BusinessService {
     }
 
     /**
-     * @param int $siret
+     * @param string $siret
      * @return bool
      */
     public function isBusinessAlreadyExistInTheDatabase(string $siret) :bool
