@@ -14,4 +14,4 @@
     Let's go with a <code>yarn build</code> and a <code>symfony serve</code> !
 </p>
 
-<p>Thanks to <a href="www.margauxpassot.com">Margaux Passot</a> for the design.</p>
+<p>Thanks to <a href="https://www.margauxpassot.com">Margaux Passot</a> for the design.</p>
