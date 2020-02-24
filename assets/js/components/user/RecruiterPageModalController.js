@@ -61,11 +61,11 @@ class RecruiterPageModalController {
 
             let newApplicationProfileLink = document.createElement("a");
             newApplicationProfileLink.setAttribute("href", "/profile/" + data[i]["userID"]);
+            newApplicationProfileLink.setAttribute("target", "_blank");
             newApplicationProfileLink.textContent = "Profil";
 
             let newApplicationUserContactLink = document.createElement("a");
             newApplicationUserContactLink.setAttribute("href", "mailto:" + data[i]["userEmail"]);
-            newApplicationUserContactLink.setAttribute("target", "_blank");
             newApplicationUserContactLink.textContent = "Contact";
 
             newApplicationControllerContainer.append(newApplicationProfileLink);
